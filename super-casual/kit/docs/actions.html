@@ -24,15 +24,15 @@ SCDocs.page({
   lead: 'Round glossy buttons for the game actions — jump, fire, dash. They sit opposite the Joystick and report press and release, so holding works.',
   hero: `<div class="row">
   <div class="sc-actions" data-layout="cluster">
-    <button class="sc-action" data-value="dash" data-icon="energy" data-color="yellow" data-size="sm">Dash</button>
-    <button class="sc-action" data-value="jump" data-icon="star" data-color="green" data-size="lg">Jump</button>
+    <button class="sc-action" data-value="dash" data-icon="rocket" data-color="yellow" data-size="sm">Dash</button>
+    <button class="sc-action" data-value="jump" data-icon="jump" data-color="green" data-size="lg">Jump</button>
   </div>
 </div>`,
   css: ['components/actions/actions.css'],
   usageNote: 'Put them in the bottom area of the HUD screen, on the opposite side from the joystick. Listen on the group.',
   usage: `<div class="sc-actions" id="acts" data-layout="cluster">
-  <button class="sc-action" data-value="jump" data-icon="star" data-size="lg" data-color="green">Jump</button>
-  <button class="sc-action" data-value="fire" data-icon="energy" data-color="red">Fire</button>
+  <button class="sc-action" data-value="jump" data-icon="jump" data-size="lg" data-color="green">Jump</button>
+  <button class="sc-action" data-value="fire" data-icon="fireball" data-color="red">Fire</button>
 </div>
 
 <script>
@@ -42,27 +42,27 @@ SCDocs.page({
   examples: [
     { title: 'Sizes and colors', desc: 'sm / md / lg (56 / 72 / 92 px). The main action is usually the biggest one, bottom-right.',
       html: `<div class="row">
-  <button class="sc-action" data-value="a" data-icon="star" data-size="sm" data-color="sky">Sm</button>
-  <button class="sc-action" data-value="b" data-icon="heart" data-color="red">Md</button>
-  <button class="sc-action" data-value="c" data-icon="energy" data-size="lg" data-color="yellow">Lg</button>
-  <button class="sc-action" data-value="d" data-icon="gem" data-color="purple"></button>
+  <button class="sc-action" data-value="a" data-icon="sword" data-size="sm" data-color="sky">Sm</button>
+  <button class="sc-action" data-value="b" data-icon="shield" data-color="red">Md</button>
+  <button class="sc-action" data-value="c" data-icon="fireball" data-size="lg" data-color="yellow">Lg</button>
+  <button class="sc-action" data-value="d" data-icon="potion" data-color="purple"></button>
 </div>` },
     { title: 'Layouts', desc: 'cluster (staggered, easy for a thumb), row, column, grid.',
       html: `<div class="row">
-  <div class="sc-actions" data-layout="cluster"><button class="sc-action" data-value="1" data-icon="clover" data-size="sm"></button><button class="sc-action" data-value="2" data-icon="star" data-size="lg" data-color="green"></button></div>
-  <div class="sc-actions" data-layout="row"><button class="sc-action" data-value="1" data-icon="heart" data-color="red"></button><button class="sc-action" data-value="2" data-icon="key" data-color="yellow"></button></div>
-  <div class="sc-actions" data-layout="grid"><button class="sc-action" data-value="1" data-icon="star" data-size="sm"></button><button class="sc-action" data-value="2" data-icon="energy" data-size="sm" data-color="yellow"></button><button class="sc-action" data-value="3" data-icon="heart" data-size="sm" data-color="red"></button><button class="sc-action" data-value="4" data-icon="gem" data-size="sm" data-color="purple"></button></div>
+  <div class="sc-actions" data-layout="cluster"><button class="sc-action" data-value="1" data-icon="sword" data-size="sm"></button><button class="sc-action" data-value="2" data-icon="jump" data-size="lg" data-color="green"></button></div>
+  <div class="sc-actions" data-layout="row"><button class="sc-action" data-value="1" data-icon="fireball" data-color="red"></button><button class="sc-action" data-value="2" data-icon="bomb" data-color="yellow"></button></div>
+  <div class="sc-actions" data-layout="grid"><button class="sc-action" data-value="1" data-icon="sword" data-size="sm"></button><button class="sc-action" data-value="2" data-icon="crosshair" data-size="sm" data-color="yellow"></button><button class="sc-action" data-value="3" data-icon="fireball" data-size="sm" data-color="red"></button><button class="sc-action" data-value="4" data-icon="potion" data-size="sm" data-color="purple"></button></div>
 </div>` },
     { title: 'Counts and locked', desc: 'data-badge shows how many are left (needs bubble.css); disabled greys the button out.',
       html: `<div class="row">
-  <button class="sc-action" data-value="bomb" data-icon="crystal-ball" data-color="purple" data-badge="3">Bomb</button>
-  <button class="sc-action" data-value="potion" data-icon="heart" data-color="red" data-badge="0" data-badge-color="dark" disabled>Heal</button>
+  <button class="sc-action" data-value="bomb" data-icon="bomb" data-color="purple" data-badge="3">Bomb</button>
+  <button class="sc-action" data-value="potion" data-icon="potion" data-color="green" data-badge="0" data-badge-color="dark" disabled>Heal</button>
 </div>` },
     { title: 'Live: press and hold', desc: 'press fires when the thumb goes down, release when it lifts — good for charging or continuous fire.',
       html: `<div class="row">
   <div class="sc-actions" id="liveActs" data-layout="cluster">
-    <button class="sc-action" data-value="shield" data-icon="lock" data-color="sky" data-size="sm">Shield</button>
-    <button class="sc-action" data-value="fire" data-icon="energy" data-color="red" data-size="lg">Fire</button>
+    <button class="sc-action" data-value="shield" data-icon="shield" data-color="sky" data-size="sm">Shield</button>
+    <button class="sc-action" data-value="fire" data-icon="fireball" data-color="red" data-size="lg">Fire</button>
   </div>
 </div>
 <p class="log" id="actLog">press a button</p>`,

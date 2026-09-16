@@ -15,8 +15,8 @@ Round glossy buttons for game actions (jump, fire, dash). They pair with the Joy
 
 ```html
 <div class="sc-actions" id="acts" data-layout="cluster">
-  <button class="sc-action" data-value="dash" data-icon="energy" data-color="yellow" data-size="sm">Dash</button>
-  <button class="sc-action" data-value="jump" data-icon="star" data-color="green" data-size="lg">Jump</button>
+  <button class="sc-action" data-value="dash" data-icon="rocket" data-color="yellow" data-size="sm">Dash</button>
+  <button class="sc-action" data-value="jump" data-icon="jump" data-color="green" data-size="lg">Jump</button>
 </div>
 
 <script>

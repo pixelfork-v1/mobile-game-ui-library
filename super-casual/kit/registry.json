@@ -2,7 +2,7 @@
   "name": "super-casual",
   "title": "Super Casual UI Kit",
   "description": "Chunky, glossy mobile game UI for hyper-casual and casual 2D/3D web games. Plain HTML + CSS components that float above any game canvas (Three.js, Babylon, Phaser, PixiJS).",
-  "version": "0.43.0",
+  "version": "0.43.1",
   "items": [
     {
       "name": "core",
@@ -2334,7 +2334,7 @@
         "core",
         "bubble"
       ],
-      "html": "<div class=\"sc-actions\" data-layout=\"cluster\">\n  <button class=\"sc-action\" data-value=\"dash\" data-icon=\"energy\" data-color=\"yellow\" data-size=\"sm\">Dash</button>\n  <button class=\"sc-action\" data-value=\"jump\" data-icon=\"star\" data-color=\"green\" data-size=\"lg\">Jump</button>\n</div>",
+      "html": "<div class=\"sc-actions\" data-layout=\"cluster\">\n  <button class=\"sc-action\" data-value=\"dash\" data-icon=\"rocket\" data-color=\"yellow\" data-size=\"sm\">Dash</button>\n  <button class=\"sc-action\" data-value=\"jump\" data-icon=\"jump\" data-color=\"green\" data-size=\"lg\">Jump</button>\n</div>",
       "props": {
         "data-layout": {
           "type": "enum",
@@ -2460,7 +2460,7 @@
       "hand",
       "avatar",
       "gem-pile",
-      "coin-pile"
+      "coin-pile", "sword", "shield", "fireball", "jump", "bomb", "rocket", "crosshair", "potion"
     ],
     "note": "Use by name with data-icon (arrow-left is arrow-right mirrored). Every icon attribute also accepts a path, web address or data: image (e.g. data-icon=\"images/fox.png\"). SC.setImage(name, src) replaces a picture for the whole page, including built-ins: check, lock, alert, level-badge, hand, avatar, star, star-empty. New pictures: kit/assets/IMAGE-PROMPTS.md.",
     "prompts": "assets/IMAGE-PROMPTS.md"
@@ -2665,8 +2665,8 @@
   },
   "blocksPreview": "blocks/preview.html?block=<file> — desktop device frames (docs only; remove the preview.js line when copying a block into a game)",
   "cdn": {
-    "css": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.0-A/super-casual/dist/kit.css",
-    "js": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.0-A/super-casual/dist/kit.js",
+    "css": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.1-A/super-casual/dist/kit.css",
+    "js": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.1-A/super-casual/dist/kit.js",
     "guide": "https://advme.github.io/mobile-game-ui-library/AI-GUIDE.md"
   }
 }

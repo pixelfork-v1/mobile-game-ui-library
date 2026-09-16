@@ -26,15 +26,16 @@
     <div class="controls">
       <div class="sc-joystick" id="stick" data-color="sky" data-snap="free"></div>
       <div class="sc-actions" data-layout="cluster" id="acts">
-        <button class="sc-action" data-value="dash" data-icon="energy" data-color="yellow" data-size="sm">Dash</button>
-        <button class="sc-action" data-value="jump" data-icon="star" data-color="green" data-size="lg">Jump</button>
+        <button class="sc-action" data-value="dash" data-icon="rocket" data-color="yellow" data-size="sm">Dash</button>
+        <button class="sc-action" data-value="jump" data-icon="jump" data-color="green" data-size="lg">Jump</button>
       </div>
     </div>
   </div>
 </div>
 <script>
   const c=document.getElementById('game'),x=c.getContext('2d');let W,H,px,py;
-  function rs(){const d=devicePixelRatio||1;W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);px=px??W/2;py=py??H/2}
+  function rs(){const d=devicePixelRatio||1,ow=W,oh=H;W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+    if(ow){px*=W/ow;py*=H/oh}else{px=W/2;py=H/2}}                                  // keep the player in the same spot when the screen turns
   addEventListener('resize',rs);rs();
   let v={x:0,y:0};
   document.getElementById('stick').addEventListener('move',e=>{v=e.detail;document.getElementById('log').textContent=`${e.detail.dir}  x:${e.detail.x}  y:${e.detail.y}  power:${e.detail.distance}`});

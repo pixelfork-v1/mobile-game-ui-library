@@ -7,8 +7,8 @@ Chunky, glossy mobile game UI for hyper-casual / casual 2D and 3D web games. Pla
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.0-A/super-casual/dist/kit.css">
-<script src="https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.0-A/super-casual/dist/kit.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.1-A/super-casual/dist/kit.css">
+<script src="https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.1-A/super-casual/dist/kit.js"></script>
 ```
 Icons load automatically from the same place. (Offline/own copy: download `super-casual/dist/` and point the 2 lines at it.)
 
@@ -92,7 +92,7 @@ Attach to buttons/slots/tabs: `data-badge="3"` (count), `data-alert` (red "!"), 
 
 ## 6. Icons and your own pictures
 
-Kit icons by name (`data-icon="coin"`): arrow-right, back, calendar, cash, chat, check, chest, close, clover, coin, crown, crystal-ball, energy, gem, gift, heart, heart-empty, info, key, lock, mail, medal, pause, ruby, search, settings, star, star-empty, ticket, trophy, video, arrow-left, home, shop, helmet, play, sound, sound-off, music, music-off, menu, restart, alert, level-badge, hand, avatar, gem-pile, coin-pile.
+Kit icons by name (`data-icon="coin"`): arrow-right, back, calendar, cash, chat, check, chest, close, clover, coin, crown, crystal-ball, energy, gem, gift, heart, heart-empty, info, key, lock, mail, medal, pause, ruby, search, settings, star, star-empty, ticket, trophy, video, arrow-left, home, shop, helmet, play, sound, sound-off, music, music-off, menu, restart, alert, level-badge, hand, avatar, gem-pile, coin-pile, sword, shield, fireball, jump, bomb, rocket, crosshair, potion.
 Your own picture: `data-icon="https://…/fox.png"` or a relative path. Re-theme a kit picture everywhere: `SC.setImage('coin', 'shell.png')`.
 New pictures must be generated (never drawn in code) with the style prompt in `super-casual/kit/assets/IMAGE-PROMPTS.md`.
 
@@ -101,4 +101,4 @@ New pictures must be generated (never drawn in code) with the style prompt in `s
 2. Every full-page UI is one `.sc-screen`; one menu screen visible at a time; HUD has no backdrop.
 3. Button labels 1–2 words; titles ≈8 letters; the page never scrolls.
 4. Always wire: Play → hide menu, show HUD, start game · Pause → pause game, open popup · win → Success screen · lose → Fail screen.
-5. Full details per component: https://advme.github.io/mobile-game-ui-library/super-casual/kit/docs/introduction.html · machine-readable: `https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.0-A/super-casual/dist/registry.json`
+5. Full details per component: https://advme.github.io/mobile-game-ui-library/super-casual/kit/docs/introduction.html · machine-readable: `https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.1-A/super-casual/dist/registry.json`

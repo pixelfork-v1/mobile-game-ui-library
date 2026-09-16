@@ -2,6 +2,14 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## v0.43.1-A — Action icons (icons5) + labels that fit the round button
+- Agent: A (Claude) · Date: 2026-09-16
+- Done: The owner delivered the action-icon sheet. Cut into 8 kit icons: `sword`, `shield`, `fireball`, `jump`, `bomb`, `rocket`, `crosshair`, `potion` (56 icons total). Optical offsets regenerated, names added to `registry.json → icons.names` and to the icon list in `AI-GUIDE.md`; the Action Buttons docs and the controls example now use them.
+- Fixed: a long label on a round Action Button crossed the button's edge ("Jump" on a 92px button). `markLong` now measures the button as a circle — the chord at the label's lowest line, minus the border and the text outline — and shrinks the label to fit (min 55%). Same shrink-to-fit idea as the tab labels; no ellipsis on outlined text.
+- Fixed: the controls example kept the player where it was when the screen size changed, instead of leaving it stuck in a corner.
+- Tested: 19 test pages, 0 failed. Checked the example at 375×812: both labels sit inside their buttons, no broken images.
+- Notes for next agent: icon sheets go to `icons/` (gitignored source), cropped PNGs to `super-casual/kit/assets/`, then `tools/icon_offsets.py` and `registry.json → icons.names`, then rebuild dist.
+
 ## v0.43.0-A — Movement controls: Joystick / D-Pad + Action Buttons
 - Agent: A (Claude) · Date: 2026-09-16
 - Done: Two new components, in the kit style (rounded, outlined, glossy — no polygons, no code-drawn art):
