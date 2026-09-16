@@ -25,7 +25,7 @@
 addEventListener('load', async () => {
   const $ = s => document.querySelector(s), results = $('#results');
   let passed = 0, failed = 0;
-  const settle = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const settle = () => new Promise(r => setTimeout(r, 40));   // timers, not animation frames: browsers pause rAF in hidden tabs
   const check = (name, ok) => { const li = document.createElement('li'); li.textContent = (ok ? 'PASS: ' : 'FAIL: ') + name; ok ? passed++ : (failed++, li.className = 'fail'); results.append(li); };
   try {
     const m = $('#m'), l = $('#l');

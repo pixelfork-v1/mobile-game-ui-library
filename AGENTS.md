@@ -49,6 +49,7 @@ Copy the pattern of an existing component (e.g. `progress`, `timer`):
 5. `docs/<name>.html` via `SCDocs.page({...})`, and add it to the `NAV` list in `docs/docs.js`.
 6. **Test in a browser** (`python3 tools/serve.py 8765`, open `http://localhost:8765/super-casual/kit/docs/<name>.html`): every example renders, images load, live demos work. Check the phone size 375×812.
    Add automatic checks in `tools/tests/<name>.html` (copy an existing one), register it in `PAGES` in `tools/tests/index.html`, and open `http://localhost:8765/tools/tests/index.html`. Every page must PASS before you publish.
+   Two rules for test pages, because the runner loads them in background iframes where browsers freeze animations and `requestAnimationFrame`: wait with `setTimeout`, never with `requestAnimationFrame`; and if the page measures sizes or positions, put `* { animation:none !important; transition:none !important; }` in its `<style>`.
 7. Run `python3 tools/build_kit.py` so `super-casual/dist/` (the bundle games use) is up to date. If you added a component, add it to `ORDER` in that script.
 8. Update **`STATUS.md`** and **`CHANGELOG.md`** (see §7).
 

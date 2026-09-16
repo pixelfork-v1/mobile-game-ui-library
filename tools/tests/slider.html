@@ -31,7 +31,7 @@ li { margin:6px 0; } .fail { color:#ff9da7; }
 addEventListener('load', async () => {
   const $ = s => document.querySelector(s), results = $('#results');
   let passed = 0, failed = 0;
-  const settle = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const settle = () => new Promise(r => setTimeout(r, 40));   // timers, not animation frames: browsers pause rAF in hidden tabs
   const check = (name, ok) => { const li = document.createElement('li'); li.textContent = (ok ? 'PASS: ' : 'FAIL: ') + name; ok ? passed++ : (failed++, li.className = 'fail'); results.append(li); };
   const events = el => { const log = []; el.addEventListener('input', e => log.push('i' + e.detail.value)); el.addEventListener('change', e => log.push('c' + e.detail.value)); return log; };
   const key = (el, k) => el.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }));

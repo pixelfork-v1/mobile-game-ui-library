@@ -26,7 +26,7 @@ addEventListener('load', async () => {
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const check = (name, ok) => { const li = document.createElement('li'); li.textContent = (ok ? 'PASS: ' : 'FAIL: ') + name; ok ? passed++ : (failed++, li.className = 'fail'); results.append(li); };
   try {
-    await wait(300);
+    await wait(600);
     const t = $('#t'), player = t.querySelector(':scope > .sc-topbar-player');
     check('structure: player first, resources last with both counters', t.firstElementChild === player && t.lastElementChild.className === 'sc-topbar-res' && t.lastElementChild.querySelectorAll('.sc-counter').length === 2);
     check('avatar default icon + level badge + name', player.querySelector('.sc-topbar-avatar img').src.endsWith('/avatar.png') && player.querySelector('.sc-level .sc-text')?.dataset.text === '12' && player.querySelector('.sc-topbar-name .sc-text')?.dataset.text === 'Farid');

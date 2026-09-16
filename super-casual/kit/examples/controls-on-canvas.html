@@ -1,0 +1,47 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Controls on a game canvas — Super Casual UI Kit</title>
+<!-- EXAMPLE: joystick + action buttons over a game canvas. Try it on a phone. -->
+<link rel="stylesheet" href="../core.css">
+<link rel="stylesheet" href="../components/screen/screen.css">
+<link rel="stylesheet" href="../components/joystick/joystick.css">
+<link rel="stylesheet" href="../components/actions/actions.css">
+<link rel="stylesheet" href="../components/icon-button/icon-button.css">
+<link rel="stylesheet" href="../components/bubble/bubble.css">
+<script src="../sc.js"></script>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#20304f}
+  #game{position:fixed;inset:0}
+  .controls{display:flex;align-items:flex-end;justify-content:space-between;width:100%}
+  .log{position:fixed;left:50%;top:70px;translate:-50% 0;font:700 14px system-ui;color:#fff;background:rgba(0,0,0,.45);padding:6px 12px;border-radius:10px}
+</style></head>
+<body>
+<canvas id="game"></canvas>
+<div class="log" id="log">move with the stick / WASD</div>
+<div class="sc-screen">
+  <div class="sc-screen-top">
+    <button class="sc-icon-button" data-icon="pause" data-color="sky" aria-label="Pause"></button>
+  </div>
+  <div class="sc-screen-bottom">
+    <div class="controls">
+      <div class="sc-joystick" id="stick" data-color="sky" data-snap="free"></div>
+      <div class="sc-actions" data-layout="cluster" id="acts">
+        <button class="sc-action" data-value="dash" data-icon="energy" data-color="yellow" data-size="sm">Dash</button>
+        <button class="sc-action" data-value="jump" data-icon="star" data-color="green" data-size="lg">Jump</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const c=document.getElementById('game'),x=c.getContext('2d');let W,H,px,py;
+  function rs(){const d=devicePixelRatio||1;W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);px=px??W/2;py=py??H/2}
+  addEventListener('resize',rs);rs();
+  let v={x:0,y:0};
+  document.getElementById('stick').addEventListener('move',e=>{v=e.detail;document.getElementById('log').textContent=`${e.detail.dir}  x:${e.detail.x}  y:${e.detail.y}  power:${e.detail.distance}`});
+  document.getElementById('stick').addEventListener('end',()=>{v={x:0,y:0};document.getElementById('log').textContent='released'});
+  document.getElementById('acts').addEventListener('press',e=>document.getElementById('log').textContent='press: '+e.detail.value);
+  document.getElementById('acts').addEventListener('release',e=>document.getElementById('log').textContent='release: '+e.detail.value);
+  (function loop(){px=Math.max(30,Math.min(W-30,px+v.x*5));py=Math.max(30,Math.min(H-30,py+v.y*5));
+    x.fillStyle='#20304f';x.fillRect(0,0,W,H);x.beginPath();x.arc(px,py,26,0,7);x.fillStyle='#f5c02e';x.fill();x.lineWidth=3;x.strokeStyle='#050308';x.stroke();
+    requestAnimationFrame(loop)})();
+</script></body></html>

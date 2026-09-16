@@ -22,7 +22,7 @@ li { margin:8px 0; } .fail { color:#ff9da7; }
 addEventListener('load', async () => {
   const fixtures = document.querySelector('#fixtures'), results = document.querySelector('#results');
   let passed = 0, failed = 0;
-  const settle = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  const settle = () => new Promise(resolve => setTimeout(resolve, 40));
   const check = (name, condition) => {
     const li = document.createElement('li'); li.textContent = (condition ? 'PASS: ' : 'FAIL: ') + name;
     if (condition) passed++; else { failed++; li.className = 'fail'; }

@@ -2,6 +2,16 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## v0.43.0-A — Movement controls: Joystick / D-Pad + Action Buttons
+- Agent: A (Claude) · Date: 2026-09-16
+- Done: Two new components, in the kit style (rounded, outlined, glossy — no polygons, no code-drawn art):
+  - **Joystick / D-Pad** `.sc-joystick` (component 29). `data-type="stick|dpad"`, `data-snap="free|8|4"`, `data-mode="fixed|follow"` (follow = invisible zone, the pad appears under the thumb and hides on release), `data-size="sm|md|lg"`, `data-keys="false"` to switch keyboard off. Fires `move` (`{x, y, angle, distance, dir}`) while held and `end` on release; `SC.joystick.get(el)` reads the current vector. Touch, mouse and WASD/arrow keys, diagonals included. Direction arrows light up; the knob is clamped inside the base, and in follow mode the whole pad is clamped inside its zone.
+  - **Action Buttons** `.sc-actions` + `button.sc-action` (component 30). `data-layout="cluster|row|column|grid"`, sizes sm/md/lg, `data-icon`/text/`data-badge`, disabled state. Fires `press` and `release` on the group with `detail.value`, so a game can hold-to-charge.
+  - Docs pages, AI manuals (`joystick.md`, `actions.md`), registry entries (31 items) and `examples/controls-on-canvas.html` (both pads + an action cluster over a live canvas).
+  - CDN tag bumped to v0.43.0-A. Dist rebuilt.
+- Tested: New `tools/tests/controls.html` (22 checks: parts built, drag + clamp + release, arrow highlight, snap 8/4, follow show/hide/clamp, keyboard diagonal, `data-keys="false"`, action press/release, disabled silence, dynamic insert, no observer churn). Full runner: **19 pages, 0 failed**.
+- Notes for next agent: Test pages that measure geometry must disable animations (`* { animation:none !important; transition:none !important; }`) — browsers freeze animations and rAF in hidden/background iframes, which is how the runner loads them. `settle()` helpers use `setTimeout`, never `requestAnimationFrame`, for the same reason.
+
 ## v0.42.0-A — Responsive fixes: popups fit short screens, readable minimum text
 - Agent: A (Claude) · Date: 2026-09-16
 - Done: The owner asked if everything is fully responsive. A sweep of all 10 blocks × 10 screen sizes (320×568 … iPad Pro 13", phone landscape, desktop) found 22 problems: popups cut off on short phones (Settings on 4 sizes, Pause, Daily) and text below 9px on small phones/landscape (Shop even on Galaxy S26). Fixes:

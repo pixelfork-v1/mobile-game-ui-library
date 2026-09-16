@@ -1,0 +1,56 @@
+/*
+  Action Buttons — Super Casual UI Kit
+  Requires: core.css, sc.js   (pairs with the Joystick on the other side of the screen)
+
+  <div class="sc-actions" data-layout="cluster">
+    <button class="sc-action" data-value="jump" data-icon="star" data-size="lg" data-color="green">Jump</button>
+    <button class="sc-action" data-value="fire" data-icon="energy" data-color="red">Fire</button>
+  </div>
+
+  On .sc-actions:
+  data-layout  cluster (staggered, thumb-friendly) | row | column | grid   default: cluster
+  On each .sc-action:
+  data-value   name the game receives                                       required
+  data-icon    kit icon or your own picture
+  data-size    sm | md | lg   (56 / 72 / 92 px)                             default: md
+  data-color   sky | blue | green | yellow | orange | red | purple | pink | mint   default: sky
+  data-count   optional number badge (like ammo / boosters; needs bubble.css via data-badge instead for counts)
+  text inside  optional small label under the icon
+  disabled     greyed out
+
+  Events on .sc-actions: "press" and "release" (detail.value) — hold-to-charge works.
+*/
+.sc-actions { display:flex; gap:14px; font-family:var(--sc-font); touch-action:none; }
+.sc-actions[data-layout="cluster"] { align-items:flex-end; }
+.sc-actions[data-layout="cluster"] > .sc-action:nth-child(odd) { margin-bottom:26px; }
+.sc-actions[data-layout="column"] { flex-direction:column; align-items:center; }
+.sc-actions[data-layout="grid"] { display:grid; grid-template-columns:repeat(2, auto); }
+
+:where(.sc-action) { --band:#52dcff; --base:#01bcff; --line:#00d5f9; --lip:#007ff0; }   /* :where() so data-color can override */
+.sc-action {
+  --size:72px;
+  position:relative; flex:none; width:var(--size); height:var(--size); padding:0; margin:0; box-sizing:border-box;
+  display:grid; place-items:center; isolation:isolate; cursor:pointer; appearance:none;
+  border:var(--sc-line) solid var(--sc-outline); border-radius:50%; background:var(--base);
+  box-shadow:0 4px 8px rgba(0,0,0,.28);
+  -webkit-tap-highlight-color:transparent; touch-action:none; outline:none; user-select:none; -webkit-user-select:none;
+  transition:transform .06s;
+}
+.sc-action[data-size="sm"] { --size:56px; }
+.sc-action[data-size="lg"] { --size:92px; }
+.sc-action::after {                                   /* glossy face */
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:50%;
+  background:radial-gradient(circle at 50% 28%, var(--band) 0 32%, var(--base) 72%, var(--lip) 100%);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.4), inset 0 calc(var(--size) * -.1) 0 var(--lip);
+}
+.sc-action::before {                                  /* shine dot */
+  content:""; position:absolute; left:22%; top:16%; width:calc(var(--size) * .17); height:calc(var(--size) * .12);
+  border-radius:50%; background:rgba(255,255,255,.75); pointer-events:none;
+}
+.sc-action > img { width:52%; height:52%; object-fit:contain; pointer-events:none; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-action > .sc-text { --fs:calc(var(--size) * .2); font-size:var(--fs); margin-top:calc(var(--size) * -.06); }
+.sc-action:has(> .sc-text) > img { margin-top:calc(var(--size) * -.06); }
+.sc-action:active, .sc-action.sc-pressed { transform:translateY(2px) scale(.94); }
+.sc-action.sc-pressed::after { filter:brightness(.92); }
+.sc-action:focus-visible { outline:3px solid #fff; outline-offset:3px; }
+.sc-action:disabled { cursor:not-allowed; filter:grayscale(1) brightness(.85); }

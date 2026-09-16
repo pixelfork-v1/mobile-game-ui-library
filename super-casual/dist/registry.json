@@ -2,7 +2,7 @@
   "name": "super-casual",
   "title": "Super Casual UI Kit",
   "description": "Chunky, glossy mobile game UI for hyper-casual and casual 2D/3D web games. Plain HTML + CSS components that float above any game canvas (Three.js, Babylon, Phaser, PixiJS).",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "items": [
     {
       "name": "core",
@@ -2220,6 +2220,194 @@
           "js": "await SC.tutorial.point(playBtn, { text: 'Tap Play!' }); await SC.tutorial.point(gift, { text: 'Open your gift' });"
         }
       ]
+    },
+    {
+      "name": "joystick",
+      "type": "registry:ui",
+      "title": "Joystick / D-Pad",
+      "description": "On-screen movement control: thumbstick or 4-way D-pad, fixed or follow-the-thumb, free/8/4 directions; touch, mouse and WASD/arrows.",
+      "whenToUse": "Any game the player moves a character in (runner, shooter, adventure, platformer).",
+      "files": [
+        "components/joystick/joystick.css"
+      ],
+      "docs": "components/joystick/joystick.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-joystick\" id=\"stick\" data-color=\"sky\"></div>",
+      "props": {
+        "data-variant": {
+          "type": "enum",
+          "values": [
+            "stick",
+            "dpad"
+          ],
+          "default": "stick"
+        },
+        "data-mode": {
+          "type": "enum",
+          "values": [
+            "fixed",
+            "follow"
+          ],
+          "default": "fixed",
+          "description": "follow needs a .sc-joystick-zone parent"
+        },
+        "data-snap": {
+          "type": "enum",
+          "values": [
+            "free",
+            "8",
+            "4"
+          ],
+          "default": "free"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "sky"
+        },
+        "data-keys": {
+          "type": "enum",
+          "values": [
+            "false"
+          ],
+          "optional": true,
+          "description": "turn off keyboard control"
+        }
+      },
+      "events": {
+        "move": "detail {x, y, angle, distance, dir} — x/y −1…1, y+ is down",
+        "end": "released (x/y back to 0)"
+      },
+      "js": {
+        "SC.joystick.get(el)": "{ x, y, angle, distance, dir, active }"
+      },
+      "rules": [
+        "One per game, bottom-left in .sc-screen-bottom, Action Buttons bottom-right.",
+        "free = smooth, 8 = eight-way, 4/dpad = classic.",
+        "follow mode for full-screen games; fixed to keep it in place.",
+        "Use distance as speed; always handle end to stop the player.",
+        "Never write the inner parts (knob, arrows, pad)."
+      ],
+      "examples": [
+        {
+          "title": "Move a character",
+          "js": "stick.addEventListener('move', e => player.move(e.detail.x, e.detail.y)); stick.addEventListener('end', () => player.stop());"
+        },
+        {
+          "title": "Follow the thumb",
+          "html": "<div class=\"sc-joystick-zone\"><div class=\"sc-joystick\" data-mode=\"follow\"></div></div>"
+        }
+      ]
+    },
+    {
+      "name": "actions",
+      "type": "registry:ui",
+      "title": "Action Buttons",
+      "description": "Round glossy game action buttons (jump/fire/dash) with press+release events, counts and layouts; pairs with the Joystick.",
+      "whenToUse": "Gameplay actions on the opposite side from the joystick.",
+      "files": [
+        "components/actions/actions.css"
+      ],
+      "docs": "components/actions/actions.md",
+      "dependencies": [
+        "core",
+        "bubble"
+      ],
+      "html": "<div class=\"sc-actions\" data-layout=\"cluster\">\n  <button class=\"sc-action\" data-value=\"dash\" data-icon=\"energy\" data-color=\"yellow\" data-size=\"sm\">Dash</button>\n  <button class=\"sc-action\" data-value=\"jump\" data-icon=\"star\" data-color=\"green\" data-size=\"lg\">Jump</button>\n</div>",
+      "props": {
+        "data-layout": {
+          "type": "enum",
+          "values": [
+            "cluster",
+            "row",
+            "column",
+            "grid"
+          ],
+          "default": "cluster",
+          "description": "on .sc-actions"
+        },
+        "data-value": {
+          "type": "string",
+          "required": true,
+          "description": "on .sc-action"
+        },
+        "data-icon": {
+          "type": "icon",
+          "optional": true
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "sky"
+        },
+        "data-badge": {
+          "type": "number",
+          "optional": true
+        },
+        "disabled": {
+          "type": "boolean",
+          "optional": true
+        }
+      },
+      "events": {
+        "press": "thumb down (detail.value)",
+        "release": "thumb up (detail.value)"
+      },
+      "js": {
+        "SC.setBadge(btn, n)": "ammo / uses left"
+      },
+      "rules": [
+        "1-3 buttons on a phone; main action lg bottom-right.",
+        "Pair with the Joystick on the other side in .sc-screen-bottom.",
+        "Handle press and release (tap and hold).",
+        "data-badge for limited actions, disabled on cooldown."
+      ],
+      "examples": [
+        {
+          "title": "Fire and dash",
+          "js": "acts.addEventListener('press', e => game.start(e.detail.value)); acts.addEventListener('release', e => game.stop(e.detail.value));"
+        }
+      ]
     }
   ],
   "icons": {
@@ -2477,8 +2665,8 @@
   },
   "blocksPreview": "blocks/preview.html?block=<file> — desktop device frames (docs only; remove the preview.js line when copying a block into a game)",
   "cdn": {
-    "css": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.42.0-A/super-casual/dist/kit.css",
-    "js": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.42.0-A/super-casual/dist/kit.js",
+    "css": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.0-A/super-casual/dist/kit.css",
+    "js": "https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.43.0-A/super-casual/dist/kit.js",
     "guide": "https://advme.github.io/mobile-game-ui-library/AI-GUIDE.md"
   }
 }

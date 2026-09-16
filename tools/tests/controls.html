@@ -1,0 +1,89 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Controls regression checks</title>
+<link rel="stylesheet" href="../../super-casual/kit/core.css">
+<link rel="stylesheet" href="../../super-casual/kit/components/joystick/joystick.css">
+<link rel="stylesheet" href="../../super-casual/kit/components/actions/actions.css">
+<link rel="stylesheet" href="../../super-casual/kit/components/bubble/bubble.css">
+<script src="../../super-casual/kit/sc.js"></script>
+<style>body { margin:20px; font:14px system-ui; background:#243453; color:white; } #fixtures { display:flex; flex-wrap:wrap; gap:24px; align-items:flex-end; } #fixtures > * { flex:none; } #zone { position:relative; width:260px; min-width:260px; height:200px; background:rgba(255,255,255,.06); } li { margin:6px 0; } .fail { color:#ff9da7; }</style>
+<h1>Controls checks</h1>
+<p id="summary">Running…</p>
+<div id="fixtures">
+  <div class="sc-joystick" id="stick" data-color="green"></div>
+  <div class="sc-joystick" id="snap8" data-snap="8"></div>
+  <div class="sc-joystick" id="pad" data-variant="dpad" data-snap="4"></div>
+  <div class="sc-joystick-zone" id="zone"><div class="sc-joystick" id="follow" data-mode="follow" data-size="sm"></div></div>
+  <div class="sc-actions" id="acts"><button class="sc-action" id="jump" data-value="jump" data-icon="star" data-size="lg">Jump</button><button class="sc-action" id="off" data-value="off" data-icon="energy" data-badge="2" disabled></button></div>
+</div>
+<ol id="results"></ol>
+<script>
+addEventListener('load', async () => {
+  const $ = s => document.querySelector(s), results = $('#results');
+  let passed = 0, failed = 0;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const check = (name, ok) => { const li = document.createElement('li'); li.textContent = (ok ? 'PASS: ' : 'FAIL: ') + name; ok ? passed++ : (failed++, li.className = 'fail'); results.append(li); };
+  const pd = (el, type, x, y, id = 1) => el.dispatchEvent(new PointerEvent(type, { clientX: x, clientY: y, pointerId: id, bubbles: true, cancelable: true, button: 0 }));
+  const centre = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+  const key = (code, down) => dispatchEvent(new KeyboardEvent(down ? 'keydown' : 'keyup', { code, bubbles: true, cancelable: true }));
+  try {
+    const stick = $('#stick');
+    check('builds knob + 4 arrows, keeps aria', !!stick.querySelector('.sc-joystick-knob') && stick.querySelectorAll('.sc-joystick-arrow').length === 4 && stick.getAttribute('role') === 'application' && !!stick.getAttribute('aria-label'));
+    check('dpad builds the cross instead of a knob', !!$('#pad').querySelector('.sc-joystick-cross') && getComputedStyle($('#pad').querySelector('.sc-joystick-knob')).display === 'none');
+    const [cx, cy] = centre(stick);
+    let moves = []; stick.addEventListener('move', e => moves.push(e.detail)); let ended = 0; stick.addEventListener('end', () => ended++);
+    pd(stick, 'pointerdown', cx + 60, cy); await wait(30);
+    const st = SC.joystick.get('stick');
+    check('drag right → x≈1, dir right, active', st.x > .6 && Math.abs(st.y) < .1 && st.dir === 'right' && st.active && moves.length > 0);
+    check('knob follows the thumb', parseFloat(stick.querySelector('.sc-joystick-knob').style.getPropertyValue('--kx')) > 10);
+    check('right arrow lights up', stick.querySelector('[data-dir="right"]').classList.contains('sc-on'));
+    pd(stick, 'pointermove', cx, cy - 300); await wait(30);
+    check('drag far up clamps to power 1', SC.joystick.get('stick').distance === 1 && SC.joystick.get('stick').dir === 'up');
+    pd(stick, 'pointerup', cx, cy - 300); await wait(30);
+    check('release resets to 0 and fires end', SC.joystick.get('stick').x === 0 && SC.joystick.get('stick').y === 0 && !SC.joystick.get('stick').active && ended === 1);
+
+    const [sx, sy] = centre($('#snap8'));
+    pd($('#snap8'), 'pointerdown', sx + 50, sy + 12); await wait(20);   // ~13° → snaps to 0°
+    check('snap 8 rounds the angle', Math.abs(SC.joystick.get('snap8').angle % 45) < 0.1 && SC.joystick.get('snap8').dir === 'right');
+    pd($('#snap8'), 'pointerup', sx + 50, sy + 12);
+    const [px, py] = centre($('#pad'));
+    pd($('#pad'), 'pointerdown', px + 20, py + 46); await wait(20);
+    check('snap 4 gives only up/down/left/right', ['up', 'down', 'left', 'right'].includes(SC.joystick.get('pad').dir) && SC.joystick.get('pad').dir === 'down');
+    pd($('#pad'), 'pointerup', px + 20, py + 46);
+
+    const zone = $('#zone'), zr = zone.getBoundingClientRect(), fol = $('#follow');
+    check('follow stick hidden until touched', !fol.classList.contains('sc-on'));
+    pd(zone, 'pointerdown', zr.left + 130, zr.top + 100); await wait(30);
+    const fr = fol.getBoundingClientRect();
+    check('follow stick appears under the thumb', fol.classList.contains('sc-on') && Math.abs(fr.left + fr.width / 2 - (zr.left + 130)) < 3 && Math.abs(fr.top + fr.height / 2 - (zr.top + 100)) < 3);
+    pd(zone, 'pointerup', zr.left + 130, zr.top + 100); await wait(30);
+    check('follow stick stays fully inside its area near an edge', (() => { pd(zone, 'pointerdown', zr.left + 4, zr.top + 4); const r = fol.getBoundingClientRect(); pd(zone, 'pointerup', zr.left + 4, zr.top + 4); return r.left >= zr.left - 1 && r.top >= zr.top - 1; })());
+    check('follow stick hides on release', !fol.classList.contains('sc-on'));
+
+    key('KeyD', true); await wait(20);
+    check('keyboard D moves right', SC.joystick.get('stick').dir === 'right' && SC.joystick.get('stick').active);
+    key('KeyW', true); await wait(20);
+    check('W+D gives a diagonal', SC.joystick.get('stick').dir === 'up-right');
+    key('KeyD', false); key('KeyW', false); await wait(20);
+    check('keys up → stopped', !SC.joystick.get('stick').active && SC.joystick.get('stick').x === 0);
+    $('#snap8').dataset.keys = 'false'; key('KeyA', true); await wait(20);
+    check('data-keys="false" ignores the keyboard', !SC.joystick.get('snap8').active); key('KeyA', false);
+
+    const log = []; $('#acts').addEventListener('press', e => log.push('p:' + e.detail.value)); $('#acts').addEventListener('release', e => log.push('r:' + e.detail.value));
+    const [jx, jy] = centre($('#jump'));
+    pd($('#jump'), 'pointerdown', jx, jy); await wait(40); pd($('#jump'), 'pointerup', jx, jy); await wait(20);
+    check('action button fires press then release', log.join() === 'p:jump,r:jump');
+    check('action builds icon, label and badge', !!$('#jump').querySelector('img') && $('#jump').querySelector('.sc-text')?.dataset.text === 'Jump' && !!$('#off').querySelector('.sc-bubble'));
+    log.length = 0; const [ox, oy] = centre($('#off'));
+    pd($('#off'), 'pointerdown', ox, oy); pd($('#off'), 'pointerup', ox, oy); await wait(20);
+    check('disabled action fires nothing', log.length === 0);
+    const fresh = document.createElement('div'); fresh.className = 'sc-joystick'; $('#fixtures').append(fresh); await wait(60);
+    check('inserted joystick upgrades', !!fresh.querySelector('.sc-joystick-knob'));
+    let records = 0; const mo = new MutationObserver(x => records += x.length); mo.observe($('#fixtures'), { attributes: true, subtree: true, childList: true });
+    await wait(250); mo.disconnect();
+    check('no endless updates', records === 0);
+  } catch (err) { check('unexpected error: ' + err.message, false); }
+  $('#summary').textContent = `${passed} passed; ${failed} failed`;
+  document.title = (failed ? 'FAIL' : 'PASS') + ' — Controls';
+});
+</script>

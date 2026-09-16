@@ -1,13 +1,14 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>All kit tests</title>
-<style>body { margin:20px; font:15px system-ui; background:#243453; color:white; } li { margin:6px 0; } .fail { color:#ff9da7; } .pass { color:#9dffb4; } iframe { position:absolute; left:-9999px; width:420px; height:900px; }</style>
+<style>body { margin:20px; font:15px system-ui; background:#243453; color:white; } li { margin:6px 0; } .fail { color:#ff9da7; } .pass { color:#9dffb4; } iframe { position:fixed; right:12px; top:12px; width:420px; height:760px; border:2px solid #3a4a6b; border-radius:10px; background:#243453; }
+  body { padding-right:460px; }</style>
 <h1>All kit tests</h1>
 <p id="summary">Running…</p>
 <ul id="list"></ul>
 <script>
 // Add every new tools/tests/<name>.html page here.
-const PAGES = ['bubble', 'toggle', 'slider', 'checkbox', 'tabs', 'tabbar', 'tag', 'banner', 'hint', 'toast', 'row', 'loading', 'alert', 'level', 'topbar', 'shopcard', 'tutorial', 'images'];
+const PAGES = ['bubble', 'toggle', 'slider', 'checkbox', 'tabs', 'tabbar', 'tag', 'banner', 'hint', 'toast', 'row', 'loading', 'alert', 'level', 'topbar', 'shopcard', 'tutorial', 'images', 'controls'];
 (async () => {
   let pass = 0, fail = 0;
   for (const name of PAGES) {
@@ -17,7 +18,7 @@ const PAGES = ['bubble', 'toggle', 'slider', 'checkbox', 'tabs', 'tabbar', 'tag'
     const result = await new Promise(resolve => {
       const poll = setInterval(() => {
         let t = ''; try { t = frame.contentDocument.title; } catch (_) {}
-        if (/^(PASS|FAIL)/.test(t) || Date.now() - started > 15000) { clearInterval(poll); resolve(t || 'TIMEOUT'); }
+        if (/^(PASS|FAIL)/.test(t) || Date.now() - started > 25000) { clearInterval(poll); resolve(t || 'TIMEOUT'); }
       }, 100);
     });
     const summary = frame.contentDocument?.querySelector('#summary')?.textContent || '';

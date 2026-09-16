@@ -38,6 +38,28 @@ Row 2: {…}.
 {STYLE BLOCK}
 ```
 
+## 3b. Waiting to be generated: icons5 — action buttons
+
+For the Action Buttons component (`.sc-action`). Size 4:2 (e.g. 2048×1024), 4 columns × 2 rows, 8 icons.
+Crop with: `python3 tools/crop_sheet.py icons5.png 4 2 super-casual/kit/assets sword shield fireball jump bomb rocket crosshair potion`
+
+```
+A 4×2 grid sprite sheet of 8 separate mobile game UI action icons, evenly spaced with generous empty space between them,
+no grid lines, no labels, each icon centered in its own cell, all 8 icons the same visual weight and size.
+Row 1: a short chunky sword pointing up with a golden crossguard and a light blue steel blade;
+a round knight shield in red and cream with a golden rim;
+a round orange-and-yellow fireball with small curved flames;
+a thick white chevron arrow pointing up with a small motion streak under it (a jump button).
+Row 2: a round black bomb with a golden cap and a short lit fuse with a tiny spark;
+a small stubby rocket in white and red with blue flames at the back, pointing up-right;
+a simple round crosshair target ring in white with a red center dot;
+a round-bellied glass potion bottle with a cork and glowing green liquid.
+Style: chunky super-casual mobile game GUI icon, glossy candy colors, thick dark navy-black outline (about 4% of the icon size),
+soft white highlight on the top-left, slightly darker shading at the bottom, rounded friendly shapes, simple readable silhouette,
+front view with a slight 3/4 tilt, flat studio lighting, no text, no letters, no numbers, no watermark, no drop shadow on the ground,
+plain fully transparent background.
+```
+
 ## 4. Ready-made subjects
 
 Put these into template 2 or 3 as `{subject}`:

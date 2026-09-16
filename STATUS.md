@@ -1,6 +1,6 @@
 # STATUS
 
-**Last updated:** 2026-09-16 · by **A (Claude)** · version **v0.42.0-A**
+**Last updated:** 2026-09-16 · by **A (Claude)** · version **v0.43.0-A**
 
 ## Next task
 **Final check with a fresh AI.** Open a new AI session with no history. Ask it to follow `templates/pixelfork-game/AI.md` and turn the template into a small real game (e.g. "tap the falling fruit" with a fruit-themed coin via `CONFIG.images` and a Shop screen copied from `kit/blocks/shop.html`). Write down everything that confused it, then fix AI.md, the docs or the registry. Also: test the template on a real iPhone and Android phone.
@@ -39,6 +39,8 @@ _Nothing._
 | 26 | Top Bar | `.sc-topbar` | v0.26.0-A |
 | 27 | Shop Card | `.sc-shopcard` | v0.27.0-A |
 | 28 | Tutorial Hand | `SC.tutorial` | v0.28.0-A |
+| 29 | Joystick / D-Pad | `.sc-joystick` | v0.43.0-A |
+| 30 | Action Buttons | `.sc-actions / .sc-action` | v0.43.0-A |
 
 ## Done — blocks (`super-casual/kit/blocks`)
 | # | Block | File | Version |
@@ -61,7 +63,7 @@ _All components done._
 _All blocks done._
 
 ## Left — other
-- Image prompts: icons4 delivered (home, shop, helmet, play, sound, sound-off, music, music-off, menu, restart, alert, level-badge, hand, avatar, gem-pile, coin-pile). Nothing owed right now.
+- Image prompts: **owed — action-button icons** (sword, shield, fireball, jump, bomb, rocket, crosshair, potion). Prompt is in `super-casual/kit/assets/IMAGE-PROMPTS.md` ("icons5 — action buttons"). The Action Buttons component works with existing icons until then.
 - Final: let a fresh AI agent build a game from `templates/pixelfork-game/`, then fix what confuses it ← next
 - Landscape layout (the kit is portrait-first; in phone landscape everything shrinks to ~46%).
 - Ideas after that: Level Select block (map of levels with stars/locks), Profile block, Leaderboard block, Settings inside Pause
