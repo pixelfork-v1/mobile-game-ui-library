@@ -51,8 +51,7 @@
   position:absolute; left:50%; top:50%; width:var(--knob); height:var(--knob); box-sizing:border-box;
   margin:calc(var(--knob) / -2); translate:var(--kx, 0px) var(--ky, 0px);
   border:var(--sc-line) solid var(--sc-outline); border-radius:50%;
-  background:radial-gradient(circle at 50% 28%, var(--band) 0 32%, var(--base) 72%, var(--lip) 100%);
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.4), inset 0 calc(var(--knob) * -.12) 0 var(--lip), 0 3px 6px rgba(0,0,0,.35);
+  background:radial-gradient(circle at 50% 34%, var(--band) 0 42%, var(--base) 100%);   /* flat: no 3D lip, no drop shadow */
   transition:translate .12s ease-out, scale .1s;
 }
 .sc-joystick.sc-active .sc-joystick-knob { transition:scale .1s; scale:1.06; }
@@ -68,10 +67,7 @@
 .sc-joystick[data-arrows="false"] .sc-joystick-arrow { display:none; }
 
 /* Ghost knob: grey and half see-through, for a stick that should not cover the game */
-.sc-joystick[data-knob="ghost"] .sc-joystick-knob {
-  background:rgba(206,212,230,.5); border-color:rgba(8,10,18,.5);
-  box-shadow:inset 0 2px 0 rgba(255,255,255,.3), 0 2px 5px rgba(0,0,0,.25);
-}
+.sc-joystick[data-knob="ghost"] .sc-joystick-knob { background:rgba(206,212,230,.5); border-color:rgba(8,10,18,.5); }
 .sc-joystick[data-knob="ghost"] .sc-joystick-knob::after { opacity:.5; }
 .sc-joystick[data-knob="ghost"] { background:radial-gradient(circle at 50% 45%, rgba(38,40,60,.55), rgba(20,22,36,.55)); }
 
@@ -114,7 +110,8 @@
   width:calc(var(--js) * var(--thick) - var(--sc-line) * 2); height:calc(var(--js) * var(--arm) / 2 - var(--sc-line));
   margin-left:calc((var(--js) * var(--thick) - var(--sc-line) * 2) / -2);
   border-radius:0 0 calc(var(--js) * .07) calc(var(--js) * .07);
-  background:linear-gradient(to top, rgba(255,255,255,.26), rgba(255,255,255,0) 55%);
+  --reach:calc(100% - var(--thick) / var(--arm) * 100%);   /* stop at the middle square, so no rectangle crosses the centre */
+  background:linear-gradient(to top, rgba(255,255,255,.26), rgba(255,255,255,0) var(--reach));
   transform:rotate(var(--rot));                      /* one transform, so the press moves along the arm */
   transition:background .08s, transform .08s;
 }
@@ -124,7 +121,7 @@
 .sc-joystick-arm[data-dir="right"] { --rot:-90deg; }
 .sc-joystick-arm.sc-on {             /* the press: the arm sinks a little towards the middle and loses its gloss */
   transform:rotate(var(--rot)) translateY(calc(var(--js) * -.015));
-  background:linear-gradient(to top, rgba(0,0,0,.26), rgba(0,0,0,.04) 70%);
+  background:linear-gradient(to top, rgba(0,0,0,.22), rgba(0,0,0,0) var(--reach));
 }
 .sc-joystick[data-variant="dpad"] .sc-joystick-arrow { z-index:2; border-color:rgba(255,255,255,.75); }
 .sc-joystick[data-variant="dpad"] .sc-joystick-arrow.sc-on { border-color:#fff; scale:1.1; }

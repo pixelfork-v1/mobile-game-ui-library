@@ -43,7 +43,7 @@ Follow-the-thumb version (the stick appears where the player touches):
 | `data-knob` | `solid` `ghost` | `solid` | `ghost`: grey, half see-through middle, so it covers less of the game. |
 
 The D-pad is drawn as **one continuous plus**, not four separate buttons: a dark plus for the outline and a
-coloured plus on top of it, with an arrow at the end of each arm. Pressing a direction sinks that arm slightly.
+coloured plus on top of it, with an arrow at the end of each arm. Pressing a direction sinks that arm slightly and shades only the part that sticks out, never the middle.
 
 ## Events and JS
 

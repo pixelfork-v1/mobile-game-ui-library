@@ -2,6 +2,14 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## v0.44.1-A — Flat knob, clean press shading, steady debug line
+- Agent: A (Claude) · Date: 2026-09-16
+- Fixed, all three from the owner's screenshots:
+  - **The moving knob is flat now.** Dropped its 3D depth: the dark bottom lip (`inset 0 -12% var(--lip)`) and the drop shadow are gone, leaving a simple top-lit ball. Same for the ghost knob.
+  - **The press no longer draws a rectangle.** The arm's shading ran the full half-length of the bar, so it crossed the middle square as a hard-edged box. Each arm's gloss and press gradient now fade out exactly where the middle square starts (`--reach: 100% - thick/arm * 100%`), so the shading covers only the arm that sticks out. This also cleans up the unpressed pad, where four overlapping glosses used to tint the centre.
+  - **The readout no longer pushes the controls sideways.** The docs preview is a centred flex row, so the `<p class="log">` was sitting beside the controls and every text change moved them. It is now a full-width line of its own (`flex:0 0 100%`) with a `min-height`, under the controls. Same fix on the Action Buttons page.
+- Tested: `tools/tests/controls.html` 26/26. Checked the pressed pad and the flat knob at 180px.
+
 ## v0.44.0-A — D-pad is one shape, arrow-free and ghost sticks, readable action labels
 - Agent: A (Claude) · Date: 2026-09-16
 - Done, all from the owner's review of the controls:

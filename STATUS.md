@@ -1,6 +1,6 @@
 # STATUS
 
-**Last updated:** 2026-09-16 · by **A (Claude)** · version **v0.44.0-A**
+**Last updated:** 2026-09-16 · by **A (Claude)** · version **v0.44.1-A**
 
 ## Next task
 **Final check with a fresh AI.** Open a new AI session with no history. Ask it to follow `templates/pixelfork-game/AI.md` and turn the template into a small real game (e.g. "tap the falling fruit" with a fruit-themed coin via `CONFIG.images` and a Shop screen copied from `kit/blocks/shop.html`). Write down everything that confused it, then fix AI.md, the docs or the registry. Also: test the template on a real iPhone and Android phone.
