@@ -39,6 +39,11 @@ Follow-the-thumb version (the stick appears where the player touches):
 | `data-size` | `sm` `md` `lg` | `md` | 120 / 150 / 180 px. |
 | `data-color` | kit colors | `sky` | Knob / pad color. |
 | `data-keys` | `false` | | Turns off WASD + arrow keys. |
+| `data-arrows` | `false` | | Hides the direction arrows (clean stick or clean pad). |
+| `data-knob` | `solid` `ghost` | `solid` | `ghost`: grey, half see-through middle, so it covers less of the game. |
+
+The D-pad is drawn as **one continuous plus**, not four separate buttons: a dark plus for the outline and a
+coloured plus on top of it, with an arrow at the end of each arm. Pressing a direction sinks that arm slightly.
 
 ## Events and JS
 

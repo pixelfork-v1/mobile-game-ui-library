@@ -2,6 +2,18 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## v0.44.0-A — D-pad is one shape, arrow-free and ghost sticks, readable action labels
+- Agent: A (Claude) · Date: 2026-09-16
+- Done, all from the owner's review of the controls:
+  - **The D-pad is now one continuous plus**, not four bars stuck together. It is drawn as two layers — a dark plus (the outline) and a coloured plus on top — built from the same pair of crossing bars, plus a small centre patch that fills the four inner corners. One colour across the whole shape, rounded tips, square inner corners (they meet another part of the same shape).
+  - **Arrows moved onto the arms**, at the end of each one, instead of sitting on the dark base.
+  - **Press animation:** the pressed arm sinks slightly towards the middle and loses its gloss (`.sc-joystick-arm.sc-on`). Small on purpose. The whole shape stays unbroken.
+  - **`data-arrows="false"`** — a clean stick or a clean pad with no arrows.
+  - **`data-knob="ghost"`** — grey, half see-through middle, for a stick that should not cover the game.
+- Fixed (the owner's second screenshot): action button labels were tiny and far from the icon. The label is now pinned just above the bottom of the circle, right under a slightly smaller icon, starts at 26% of the button size, and never shrinks below the kit's readable minimum (10px) — the old shrink-to-fit could take it down to 55%, which on a small button meant 8px. Its box is also no longer stretched to the button's width, which had knocked the 3D copy out of line.
+- Tested: `tools/tests/controls.html` 26/26 (new checks: one-plus markup, pressed arm marked, arrows hidden, ghost knob). Full runner 17/19 — `toast` and `loading` failed on wall-clock assertions while this browser was throttling timers ~15× (a 40 ms timer took 620 ms); both pass at normal speed, and neither page touches anything changed here. The runner's per-page timeout is now 90s for the same reason.
+- Notes for next agent: the D-pad's shape lives in `joystick.css` only — `.sc-joystick-cross` (+ `::before`, `::after`) is the dark layer and the corner patch, `.sc-joystick-fill` (+ `::before`) the coloured one. Keep both layers built from the same two bars, or the outline will not line up.
+
 ## v0.43.1-A — Action icons (icons5) + labels that fit the round button
 - Agent: A (Claude) · Date: 2026-09-16
 - Done: The owner delivered the action-icon sheet. Cut into 8 kit icons: `sword`, `shield`, `fireball`, `jump`, `bomb`, `rocket`, `crosshair`, `potion` (56 icons total). Optical offsets regenerated, names added to `registry.json → icons.names` and to the icon list in `AI-GUIDE.md`; the Action Buttons docs and the controls example now use them.

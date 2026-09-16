@@ -48,8 +48,13 @@
   border-radius:50%; background:rgba(255,255,255,.75); pointer-events:none;
 }
 .sc-action > img { width:52%; height:52%; object-fit:contain; pointer-events:none; translate:var(--ox, 0%) var(--oy, 0%); }
-.sc-action > .sc-text { --fs:calc(var(--size) * .2); font-size:var(--fs); margin-top:calc(var(--size) * -.06); }
-.sc-action:has(> .sc-text) > img { margin-top:calc(var(--size) * -.06); }
+/* With a label: a smaller icon lifted a little, and the label pinned just above the bottom of the circle,
+   close under the icon. sc.js shrinks a label that is wider than the circle at that height. */
+.sc-action:has(> .sc-text) > img { width:46%; height:46%; margin-top:calc(var(--size) * -.1); }
+.sc-action > .sc-text {
+  --fs:calc(var(--size) * .26); font-size:var(--fs); line-height:1;
+  position:absolute; left:50%; bottom:15%; transform:translateX(-50%);   /* its own width, so the 3D copy stays aligned */
+}
 .sc-action:active, .sc-action.sc-pressed { transform:translateY(2px) scale(.94); }
 .sc-action.sc-pressed::after { filter:brightness(.92); }
 .sc-action:focus-visible { outline:3px solid #fff; outline-offset:3px; }

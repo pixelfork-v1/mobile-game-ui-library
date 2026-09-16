@@ -42,6 +42,12 @@ SCDocs.page({
   <div class="sc-joystick" data-color="sky"></div>
   <div class="sc-joystick" data-variant="dpad" data-size="lg" data-color="yellow"></div>
 </div>` },
+    { title: 'Clean look: no arrows, see-through knob', desc: 'data-arrows="false" hides the direction arrows. data-knob="ghost" makes the middle grey and half see-through, so it covers less of the game.',
+      html: `<div class="row">
+  <div class="sc-joystick" data-arrows="false" data-color="sky"></div>
+  <div class="sc-joystick" data-knob="ghost" data-arrows="false"></div>
+  <div class="sc-joystick" data-variant="dpad" data-arrows="false" data-color="purple"></div>
+</div>` },
     { title: 'Directions: free, 8-way or 4-way', desc: 'data-snap decides what the game receives. Free = any angle; 8 = eight directions; 4 = up/down/left/right only.',
       html: `<div class="row">
   <div class="sc-joystick" id="jFree" data-color="sky"></div>
@@ -66,8 +72,8 @@ SCDocs.page({
       html: `<div class="row" style="width:100%; justify-content:space-between">
   <div class="sc-joystick" id="liveStick" data-color="sky"></div>
   <div class="sc-actions" id="liveActs" data-layout="cluster">
-    <button class="sc-action" data-value="dash" data-icon="energy" data-color="yellow" data-size="sm">Dash</button>
-    <button class="sc-action" data-value="jump" data-icon="star" data-color="green" data-size="lg">Jump</button>
+    <button class="sc-action" data-value="dash" data-icon="rocket" data-color="yellow" data-size="sm">Dash</button>
+    <button class="sc-action" data-value="jump" data-icon="jump" data-color="green" data-size="lg">Jump</button>
   </div>
 </div>
 <p class="log" id="liveLog">drag the stick, or use WASD / arrow keys</p>`,
@@ -86,6 +92,8 @@ SCDocs.page({
     ['data-size', 'sm md lg', 'md', '120 / 150 / 180 px.'],
     ['data-color', 'sky blue green yellow orange red purple pink mint', 'sky', 'Knob / pad color.'],
     ['data-keys', 'false', '', 'Turn off WASD + arrow key control.'],
+    ['data-arrows', 'false', '', 'Hide the direction arrows.'],
+    ['data-knob', 'solid ghost', 'solid', 'ghost: grey, half see-through middle.'],
   ],
   js: `stick.addEventListener('move', e => {
   // e.detail = { x, y, angle, distance, dir }   x,y: -1…1 (y+ is down)

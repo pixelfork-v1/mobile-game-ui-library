@@ -15,7 +15,7 @@
   const here = location.pathname.split('/').pop();
 
   function nav() {
-    return `<div class="brand">Super Casual UI Kit<small>v0.43 · for mobile web games</small></div>` +
+    return `<div class="brand">Super Casual UI Kit<small>v0.44 · for mobile web games</small></div>` +
       NAV.map(g => `<div class="nav-group"><h4>${g.group}</h4>${g.items.map(([label, href]) =>
         href ? `<a href="${href}" class="${href === here ? 'active' : ''}">${label}</a>` : `<a class="soon">${label}</a>`
       ).join('')}</div>`).join('');

@@ -13,6 +13,7 @@
   <div class="sc-joystick" id="stick" data-color="green"></div>
   <div class="sc-joystick" id="snap8" data-snap="8"></div>
   <div class="sc-joystick" id="pad" data-variant="dpad" data-snap="4"></div>
+  <div class="sc-joystick" id="clean" data-arrows="false" data-knob="ghost"></div>
   <div class="sc-joystick-zone" id="zone"><div class="sc-joystick" id="follow" data-mode="follow" data-size="sm"></div></div>
   <div class="sc-actions" id="acts"><button class="sc-action" id="jump" data-value="jump" data-icon="star" data-size="lg">Jump</button><button class="sc-action" id="off" data-value="off" data-icon="energy" data-badge="2" disabled></button></div>
 </div>
@@ -29,7 +30,12 @@ addEventListener('load', async () => {
   try {
     const stick = $('#stick');
     check('builds knob + 4 arrows, keeps aria', !!stick.querySelector('.sc-joystick-knob') && stick.querySelectorAll('.sc-joystick-arrow').length === 4 && stick.getAttribute('role') === 'application' && !!stick.getAttribute('aria-label'));
-    check('dpad builds the cross instead of a knob', !!$('#pad').querySelector('.sc-joystick-cross') && getComputedStyle($('#pad').querySelector('.sc-joystick-knob')).display === 'none');
+    const pad = $('#pad');
+    check('dpad builds the cross instead of a knob', !!pad.querySelector('.sc-joystick-cross') && getComputedStyle(pad.querySelector('.sc-joystick-knob')).display === 'none');
+    check('dpad is one plus: outline + fill + 4 arms', !!pad.querySelector('.sc-joystick-fill') && pad.querySelectorAll('.sc-joystick-arm').length === 4);
+    const clean = $('#clean');
+    check('data-arrows="false" hides the arrows', clean.querySelectorAll('.sc-joystick-arrow').length === 4 && getComputedStyle(clean.querySelector('.sc-joystick-arrow')).display === 'none');
+    check('ghost knob is grey and half see-through', /rgba\(.*0?\.5\)/.test(getComputedStyle(clean.querySelector('.sc-joystick-knob')).backgroundColor));
     const [cx, cy] = centre(stick);
     let moves = []; stick.addEventListener('move', e => moves.push(e.detail)); let ended = 0; stick.addEventListener('end', () => ended++);
     pd(stick, 'pointerdown', cx + 60, cy); await wait(30);
@@ -49,6 +55,7 @@ addEventListener('load', async () => {
     const [px, py] = centre($('#pad'));
     pd($('#pad'), 'pointerdown', px + 20, py + 46); await wait(20);
     check('snap 4 gives only up/down/left/right', ['up', 'down', 'left', 'right'].includes(SC.joystick.get('pad').dir) && SC.joystick.get('pad').dir === 'down');
+    check('the pressed arm is marked, the others are not', pad.querySelector('.sc-joystick-arm[data-dir="down"]').classList.contains('sc-on') && !pad.querySelector('.sc-joystick-arm[data-dir="up"]').classList.contains('sc-on'));
     pd($('#pad'), 'pointerup', px + 20, py + 46);
 
     const zone = $('#zone'), zr = zone.getBoundingClientRect(), fol = $('#follow');

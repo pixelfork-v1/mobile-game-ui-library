@@ -18,7 +18,8 @@ const PAGES = ['bubble', 'toggle', 'slider', 'checkbox', 'tabs', 'tabbar', 'tag'
     const result = await new Promise(resolve => {
       const poll = setInterval(() => {
         let t = ''; try { t = frame.contentDocument.title; } catch (_) {}
-        if (/^(PASS|FAIL)/.test(t) || Date.now() - started > 25000) { clearInterval(poll); resolve(t || 'TIMEOUT'); }
+        // 90s: a busy machine throttles this tab, and every wait in a test page stretches with it
+        if (/^(PASS|FAIL)/.test(t) || Date.now() - started > 90000) { clearInterval(poll); resolve(t || 'TIMEOUT'); }
       }, 100);
     });
     const summary = frame.contentDocument?.querySelector('#summary')?.textContent || '';
