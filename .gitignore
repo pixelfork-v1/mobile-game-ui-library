@@ -6,3 +6,4 @@ _archive/
 
 # Built copy of super-casual/dist for the template (run tools/build_kit.py)
 templates/pixelfork-game/kit/
+tools/.env
