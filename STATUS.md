@@ -1,6 +1,6 @@
 # STATUS
 
-**Last updated:** 2026-09-16 · by **A (Claude)** · version **v0.44.1-A**
+**Last updated:** 2026-09-19 · by **A (Claude)** · version **v0.44.2-A**
 
 ## Next task
 **Final check with a fresh AI.** Open a new AI session with no history. Ask it to follow `templates/pixelfork-game/AI.md` and turn the template into a small real game (e.g. "tap the falling fruit" with a fruit-themed coin via `CONFIG.images` and a Shop screen copied from `kit/blocks/shop.html`). Write down everything that confused it, then fix AI.md, the docs or the registry. Also: test the template on a real iPhone and Android phone.
@@ -69,5 +69,6 @@ _All blocks done._
 - Ideas after that: Level Select block (map of levels with stars/locks), Profile block, Leaderboard block, Settings inside Pause
 
 ## Links
-- Repo is **public** again (since v0.41.1-A); GitHub Pages is on: https://advme.github.io/mobile-game-ui-library/
+- Repo lives at https://github.com/pixelfork-v1/mobile-game-ui-library (moved from `advme` in 2026-09) and is **public** (since v0.41.1-A); GitHub Pages is on: https://pixelfork-v1.github.io/mobile-game-ui-library/
+- A local clone may still have `origin` set to the old `github.com/advme/...` address. It works through GitHub's redirect; ask the owner before changing it.
 - No-install use: jsDelivr CDN of `super-casual/dist` pinned to a tag (see `AI-GUIDE.md`). **When you publish a new version, update the tag in `AI-GUIDE.md`, `llms.txt`, `README.md`, `templates/cdn-game.html` and `registry.json → cdn` (search for the old tag).**

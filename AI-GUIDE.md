@@ -7,8 +7,8 @@ Chunky, glossy mobile game UI for hyper-casual / casual 2D and 3D web games. Pla
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.44.1-A/super-casual/dist/kit.css">
-<script src="https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.44.1-A/super-casual/dist/kit.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/kit.css">
+<script src="https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/kit.js"></script>
 ```
 Icons load automatically from the same place. (Offline/own copy: download `super-casual/dist/` and point the 2 lines at it.)
 
@@ -36,7 +36,7 @@ Icons load automatically from the same place. (Offline/own copy: download `super
 
 ## 3. Complete minimal game (copy, then replace the stand-in game)
 
-A working example: https://advme.github.io/mobile-game-ui-library/templates/cdn-game.html
+A working example: https://pixelfork-v1.github.io/mobile-game-ui-library/templates/cdn-game.html
 Source: `templates/cdn-game.html` in this repo.
 
 ## 4. Components (write the tag, the runtime builds the rest)
@@ -79,16 +79,16 @@ Attach to buttons/slots/tabs: `data-badge="3"` (count), `data-alert` (red "!"), 
 
 | Block | Use for | Live page (view source to copy) |
 |---|---|---|
-| Gameplay HUD | Any level-based or score-based game while playing. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/hud.html |
-| Success | After the player wins a level. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/success.html |
-| Fail | When the player loses a level. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/fail.html |
-| Pause | When the player pauses during a level. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/pause.html |
-| Start | Main menu of casual games with meta features. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/start.html |
-| Reward Reveal | Opening chests, unlocking skins/characters, big rewards. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/reward.html |
-| Daily Reward | Retention: daily login rewards. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/daily.html |
-| Settings | Game settings from the menu or pause screen. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/settings.html |
-| Shop | In-game store for currency packs and items. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/shop.html |
-| Loading | Game start while assets load. | https://advme.github.io/mobile-game-ui-library/super-casual/kit/blocks/loading.html |
+| Gameplay HUD | Any level-based or score-based game while playing. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/hud.html |
+| Success | After the player wins a level. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/success.html |
+| Fail | When the player loses a level. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/fail.html |
+| Pause | When the player pauses during a level. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/pause.html |
+| Start | Main menu of casual games with meta features. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/start.html |
+| Reward Reveal | Opening chests, unlocking skins/characters, big rewards. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/reward.html |
+| Daily Reward | Retention: daily login rewards. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/daily.html |
+| Settings | Game settings from the menu or pause screen. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/settings.html |
+| Shop | In-game store for currency packs and items. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/shop.html |
+| Loading | Game start while assets load. | https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/blocks/loading.html |
 
 ## 6. Icons and your own pictures
 
@@ -101,4 +101,4 @@ New pictures must be generated (never drawn in code) with the style prompt in `s
 2. Every full-page UI is one `.sc-screen`; one menu screen visible at a time; HUD has no backdrop.
 3. Button labels 1–2 words; titles ≈8 letters; the page never scrolls.
 4. Always wire: Play → hide menu, show HUD, start game · Pause → pause game, open popup · win → Success screen · lose → Fail screen.
-5. Full details per component: https://advme.github.io/mobile-game-ui-library/super-casual/kit/docs/introduction.html · machine-readable: `https://cdn.jsdelivr.net/gh/advme/mobile-game-ui-library@v0.44.1-A/super-casual/dist/registry.json`
+5. Full details per component: https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/docs/introduction.html · machine-readable: `https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/registry.json`

@@ -2,6 +2,12 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## v0.44.2-A — Links moved to the new GitHub home
+- Agent: A (Claude) · Date: 2026-09-19
+- Done: The repo moved on GitHub from the account `advme` to `pixelfork-v1` (https://github.com/pixelfork-v1/mobile-game-ui-library). GitHub Pages links do not follow a move, so every `https://advme.github.io/mobile-game-ui-library/...` link was a dead page (404). All 22 of them now point to `https://pixelfork-v1.github.io/mobile-game-ui-library/...`: `AI-GUIDE.md` (12), `README.md` (3), `llms.txt` (3), `AGENTS.md`, `STATUS.md`, `templates/cdn-game.html`, `super-casual/kit/registry.json → cdn.guide`. The jsDelivr links were not broken (both owners work), but they now also say `gh/pixelfork-v1/...` and are pinned to `v0.44.2-A`. No kit code changed, only the version number (`0.44.2`). `super-casual/dist/` was rebuilt with `tools/build_kit.py`. No script in `tools/` writes these links, so there was no generator to fix.
+- Tested: `curl` on all 15 different new Pages links (the guide, the 10 blocks, docs, tests, the CDN game example, the site root): every one returned HTTP 200. After publishing, the new pinned jsDelivr links (`kit.css`, `kit.js`, `registry.json`) were checked too. No `advme` text is left outside this changelog's history.
+- Notes for next agent: the owner's local git `origin` may still point at `https://github.com/advme/mobile-game-ui-library.git`. It works through GitHub's redirect. Ask the owner before changing it. Old changelog entries keep the `advme` links as history.
+
 ## v0.44.1-A — Flat knob, clean press shading, steady debug line
 - Agent: A (Claude) · Date: 2026-09-16
 - Fixed, all three from the owner's screenshots:
