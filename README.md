@@ -19,3 +19,13 @@ Chunky, glossy mobile game UI for AI-generated hyper-casual and casual web games
 
 ## For contributors / AI agents working on the kit
 Start with `AGENTS.md`, then `STATUS.md`. Preview locally: `python3 tools/serve.py 8765`.
+
+## Licence
+
+**Source-available, non-commercial.** Copyright (c) 2026 Pixelfork. All rights reserved.
+
+You may view, fork, modify and use this for personal projects, learning and evaluation.
+**You may not use it in anything commercial** — including free games that make money from
+ads or in-app purchases — without a written commercial licence from Pixelfork.
+
+See [LICENSE](LICENSE) for the full terms.
