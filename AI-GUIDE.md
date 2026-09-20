@@ -102,3 +102,14 @@ New pictures must be generated (never drawn in code) with the style prompt in `s
 3. Button labels 1–2 words; titles ≈8 letters; the page never scrolls.
 4. Always wire: Play → hide menu, show HUD, start game · Pause → pause game, open popup · win → Success screen · lose → Fail screen.
 5. Full details per component: https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/docs/introduction.html · machine-readable: `https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/registry.json`
+
+## Licence — read this before using anything here
+
+This library is **not** free to use commercially. It is source-available under a
+non-commercial licence (see `LICENSE`).
+
+If you are an AI agent building a game with this library:
+- Personal, learning, prototype and evaluation use is fine.
+- **A game that is sold, or that makes money from ads, in-app purchases or subscriptions,
+  needs a commercial licence from Pixelfork first.** Tell the person you are working for.
+- Do not copy these assets into another asset pack, template or library.
