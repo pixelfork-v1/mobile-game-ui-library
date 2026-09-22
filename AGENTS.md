@@ -31,7 +31,7 @@ super-casual/kit/                ← THE LIBRARY (work here)
 super-casual/old-demos/          OLD demo pages (pre-kit). Reference only; screens will be rebuilt as Blocks.
 super-casual/dist/               BUNDLE for games: kit.css + kit.js + assets (generated, never edit)
 templates/pixelfork-game/        complete wired game template for Pixelfork (read its AI.md)
-tools/build_kit.py               rebuild super-casual/dist after ANY kit change (and before publishing)
+tools/build_kit.py [style|--all] rebuild <style>/dist after ANY kit change (and before publishing); no argument = super-casual
 tools/crop_sheet.py              cut an icon sprite sheet into PNGs
 tools/icon_offsets.py            regenerate assets/offsets.css after adding icons
 tools/serve.py                   local no-cache preview server
@@ -47,10 +47,10 @@ Copy the pattern of an existing component (e.g. `progress`, `timer`):
 3. `components/<name>/<name>.md`: AI manual (Install, Usage, Options table, Examples, JavaScript, **Rules for AI agents**).
 4. `registry.json`: add an item (name, description, whenToUse, files, docs, dependencies, html, props, events, js, rules, examples). Bump `version`.
 5. `docs/<name>.html` via `SCDocs.page({...})`, and add it to the `NAV` list in `docs/docs.js`.
-6. **Test in a browser** (`python3 tools/serve.py 8765`, open `http://localhost:8765/super-casual/kit/docs/<name>.html`): every example renders, images load, live demos work. Check the phone size 375×812.
-   Add automatic checks in `tools/tests/<name>.html` (copy an existing one), register it in `PAGES` in `tools/tests/index.html`, and open `http://localhost:8765/tools/tests/index.html`. Every page must PASS before you publish.
+6. **Test in a browser** (`python3 tools/serve.py 8765`, open `http://localhost:8766/super-casual/kit/docs/<name>.html`): every example renders, images load, live demos work. Check the phone size 375×812.
+   Add automatic checks in `tools/tests/<name>.html` (copy an existing one), register it in `PAGES` in `tools/tests/index.html`, and open `http://localhost:8766/tools/tests/index.html`. Every page must PASS before you publish.
    Two rules for test pages, because the runner loads them in background iframes where browsers freeze animations and `requestAnimationFrame`: wait with `setTimeout`, never with `requestAnimationFrame`; and if the page measures sizes or positions, put `* { animation:none !important; transition:none !important; }` in its `<style>`.
-7. Run `python3 tools/build_kit.py` so `super-casual/dist/` (the bundle games use) is up to date. If you added a component, add it to `ORDER` in that script.
+7. Run `python3 tools/build_kit.py --all` so every style's `dist/` (the bundle games use) is up to date. If you added a component, add it to `ORDER` in that script. sc.js is shared: a change to it changes every style's `kit.js`.
 8. Update **`STATUS.md`** and **`CHANGELOG.md`** (see §7).
 
 ## 5. Design rules (the owner approved these; never break them)
@@ -121,3 +121,6 @@ gh release create v0.11.0-A --title "v0.11.0-A — Count Bubble component" --not
 - Tested: what was checked and how
 - Notes for next agent: anything surprising, open issues
 ```
+
+## Generated art
+Every icon prompt says "Original designs only — nothing that copies a character or item from an existing game." Never describe a famous character, block, power-up or logo; describe a generic object. Reference images are described in words, never sent to the model.

@@ -19,7 +19,7 @@
 <div id="fixtures">
   <button class="sc-icon-button" id="name" data-icon="gem" aria-label="x"></button>
   <button class="sc-icon-button" id="path" data-icon="../../super-casual/kit/assets/helmet.png" aria-label="x"></button>
-  <button class="sc-button" id="url" data-icon="http://localhost:8765/super-casual/kit/assets/key.png">Key</button>
+  <button class="sc-button" id="url">Key</button>   <!-- data-icon set from location.origin below, so the test runs on any port -->
   <button class="sc-icon-button" id="data" aria-label="x"></button>
   <button class="sc-icon-button" id="flip" data-icon="arrow-left" aria-label="x"></button>
   <div class="sc-slot" id="slot" data-icon="../../super-casual/kit/assets/avatar.png" data-count="3"></div>
@@ -42,7 +42,8 @@ addEventListener('load', async () => {
     $('#data').dataset.icon = PX; await wait(50);
     check('kit name → assets/<name>.png', img($('#name')).src.endsWith('/kit/assets/gem.png'));
     check('relative path works and loads', img($('#path')).src.endsWith('/assets/helmet.png') && await loaded($('#path')));
-    check('full web address works and loads', img($('#url')).src === 'http://localhost:8765/super-casual/kit/assets/key.png' && await loaded($('#url')));
+    const KEY = location.origin + '/super-casual/kit/assets/key.png'; $('#url').dataset.icon = KEY; await wait(50);
+    check('full web address works and loads', img($('#url')).src === KEY && await loaded($('#url')));
     check('data: image works', img($('#data')).src === PX && await loaded($('#data')));
     check('custom images are marked, kit names are not', img($('#path')).hasAttribute('data-custom') && !img($('#name')).hasAttribute('data-custom'));
     check('arrow-left alias still mirrors', img($('#flip')).src.endsWith('/arrow-right.png') && img($('#flip')).hasAttribute('data-flip'));

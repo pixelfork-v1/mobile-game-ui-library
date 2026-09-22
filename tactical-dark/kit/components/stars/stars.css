@@ -1,0 +1,33 @@
+/*
+  Star Rating — Tactical Dark
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file selector-for-selector (sizes, arc layout, pop-in with --d delays,
+  data-animate). Only difference: a soft gold glow on an earned star instead of a glossy rim.
+*/
+.sc-stars {
+  --s:40px; --gap:calc(var(--s) * .08);
+  display:inline-flex; align-items:center; gap:var(--gap); vertical-align:middle; user-select:none; -webkit-user-select:none;
+}
+.sc-stars[data-size="sm"] { --s:22px; --gap:1px; }
+.sc-stars[data-size="lg"] { --s:88px; --gap:calc(var(--s) * .08); }
+
+.sc-star { position:relative; width:var(--s); height:var(--s); flex:none; }
+.sc-star img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none; }
+.sc-star .sc-star-empty { opacity:.6; }
+.sc-star .sc-star-full { opacity:0; transform:scale(.4); }
+.sc-star.sc-on .sc-star-full { opacity:1; transform:none; filter:drop-shadow(0 0 calc(var(--s) * .16) color-mix(in srgb, var(--sc-c-yellow) 45%, transparent)); }
+.sc-star.sc-on .sc-star-empty { opacity:0; }
+
+/* Arc layout: middle raised, outer stars tilted outward */
+.sc-stars[data-layout="arc"] { align-items:flex-end; padding-top:calc(var(--s) * .45); }
+.sc-stars[data-layout="arc"] .sc-star:nth-child(1) { transform:rotate(-14deg); }
+.sc-stars[data-layout="arc"] .sc-star:nth-child(2) { width:calc(var(--s) * 1.06); height:calc(var(--s) * 1.06); margin-bottom:calc(var(--s) * .45); }
+.sc-stars[data-layout="arc"] .sc-star:nth-child(3) { transform:rotate(14deg); }
+
+/* Pop-in */
+.sc-star.sc-pop .sc-star-full { animation:sc-star-pop .45s cubic-bezier(.2,1.5,.5,1) both; animation-delay:var(--d, 0s); }
+.sc-star.sc-pop .sc-star-empty { animation:sc-star-empty .45s ease-out both; animation-delay:var(--d, 0s); }
+.sc-stars[data-animate] .sc-star:not(.sc-on) .sc-star-empty { animation:sc-star-fade .4s ease-out both; animation-delay:var(--d, 0s); }
+@keyframes sc-star-pop { 0% { opacity:0; transform:scale(0) rotate(-30deg); } 70% { opacity:1; transform:scale(1.2) rotate(6deg); } 100% { opacity:1; transform:none; } }
+@keyframes sc-star-empty { 0% { opacity:.6; } 60% { opacity:.6; } 100% { opacity:0; } }
+@keyframes sc-star-fade { from { opacity:0; transform:scale(.6); } }

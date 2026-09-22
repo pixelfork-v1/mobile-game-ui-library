@@ -1,0 +1,40 @@
+/*
+  Checkbox — Tactical Dark
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file selector-for-selector (sizes, 44px touch target, the tick's scale-in,
+  pressed / focus / disabled). Skin: the reference's box — dark square with a thin edge that lights up in the
+  accent when checked, white tick, near-white label.
+*/
+:where(.sc-checkbox) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-checkbox {
+  --box:30px; --cb-fs:16px;
+  position:relative; display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:0; margin:0;
+  border:0; background:none; font-family:var(--sc-font); color:inherit; cursor:pointer; appearance:none; vertical-align:middle;
+  user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none;
+}
+.sc-checkbox[data-size="sm"] { --box:24px; --cb-fs:13px; min-height:40px; }
+.sc-checkbox[data-size="lg"] { --box:38px; --cb-fs:20px; min-height:52px; }
+.sc-checkbox > .sc-text { --fs:var(--cb-fs); --ink:var(--sc-ink); font-size:var(--fs); }
+
+.sc-checkbox-box {
+  position:relative; flex:none; box-sizing:border-box; width:var(--box); height:var(--box);
+  border:1.5px solid color-mix(in srgb, var(--sc-edge) 99%, var(--sc-sheen)); border-radius:calc(var(--box) * .16 * var(--sc-round));
+  background:var(--sc-well);
+  transition:transform .06s, border-color .14s, background .14s, box-shadow .14s;
+}
+.sc-checkbox:is([data-checked=""], [data-checked="true"]) > .sc-checkbox-box {
+  border-color:var(--line); background:color-mix(in srgb, var(--line) 24%, color-mix(in srgb, var(--sc-panel) 55%, var(--sc-shade)));
+  box-shadow:0 0 12px -3px var(--lip);
+}
+.sc-checkbox-box > img {
+  position:absolute; left:50%; top:50%; width:76%; height:76%; object-fit:contain; pointer-events:none;
+  transform:translate(-50%, -50%) scale(0); opacity:0; translate:var(--ox, 0%) var(--oy, 0%);
+}
+.sc-checkbox:is([data-checked=""], [data-checked="true"]) > .sc-checkbox-box > img {
+  opacity:1; transform:translate(-50%, -50%) scale(1); transition:transform .2s cubic-bezier(.2,1.5,.5,1);
+}
+
+.sc-checkbox:active > .sc-checkbox-box, .sc-checkbox.sc-pressed > .sc-checkbox-box { transform:scale(.92); }
+.sc-checkbox:focus-visible > .sc-checkbox-box { outline:2px solid var(--line); outline-offset:3px; }
+.sc-checkbox:disabled { cursor:not-allowed; filter:grayscale(1) brightness(.7); }
+@media (prefers-reduced-motion:reduce) { .sc-checkbox-box, .sc-checkbox-box > img { transition:none !important; } }

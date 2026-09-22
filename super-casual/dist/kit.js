@@ -639,7 +639,12 @@
   });
 
   /* ---------- Tutorial Hand ---------- */
-  const TIP = { x: .17, y: .05 };   // fingertip position inside the 1:1 hand image box
+  // Fingertip position inside the 1:1 hand image box. It depends on the hand ARTWORK, so a style with a
+  // different hand icon sets --sc-tip-x / --sc-tip-y (0…1) in its core.css; these are the Super Casual values.
+  const TIP = {
+    get x() { const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sc-tip-x')); return v >= 0 && v <= 1 ? v : .17; },
+    get y() { const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--sc-tip-y')); return v >= 0 && v <= 1 ? v : .05; },
+  };
   let tut = null;
   function tutRect(el) { const r = el.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height, cx: r.left + r.width / 2, cy: r.top + r.height / 2 }; }
   function tutPlace() {

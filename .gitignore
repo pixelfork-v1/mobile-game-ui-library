@@ -7,3 +7,13 @@ _archive/
 # Built copy of super-casual/dist for the template (run tools/build_kit.py)
 templates/pixelfork-game/kit/
 tools/.env
+_staging/
+
+# Reference screenshots from a paid asset pack — look at, never publish
+tactical-dark/survival kit screens/
+
+# Reference images for future styles — look at, never publish
+references/
+
+# Raw GPT icon sheets (source for the cut icons in assets/) — local only, large
+tactical-dark/kit/gpt icons/

@@ -1,0 +1,17 @@
+/*
+  Loading Bar — Fantasy RPG Casual
+  Requires: ../../core.css, ../sc.js, ../progress/progress.css
+  PORTED from the Super Casual file (layout, the bouncing icon, the fading tip). Skin: near-white label,
+  dim tip.
+*/
+.sc-loading {
+  display:flex; flex-direction:column; align-items:center; gap:10px; width:100%; max-width:340px; margin:0 auto 18px;
+  font-family:var(--sc-font); user-select:none; -webkit-user-select:none;
+}
+.sc-loading > .sc-progress { width:100%; }
+.sc-loading-icon { width:56px; height:56px; object-fit:contain; animation:sc-loading-bounce .9s ease-in-out infinite; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-loading-label > .sc-text { --fs:17px; --ink:var(--sc-ink); font-size:var(--fs); letter-spacing:calc(.1em * var(--sc-tracking)); text-transform:var(--sc-caps); font-variant-numeric:tabular-nums; }
+.sc-loading-tip { min-height:2.4em; max-width:300px; text-align:center; font:600 14px/1.3 var(--sc-font); color:color-mix(in srgb, var(--sc-dim) 81%, var(--sc-sheen)); transition:opacity .25s; }
+.sc-loading-tip.sc-fade { opacity:0; }
+@keyframes sc-loading-bounce { 0%, 100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+@media (prefers-reduced-motion:reduce) { .sc-loading-icon { animation:none; } }

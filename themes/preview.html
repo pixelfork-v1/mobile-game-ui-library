@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom themes — preview</title>
+<!-- Docs helper, not part of the kit. Shows the SAME blocks (same HTML, same sc.js) under different themes:
+     a theme is one small CSS file of tokens loaded after the base style. See README.md in this folder. -->
+<style>
+  body { margin:0; font:14px system-ui, sans-serif; background:#16181d; color:#e7e9ee; }
+  header { position:sticky; top:0; z-index:2; display:flex; flex-wrap:wrap; gap:8px; align-items:center; padding:12px 16px; background:#1d2027; border-bottom:1px solid #2c313c; }
+  header b { margin-right:8px; }
+  button { font:inherit; color:inherit; background:#2a2f3a; border:1px solid #3a4150; border-radius:8px; padding:7px 12px; cursor:pointer; }
+  button.on { background:#3b6cf6; border-color:#3b6cf6; color:#fff; }
+  .sep { width:1px; height:22px; background:#3a4150; margin:0 6px; }
+  main { display:flex; flex-wrap:wrap; gap:16px; padding:16px; }
+  figure { margin:0; } figcaption { padding:0 0 6px 2px; color:#9aa3b5; }
+  iframe { width:390px; height:780px; border:0; border-radius:14px; display:block; background:#000; }
+</style></head>
+<body>
+<header><b>Theme</b><span id="themes"></span><span class="sep"></span><b>Screens</b><span id="sets"></span></header>
+<main id="grid"></main>
+<script>
+const THEMES = [['', 'Tactical Dark (no theme)'], ['neon-arcade', 'Neon Arcade'], ['desert-ops', 'Desert Ops'], ['daylight', 'Daylight']];
+const SETS = { 'Menu': ['start', 'shop', 'daily', 'settings'], 'Play': ['hud', 'pause', 'success', 'fail'], 'Other': ['reward', 'loading'], 'All components': ['../examples/all-components'] };
+const q = new URLSearchParams(location.search);
+let theme = q.get('theme') || '', set = q.get('set') || 'Menu';
+const BASE = '../tactical-dark/kit/blocks/';
+function apply(frame) {
+  const d = frame.contentDocument; if (!d) return;
+  d.getElementById('sc-theme')?.remove();
+  if (!theme) return;
+  const l = d.createElement('link'); l.id = 'sc-theme'; l.rel = 'stylesheet'; l.href = new URL(theme + '/theme.css', location.href).href;
+  d.head.append(l);                                   // after the kit's CSS, exactly where a game would put it
+}
+function draw() {
+  themes.innerHTML = THEMES.map(([id, name]) => `<button data-theme="${id}" class="${id === theme ? 'on' : ''}">${name}</button>`).join(' ');
+  sets.innerHTML = Object.keys(SETS).map(s => `<button data-set="${s}" class="${s === set ? 'on' : ''}">${s}</button>`).join(' ');
+  history.replaceState(null, '', '?theme=' + theme + '&set=' + encodeURIComponent(set));
+}
+function build() {
+  grid.innerHTML = '';
+  for (const b of SETS[set]) {
+    const fig = document.createElement('figure'), f = document.createElement('iframe');
+    fig.innerHTML = `<figcaption>${b.split('/').pop()}</figcaption>`; f.onload = () => apply(f); f.src = BASE + b + '.html?embed=1';
+    if (b.includes('/')) f.style.width = '820px';
+    fig.append(f); grid.append(fig);
+  }
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('button'); if (!t) return;
+  if ('theme' in t.dataset) { theme = t.dataset.theme; document.querySelectorAll('iframe').forEach(apply); }   // live: no reload, the UI keeps its state
+  if ('set' in t.dataset) { set = t.dataset.set; build(); }
+  draw();
+});
+draw(); build();
+</script>
+</body></html>

@@ -1,0 +1,218 @@
+/*
+  Tactical Dark — core
+  Second skin for the same kit. Same class names, same sc.js, same blocks and tests.
+  See ../STYLE.md. Load this INSTEAD of super-casual/kit/core.css.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&display=swap');
+
+:root {
+  --sc-font: 'Chakra Petch', 'Eurostile', 'Arial Narrow', sans-serif;
+  --sc-outline: rgba(126,180,255,.5);     /* the edge is a LIGHT line here, not a black one */
+
+  --sc-line: 1.5px;
+  --sc-line-sm: 1.5px;
+  --sc-text-stroke: 0;                     /* flat text: no outline … */
+  --sc-text-drop: 0;                       /* … and no 3D bottom edge */
+  --sc-min-text: 10px;
+
+  --sc-safe-top: env(safe-area-inset-top, 0px);
+  --sc-safe-right: env(safe-area-inset-right, 0px);
+  --sc-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --sc-safe-left: env(safe-area-inset-left, 0px);
+
+  /* ---------- THEME TOKENS ----------
+     Everything a theme may change lives here. Components never hardcode a colour: they use these, or a
+     color-mix() step of these. A theme is a :root block that overrides some of them — see THEMES.md. */
+  /* surfaces, darkest → lightest (a light theme runs them lightest → darkest) */
+  --sc-ground: #070B16;                    /* page / game background */
+  --sc-well: #0A101E;                      /* inset areas: bar tracks, slot insides, input wells */
+  --sc-panel: #0E1628;                     /* panels, popups, bars */
+  --sc-raise: #18223A;                     /* raised neutral tiles: flat icon buttons, cards */
+  --sc-edge: #3A4356;                      /* neutral borders and dividers */
+  /* text */
+  --sc-ink: #E6EEFF;                       /* main text */
+  --sc-dim: #7C89A6;                       /* secondary text */
+  --sc-sheen: #FFFFFF;                     /* the highlight colour laid over surfaces at low opacity (a light theme uses a dark one) */
+  --sc-shade: #000000;                     /* what a surface is mixed with for its darker steps (a light theme uses a soft grey-blue, or it turns muddy) */
+  --sc-glyph-filter: none;                 /* recolours the white glyph icons: a light theme sets brightness(0) */
+  --sc-glyph-on-button: none;              /* the same, for glyphs sitting on a button's accent fill (they follow the button label) */
+  /* accents: ONE value per colour name; fills, glows and tinted text are derived from it below */
+  --sc-accent: var(--sc-c-sky);            /* what a component uses when it has no data-color */
+  --sc-c-sky: #1E9CF5;    --sc-c-blue: #5B7DFF;   --sc-c-cyan: #42E8F5;   --sc-c-mint: #37E0C8;
+  --sc-c-green: #25C275;  --sc-c-olive: #A8C43A;  --sc-c-yellow: #F2C14E; --sc-c-orange: #EE7B28;
+  --sc-c-red: #F2495C;    --sc-c-pink: #E45BD0;   --sc-c-purple: #8C6BFF;
+  --sc-c-white: #DCE9FA;  --sc-c-dark: #5A6478;
+  /* the button: its fill is the accent mixed into this tint, its label the accent mixed into this light */
+  --sc-button-tint: #420917;               /* warm and dark here; a theme usually sets it to its own --sc-ground */
+  --sc-button-label: #FFEAB0;
+  --sc-button-fill: 1;                     /* how much accent is in the fill: 1 = this style's tinted glass, 1.7 = solid accent */
+  --sc-button-label-mix: 35;             /* how much of the accent is mixed into the label (0 = the plain label colour) */
+  --sc-button-dark-label: '';   /* colour names whose button label is the dark outline colour instead (light fills) */
+  --sc-scrim: #04070E;                     /* the veil laid over the game behind popups and result screens (text sits on it, so a light theme makes it light) */
+  /* shape and type */
+  --sc-round: 1;                           /* roundness, one knob: 0 = square, 1 = this style, 2.5 = soft, 6 = pills */
+  --sc-r: calc(8px * var(--sc-round));     /* the radius components use (derived — themes set --sc-round) */
+  --sc-cut: .28;                           /* button cut corner, share of its height: 0 = no cut */
+  --sc-spine: .09;                         /* button's thick left edge, share of its height: 0 = same as the other edges */
+  --sc-glow: 1;                            /* strength of the light around accents: 0 = none, 1 = this style, 2 = neon */
+  --sc-caps: uppercase;                    /* small labels: uppercase | none */
+  --sc-tracking: 1;                        /* letter-spacing multiplier */
+  --sc-weight: 700;                        /* text weight — must be a weight the font was loaded with */
+  --sc-tip-x: .4;                          /* where the fingertip is inside THIS style's hand icon — sc.js */
+  --sc-tip-y: .1;                          /* reads these to aim the Tutorial Hand (measured off hand.png) */
+}
+
+[class^="sc-"][hidden], [class*=" sc-"][hidden], [role="tabpanel"][hidden] { display:none !important; }
+
+/* ---------- Colour palette ----------
+   Same four variables as Super Casual, different jobs:
+   --base  dark tint of the accent (the fill)      --band  slightly lighter top of that fill
+   --line  the accent at full brightness (border AND text)   --lip  the accent as a glow
+   --ink   the text colour inside the component */
+[data-color="sky"]    { --line:var(--sc-c-sky); }
+[data-color="blue"]   { --line:var(--sc-c-blue); }
+[data-color="cyan"]   { --line:var(--sc-c-cyan); }
+[data-color="white"]  { --line:var(--sc-c-white); }
+[data-color="dark"]   { --line:var(--sc-c-dark); }
+[data-color="green"]  { --line:var(--sc-c-green); }
+[data-color="olive"]  { --line:var(--sc-c-olive); }
+[data-color="yellow"] { --line:var(--sc-c-yellow); }
+[data-color="orange"] { --line:var(--sc-c-orange); }
+[data-color="red"]    { --line:var(--sc-c-red); }
+[data-color="purple"] { --line:var(--sc-c-purple); }
+[data-color="pink"]   { --line:var(--sc-c-pink); }
+[data-color="mint"]   { --line:var(--sc-c-mint); }
+[data-color="gold"]   { --line:var(--sc-c-yellow); }
+[data-color="lavender"] { --line:var(--sc-c-pink); }
+/* derived from --line, so a theme only ever names the accent */
+[data-color] {
+  --band:color-mix(in srgb, var(--line) 22%, var(--sc-ground));
+  --base:color-mix(in srgb, var(--line) 12%, var(--sc-ground));
+  --lip:color-mix(in srgb, var(--line) calc(35% * var(--sc-glow)), transparent);
+  --ink:color-mix(in srgb, var(--line) 50%, var(--sc-ink));
+}
+[data-color="white"], [data-color="dark"] { --lip:color-mix(in srgb, var(--line) calc(25% * var(--sc-glow)), transparent); }
+
+/* ---------- Flat text (replaces the outlined 3D text) ---------- */
+.sc-text {
+  --fs:25px; --ink:var(--sc-ink);
+  --sc-fs:max(var(--fs), var(--sc-min-fs, 0px));
+  position:relative; display:inline-block; font-family:var(--sc-font); font-weight:var(--sc-weight);
+  font-size:var(--sc-fs) !important; line-height:1; color:var(--ink);
+  letter-spacing:calc(.04em * var(--sc-tracking)); white-space:nowrap; -webkit-text-stroke:0;
+}
+.sc-text::before { content:none; }        /* no 3D copy in this style */
+
+/* ---------- Lit surface (shared by Button, Icon Button, Counter "+") ----------
+   Flat dark fill, one thin accent line, a soft glow. No lip, no shine dot. */
+:where(.sc-button, .sc-icon-button:not([data-variant]), .sc-icon-button[data-variant="glossy"], .sc-counter-plus) {
+  --line:var(--sc-accent);
+  --band:color-mix(in srgb, var(--line) 22%, var(--sc-ground)); --base:color-mix(in srgb, var(--line) 12%, var(--sc-ground));
+  --lip:color-mix(in srgb, var(--line) calc(35% * var(--sc-glow)), transparent); --ink:color-mix(in srgb, var(--line) 50%, var(--sc-ink));
+  --r:var(--sc-r); --lipH:0px; --bw:var(--sc-line);
+  position:relative; box-sizing:border-box; isolation:isolate; cursor:pointer;
+  border:var(--bw) solid var(--line); border-radius:var(--r);
+  background:linear-gradient(var(--band), var(--base));
+  box-shadow:0 0 0 1px #0000, 0 0 12px -2px var(--lip), inset 0 1px 0 color-mix(in srgb, var(--sc-sheen) 8%, transparent);
+  -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none; user-select:none; -webkit-user-select:none;
+  transition:box-shadow .12s, background .12s, transform .06s;
+}
+:where(.sc-button, .sc-icon-button:not([data-variant]), .sc-icon-button[data-variant="glossy"], .sc-counter-plus)::after {
+  content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
+  background:radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--sc-sheen) 6%, transparent), #0000 70%);   /* faint top light, not a gloss band */
+}
+:where(.sc-button, .sc-icon-button:not([data-variant]), .sc-icon-button[data-variant="glossy"], .sc-counter-plus)::before { content:none; }
+:where(.sc-button, .sc-icon-button):focus-visible { box-shadow:0 0 0 2px var(--line), 0 0 16px -2px var(--lip); }
+
+/* glyphs:start — generated by tools/glyph_list.py, do not edit */
+:where(img[src*="assets/"][src$="/alert.png"],
+img[src*="assets/"][src$="/arrow-left.png"],
+img[src*="assets/"][src$="/arrow-right.png"],
+img[src*="assets/"][src$="/back.png"],
+img[src*="assets/"][src$="/battery.png"],
+img[src*="assets/"][src$="/calendar.png"],
+img[src*="assets/"][src$="/chat.png"],
+img[src*="assets/"][src$="/check.png"],
+img[src*="assets/"][src$="/clock.png"],
+img[src*="assets/"][src$="/close.png"],
+img[src*="assets/"][src$="/compass.png"],
+img[src*="assets/"][src$="/crosshair.png"],
+img[src*="assets/"][src$="/eye.png"],
+img[src*="assets/"][src$="/flag.png"],
+img[src*="assets/"][src$="/hand.png"],
+img[src*="assets/"][src$="/home.png"],
+img[src*="assets/"][src$="/hourglass.png"],
+img[src*="assets/"][src$="/info.png"],
+img[src*="assets/"][src$="/jump.png"],
+img[src*="assets/"][src$="/lock.png"],
+img[src*="assets/"][src$="/mail.png"],
+img[src*="assets/"][src$="/map.png"],
+img[src*="assets/"][src$="/menu.png"],
+img[src*="assets/"][src$="/minus.png"],
+img[src*="assets/"][src$="/music-off.png"],
+img[src*="assets/"][src$="/music.png"],
+img[src*="assets/"][src$="/pause.png"],
+img[src*="assets/"][src$="/pin.png"],
+img[src*="assets/"][src$="/play.png"],
+img[src*="assets/"][src$="/plus.png"],
+img[src*="assets/"][src$="/radar.png"],
+img[src*="assets/"][src$="/refresh.png"],
+img[src*="assets/"][src$="/restart.png"],
+img[src*="assets/"][src$="/ring.png"],
+img[src*="assets/"][src$="/search.png"],
+img[src*="assets/"][src$="/settings.png"],
+img[src*="assets/"][src$="/shop.png"],
+img[src*="assets/"][src$="/skull.png"],
+img[src*="assets/"][src$="/sound-off.png"],
+img[src*="assets/"][src$="/sound.png"],
+img[src*="assets/"][src$="/trash.png"],
+img[src*="assets/"][src$="/video.png"],
+img[src*="assets/"][src$="/warning.png"],
+img[src*="assets/"][src$="/wifi.png"],
+img[src*="assets/"][src$="/wrench.png"]) { filter:var(--sc-glyph-filter); }
+.sc-button > :where(img[src*="assets/"][src$="/alert.png"],
+img[src*="assets/"][src$="/arrow-left.png"],
+img[src*="assets/"][src$="/arrow-right.png"],
+img[src*="assets/"][src$="/back.png"],
+img[src*="assets/"][src$="/battery.png"],
+img[src*="assets/"][src$="/calendar.png"],
+img[src*="assets/"][src$="/chat.png"],
+img[src*="assets/"][src$="/check.png"],
+img[src*="assets/"][src$="/clock.png"],
+img[src*="assets/"][src$="/close.png"],
+img[src*="assets/"][src$="/compass.png"],
+img[src*="assets/"][src$="/crosshair.png"],
+img[src*="assets/"][src$="/eye.png"],
+img[src*="assets/"][src$="/flag.png"],
+img[src*="assets/"][src$="/hand.png"],
+img[src*="assets/"][src$="/home.png"],
+img[src*="assets/"][src$="/hourglass.png"],
+img[src*="assets/"][src$="/info.png"],
+img[src*="assets/"][src$="/jump.png"],
+img[src*="assets/"][src$="/lock.png"],
+img[src*="assets/"][src$="/mail.png"],
+img[src*="assets/"][src$="/map.png"],
+img[src*="assets/"][src$="/menu.png"],
+img[src*="assets/"][src$="/minus.png"],
+img[src*="assets/"][src$="/music-off.png"],
+img[src*="assets/"][src$="/music.png"],
+img[src*="assets/"][src$="/pause.png"],
+img[src*="assets/"][src$="/pin.png"],
+img[src*="assets/"][src$="/play.png"],
+img[src*="assets/"][src$="/plus.png"],
+img[src*="assets/"][src$="/radar.png"],
+img[src*="assets/"][src$="/refresh.png"],
+img[src*="assets/"][src$="/restart.png"],
+img[src*="assets/"][src$="/ring.png"],
+img[src*="assets/"][src$="/search.png"],
+img[src*="assets/"][src$="/settings.png"],
+img[src*="assets/"][src$="/shop.png"],
+img[src*="assets/"][src$="/skull.png"],
+img[src*="assets/"][src$="/sound-off.png"],
+img[src*="assets/"][src$="/sound.png"],
+img[src*="assets/"][src$="/trash.png"],
+img[src*="assets/"][src$="/video.png"],
+img[src*="assets/"][src$="/warning.png"],
+img[src*="assets/"][src$="/wifi.png"],
+img[src*="assets/"][src$="/wrench.png"]) { filter:var(--sc-glyph-on-button); }
+/* glyphs:end */

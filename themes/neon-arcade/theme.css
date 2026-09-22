@@ -1,0 +1,17 @@
+/* theme: Neon Arcade · base: tactical-dark
+   Synthwave arcade: deep violet night, hot pink and cyan light, pill shapes, heavy glow. */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&display=swap');
+:root {
+  --sc-font: 'Exo 2', 'Trebuchet MS', sans-serif;
+  --sc-weight: 800;
+  --sc-ground: #0D0221;  --sc-well: #140633;  --sc-panel: #1B0B40;  --sc-raise: #2A1459;  --sc-edge: #4A2E8A;
+  --sc-ink: #F6EEFF;     --sc-dim: #A08CD0;
+  --sc-accent: var(--sc-c-pink);
+  --sc-c-sky: #2DE2E6;   --sc-c-blue: #5B8CFF;  --sc-c-cyan: #2DE2E6;   --sc-c-mint: #3DFFC0;
+  --sc-c-green: #39FF88; --sc-c-olive: #C6F432; --sc-c-yellow: #FFD319; --sc-c-orange: #FF8A2A;
+  --sc-c-red: #FF3864;   --sc-c-pink: #FF2FD0;  --sc-c-purple: #A45CFF;
+  --sc-c-white: #EFE3FF; --sc-c-dark: #6A58A0;
+  --sc-button-tint: #1B0B40;  --sc-button-label: #FFFFFF;
+  --sc-round: 3;  --sc-cut: 0;  --sc-spine: 0;  --sc-glow: 1.9;
+  --sc-caps: uppercase;  --sc-tracking: 1.2;
+}

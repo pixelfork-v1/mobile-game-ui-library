@@ -1,0 +1,39 @@
+/*
+  Tabs — Tactical Dark
+  Requires: ../../core.css, super-casual/kit/sc.js
+  Dim labels on a dark strip; the selected tab lights up and gets a 2px underline. No pill, no gloss.
+*/
+:where(.sc-tabs) { --line:color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)); --lip:color-mix(in srgb, color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)) calc(35% * var(--sc-glow)), transparent); }
+.sc-tabs {
+  --h:44px; --tab-fs:15px; --tab-icon:24px;
+  display:flex; gap:0; width:100%; box-sizing:border-box; font-family:var(--sc-font);
+  border-bottom:1px solid color-mix(in srgb, var(--sc-sheen) 8%, transparent);
+}
+.sc-tabs[data-size="sm"] { --h:36px; --tab-fs:13px; --tab-icon:20px; }
+.sc-tabs[data-size="lg"] { --h:54px; --tab-fs:18px; --tab-icon:28px; }
+
+.sc-tab {
+  position:relative; flex:1 1 0; min-width:0; height:var(--h); box-sizing:border-box; margin:0;
+  display:flex; align-items:center; justify-content:center; gap:7px; padding:0 10px;
+  border:0; background:none; color:inherit; font:inherit; cursor:pointer; appearance:none;
+  user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none;
+  transition:color .14s;
+}
+.sc-tab::after {                                   /* the underline */
+  content:""; position:absolute; left:10%; right:10%; bottom:-1px; height:2px; border-radius:calc(var(--sc-r) * 0.25);
+  background:var(--line); box-shadow:0 0 10px -1px var(--lip);
+  opacity:0; transform:scaleX(.4); transition:opacity .16s, transform .16s;
+}
+.sc-tab[aria-selected="true"]::after { opacity:1; transform:none; }
+.sc-tab > .sc-text { --fs:var(--tab-fs); --ink:var(--sc-dim); font-size:var(--fs); text-transform:var(--sc-caps); transition:color .14s; }
+.sc-tab[aria-selected="true"] > .sc-text { --ink:var(--line); }
+.sc-tab > img[data-sc-icon] {
+  width:var(--tab-icon); height:var(--tab-icon); flex:none; object-fit:contain; pointer-events:none;
+  opacity:.7; translate:var(--ox, 0%) var(--oy, 0%); transition:opacity .14s;
+}
+.sc-tab[aria-selected="true"] > img[data-sc-icon] { opacity:1; }
+.sc-tab > img[data-flip] { transform:scaleX(-1); }
+.sc-tab.sc-tab-tight > img[data-sc-icon] { display:none; }
+.sc-tab:active, .sc-tab.sc-pressed { filter:brightness(1.3); }
+.sc-tab:disabled { opacity:.35; cursor:not-allowed; }
+.sc-tab:focus-visible { outline:2px solid var(--line); outline-offset:-3px; }

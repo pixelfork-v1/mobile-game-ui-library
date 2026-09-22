@@ -1,0 +1,19 @@
+/* theme: Daylight · base: tactical-dark
+   The hard test: a LIGHT theme. Paper surfaces, ink text, saturated accents, soft corners, no glow. */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&display=swap');
+:root {
+  --sc-font: 'Nunito', 'Trebuchet MS', sans-serif;
+  --sc-weight: 800;
+  --sc-ground: #E9EEF6;  --sc-well: #D5DDEA;  --sc-panel: #FFFFFF;  --sc-raise: #F3F6FB;  --sc-edge: #B4C0D4;
+  --sc-ink: #152033;     --sc-dim: #5C6B85;
+  --sc-sheen: #0B1730;   --sc-shade: #A9B8D0;   --sc-glyph-filter: brightness(0) invert(.12);
+  --sc-accent: var(--sc-c-blue);
+  --sc-c-sky: #0A84D6;   --sc-c-blue: #2F5BEA;  --sc-c-cyan: #0796A8;   --sc-c-mint: #078A74;
+  --sc-c-green: #12904F; --sc-c-olive: #6C8612; --sc-c-yellow: #B97B00; --sc-c-orange: #D4570B;
+  --sc-c-red: #D92B45;   --sc-c-pink: #C52BAE;  --sc-c-purple: #6B3FE0;
+  --sc-c-white: #3B4A66; --sc-c-dark: #7486A3;
+  --sc-button-tint: #0B1730;  --sc-button-label: #FFFFFF;  --sc-button-fill: 1.35;
+  --sc-scrim: #DCE4F0;
+  --sc-round: 2;  --sc-cut: 0;  --sc-spine: 0;  --sc-glow: 0;
+  --sc-caps: none;  --sc-tracking: .4;
+}

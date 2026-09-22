@@ -1,0 +1,71 @@
+/*
+  Toggle — Pixel Retro
+  Requires: ../../core.css, ../sc.js   (same markup, role="switch", change event)
+
+  A chunky outlined switch: dark-outlined track (gold when ON, with the button's top band), a cream knob with its
+  own outline and bottom edge, the state word beside it. Same markup, same behaviour as every other style.
+
+  CONTRAST RULE (applies to every component in this style): the label is ALWAYS near-white on the dark
+  track, in both states. Never tint the text with the accent — accent-on-dark reads at about 3:1 and
+  disappears at small sizes. The accent carries the state through the THUMB, the BORDER and the GLOW;
+  the text carries the meaning, so it stays readable.
+*/
+:where(.sc-toggle) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); --on-label:var(--sc-ink); }   /* the label is light in BOTH states; on the gold track it carries the outline */
+.sc-toggle {
+  clip-path:var(--sc-notch);
+  --h:44px; --w:calc(var(--h) * 2.3);
+  --thumb:calc(var(--h) - var(--pad) * 2 - var(--bw) * 2);
+  --pad:calc(var(--h) * .13);
+  --bw:var(--sc-line);
+  --track:var(--sc-well);
+  --edge:var(--sc-outline);                   /* the outline is the same dark line the icons have, in both states */
+  --knob:color-mix(in srgb, var(--sc-dim) 70%, var(--sc-sheen));   /* OFF: a pale grey knob */
+  --label:var(--sc-ink);                      /* near-white in BOTH states — this is the contrast rule */
+  position:relative; display:inline-block; flex:none; box-sizing:border-box;
+  width:var(--w); height:var(--h); padding:0; vertical-align:middle;
+  border:var(--bw) solid var(--edge); border-radius:0;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--sc-sheen) 22%, transparent) 0 var(--sc-px), color-mix(in srgb, var(--sc-sheen) 10%, transparent) var(--sc-px) 45%, #0000 45%), var(--track);
+  box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--sc-well) 70%, var(--sc-shade));
+  font-family:var(--sc-font); cursor:pointer; appearance:none;
+  -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none;
+  user-select:none; -webkit-user-select:none;
+  transition:border-color .16s, box-shadow .16s, background .16s;
+}
+.sc-toggle[data-size="sm"] { --h:36px; --bw:2px; }
+.sc-toggle[data-size="lg"] { --h:54px; }
+
+/* ON: the accent lights the edge, the thumb and the glow — never the text */
+.sc-toggle:is([data-checked="true"], [data-checked=""]) {
+  --knob:var(--sc-ink); --track:var(--line); --label:var(--on-label); --sc-outline:color-mix(in srgb, var(--line) 38%, var(--sc-shade));
+  box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--line) 62%, var(--sc-shade)), 0 0 calc(var(--h) * .28) var(--lip);
+}
+
+.sc-toggle-thumb {
+  position:absolute; top:var(--pad); left:var(--pad);
+  width:var(--thumb); height:var(--thumb); box-sizing:border-box; pointer-events:none;
+  border-radius:0; background:linear-gradient(180deg, color-mix(in srgb, var(--knob) 92%, var(--sc-sheen)), color-mix(in srgb, var(--knob) 88%, var(--sc-shade)));
+  border:var(--sc-px) solid var(--sc-outline); box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--sc-ink) 70%, var(--sc-shade));
+  transition:transform .18s cubic-bezier(.3,1.1,.5,1), background .16s;
+}
+.sc-toggle:is([data-checked="true"], [data-checked=""]) > .sc-toggle-thumb {
+  transform:translateX(calc(var(--w) - var(--h)));
+}
+
+/* the word sits on the free side of the track */
+.sc-toggle-label {
+  position:absolute; top:0; bottom:0;
+  left:calc(var(--h) - var(--bw)); right:calc(var(--h) * .22);
+  display:grid; place-items:center; pointer-events:none;
+}
+.sc-toggle:is([data-checked="true"], [data-checked=""]) > .sc-toggle-label {
+  left:calc(var(--h) * .22); right:calc(var(--h) - var(--bw));
+}
+.sc-toggle-label > .sc-text {
+  --fs:calc(var(--h) * .36); --ink:var(--label);
+  font-size:var(--fs); font-weight:var(--sc-weight); letter-spacing:.04em; text-transform:uppercase; --o:max(2px, calc(var(--fs) * .09)); -webkit-text-stroke:0; text-shadow:var(--o) 0 0 var(--sc-outline), calc(var(--o) * -1) 0 0 var(--sc-outline), 0 var(--o) 0 var(--sc-outline), 0 calc(var(--o) * -1) 0 var(--sc-outline), 0 calc(var(--o) * 2) 0 var(--sc-outline);
+}
+
+.sc-toggle:active, .sc-toggle.sc-pressed { scale:.97; }
+.sc-toggle:focus-visible { outline:2px solid var(--line); outline-offset:3px; }
+.sc-toggle:disabled { cursor:not-allowed; filter:grayscale(1); opacity:.5; }
+@media (prefers-reduced-motion:reduce) { .sc-toggle, .sc-toggle-thumb { transition:none; } }

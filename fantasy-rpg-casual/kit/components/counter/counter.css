@@ -1,0 +1,44 @@
+/*
+  Resource Counter — Fantasy RPG Casual
+  Requires: ../../core.css, super-casual/kit/sc.js   (same markup and attributes)
+  A translucent dark pill with a hairline edge, the icon sitting on its left end, a white number,
+  and a small accent "+" square. No gloss, no 3D lip.
+*/
+.sc-counter {
+  --icon:38px; --pill:30px; --fs:17px; --plus:26px; --minv:56px;
+  position:relative; display:inline-flex; align-items:center; vertical-align:middle;
+  height:var(--icon); padding-left:calc(var(--icon) * .42); box-sizing:border-box;
+  font-family:var(--sc-font); user-select:none; -webkit-user-select:none;
+}
+.sc-counter[data-size="sm"] { --icon:30px; --pill:24px; --fs:14px; --plus:22px; --minv:44px; }
+.sc-counter[data-size="lg"] { --icon:48px; --pill:38px; --fs:22px; --plus:32px; --minv:70px; }
+
+.sc-counter > img {
+  position:absolute; left:0; top:50%; z-index:1; width:var(--icon); height:var(--icon); object-fit:contain;
+  transform:translateY(-50%); translate:var(--ox, 0%) var(--oy, 0%); pointer-events:none;
+}
+.sc-counter-pill {
+  display:flex; align-items:center; height:var(--pill);
+  padding-left:calc(var(--icon) * .64); padding-right:calc(var(--pill) * .3);
+  border:2px solid var(--sc-outline); border-radius:999px;
+  background:color-mix(in srgb, var(--sc-well) 92%, transparent); box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--sc-well) 70%, var(--sc-shade));
+}
+.sc-counter:has(.sc-counter-plus) .sc-counter-pill { padding-right:3px; }
+.sc-counter-value { min-width:var(--minv); padding:0 calc(var(--fs) * .4); text-align:center; }
+.sc-counter-value .sc-text { --fs:inherit; --ink:var(--sc-ink); font-size:var(--fs); font-variant-numeric:tabular-nums; }
+
+/* "+" : a small accent square, flat */
+.sc-counter-plus {
+  --r:999px; --lipH:0px; --bw:2px;
+  width:var(--plus); height:var(--plus); flex:none; padding:0;
+  display:grid; place-items:center;
+}
+.sc-counter-plus svg { width:56%; height:56%; overflow:visible; }
+.sc-counter-plus path { fill:none; stroke-linecap:round; }
+.sc-counter-plus .o { stroke:none; stroke-width:0; }          /* no dark outline stroke in this style */
+.sc-counter-plus .f { stroke:var(--line); stroke-width:5; }
+.sc-counter-plus:active, .sc-counter-plus.sc-pressed { transform:scale(.92); box-shadow:0 0 14px -2px var(--lip); }
+.sc-counter.sc-bump > img { animation:sc-count-bump .3s ease-out; }
+.sc-counter.sc-bump .sc-counter-value .sc-text { animation:sc-counter-bump .28s ease-out; }
+@keyframes sc-counter-bump { 40% { transform:scale(1.22); } }
+@keyframes sc-count-bump { 40% { transform:translateY(-50%) scale(1.18); } }

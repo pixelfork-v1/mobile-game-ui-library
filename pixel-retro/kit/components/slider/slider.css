@@ -1,0 +1,52 @@
+/*
+  Slider — Pixel Retro
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file selector-for-selector: --p (0…1 from sc.js), the half-thumb margins that
+  keep the thumb inside the bar, the fill that ends under the thumb centre, the 44px touch target, sizes,
+  the icon and the value label are all behaviour. Skin: an outlined pill rail, accent fill with the button's top band,
+  and a round cream knob with its own outline — the toggle's knob on a rail.
+*/
+:where(.sc-slider) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-slider {
+  --h:16px; --thumb:32px; --p:0;
+  position:relative; display:flex; align-items:center; gap:10px; width:100%; min-width:120px; box-sizing:border-box;
+  min-height:44px;
+  font-family:var(--sc-font); cursor:pointer; outline:none; touch-action:none;
+  user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent;
+}
+.sc-slider[data-size="sm"] { --h:11px; --thumb:26px; }
+.sc-slider[data-size="lg"] { --h:22px; --thumb:40px; min-height:52px; }
+
+.sc-slider-bar { position:relative; flex:1; height:var(--thumb); margin:0 calc(var(--thumb) / 2); }
+.sc-slider-track {
+  clip-path:var(--sc-notch);
+  position:absolute; left:calc(var(--thumb) / -2); right:calc(var(--thumb) / -2); top:50%; height:var(--h);
+  transform:translateY(-50%); box-sizing:border-box; overflow:hidden;
+  background:var(--sc-well); border:2px solid var(--sc-outline); border-radius:0;
+  box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--sc-well) 70%, var(--sc-shade));
+}
+.sc-slider-fill {
+  position:absolute; left:0; top:0; bottom:0; width:calc(var(--thumb) / 2 + (100% - var(--thumb)) * var(--p));
+  background:linear-gradient(180deg, color-mix(in srgb, var(--sc-sheen) 22%, transparent) 0 var(--sc-px), color-mix(in srgb, var(--sc-sheen) 10%, transparent) var(--sc-px) 45%, #0000 45%), var(--line);
+  border-radius:0; box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--line) 62%, var(--sc-shade));
+}
+.sc-slider-thumb {
+  clip-path:var(--sc-notch);
+  position:absolute; top:50%; left:calc(var(--p) * 100%); width:var(--thumb); height:var(--thumb); box-sizing:border-box;
+  transform:translate(-50%, -50%); pointer-events:none;
+  border:2px solid var(--sc-outline); border-radius:0;
+  background:linear-gradient(var(--sc-ink), color-mix(in srgb, var(--sc-ink) 86%, var(--sc-shade)));
+  box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--sc-ink) 70%, var(--sc-shade)), 0 0 8px var(--lip);
+  transition:scale .08s;
+}
+.sc-slider.sc-dragging .sc-slider-thumb { scale:1.12; }
+.sc-slider:focus-visible .sc-slider-track { outline:2px solid var(--line); outline-offset:3px; }
+
+.sc-slider > img[data-sc-icon] {
+  flex:none; width:calc(var(--thumb) * .9); height:calc(var(--thumb) * .9); object-fit:contain; pointer-events:none;
+  translate:var(--ox, 0%) var(--oy, 0%);
+}
+.sc-slider-value { flex:none; min-width:calc(var(--thumb) * 1.5); text-align:right; line-height:1; pointer-events:none; }
+.sc-slider-value .sc-text { --fs:calc(var(--h) * .5 + 8px); --ink:var(--sc-ink); font-size:var(--fs); font-variant-numeric:tabular-nums; }
+
+.sc-slider:is([disabled], fieldset:disabled .sc-slider) { cursor:not-allowed; filter:grayscale(1) brightness(.7); }

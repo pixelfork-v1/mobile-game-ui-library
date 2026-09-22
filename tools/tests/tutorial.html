@@ -28,7 +28,10 @@ addEventListener('load', async () => {
     check('layer, hand, spotlight, blockers, ring, hint', !!$('.sc-tut-layer') && hand?.src.endsWith('/hand.png') && !!$('.sc-tut-spot') && document.querySelectorAll('.sc-tut-block').length === 4 && !!$('.sc-tut-ring') && $('.sc-hint-float')?.textContent === 'Tap Play!');
     check('SC.tutorial.active', SC.tutorial.active === true);
     const [ax, ay] = center($('#a')), hr = hand.getBoundingClientRect(), tr = hand.style.translate.split(' ').map(parseFloat);
-    check('fingertip placed at target center', Math.abs(tr[0] + 76 * .17 - ax) < 2 && Math.abs(tr[1] + 76 * .05 - ay) < 2);
+    // the fingertip position is a token of the style (sc.js reads --sc-tip-x / --sc-tip-y; Super Casual's values are the defaults)
+    const tipv = (n, d) => { const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(n)); return v >= 0 && v <= 1 ? v : d; };
+    const hs = parseFloat(getComputedStyle(hand).width);          // the hand's size is the style's too (76px in Super Casual, 64px in the dark styles)
+    check('fingertip placed at target center', Math.abs(tr[0] + hs * tipv('--sc-tip-x', .17) - ax) < 2 && Math.abs(tr[1] + hs * tipv('--sc-tip-y', .05) - ay) < 2);
     const [bx, by] = center($('#b'));
     check('outside target is blocked by the spotlight', document.elementFromPoint(bx, by).classList.contains('sc-tut-block'));
     check('target itself stays tappable', document.elementFromPoint(ax, ay).closest('#a') !== null);

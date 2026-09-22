@@ -1,0 +1,59 @@
+/*
+  Popup — Tactical Dark
+  Requires: ../../core.css, super-casual/kit/sc.js   (same markup, same SC.popup API)
+*/
+.sc-popup {
+  position:fixed; inset:0; z-index:1000; box-sizing:border-box;
+  display:grid; place-content:unsafe center; place-items:center; overflow:hidden;
+  padding:calc(14px + var(--sc-safe-top)) calc(14px + var(--sc-safe-right)) calc(14px + var(--sc-safe-bottom)) calc(14px + var(--sc-safe-left));
+  background:color-mix(in srgb, var(--sc-scrim) 72%, transparent); backdrop-filter:blur(2px); animation:sc-popup-fade .18s ease-out;
+  font-family:var(--sc-font);
+}
+.sc-popup[hidden] { display:none; }
+.sc-popup.sc-closing { animation:sc-popup-fade .16s ease-in reverse forwards; }
+@keyframes sc-popup-fade { from { opacity:0; } }
+
+.sc-popup-box {
+  --line:color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)); --lip:color-mix(in srgb, color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)) calc(35% * var(--sc-glow)), transparent); --p-ink:var(--sc-ink); --soft:var(--sc-dim);
+  position:relative; width:330px; max-width:none; box-sizing:border-box; flex:none;
+  scale:var(--sc-pop-s, 1); --sc-min-fs:calc(var(--sc-min-text) / var(--sc-pop-s, 1));
+  border:var(--sc-line) solid var(--line); border-radius:calc(var(--sc-r) * 1.5);
+  background:linear-gradient(color-mix(in srgb, var(--sc-raise) 86%, var(--sc-shade)), var(--sc-panel));
+  box-shadow:0 0 30px -6px var(--lip), 0 18px 40px -12px #000;
+  animation:sc-popup-pop .26s cubic-bezier(.2,1.2,.4,1);
+}
+.sc-popup.sc-closing .sc-popup-box { animation:sc-popup-out .16s ease-in forwards; }
+@keyframes sc-popup-pop { from { transform:translateY(8px); opacity:0; } }
+@keyframes sc-popup-out { to { transform:translateY(6px); opacity:0; } }
+
+.sc-popup[data-color="red"]    .sc-popup-box { --line:var(--sc-c-red); --lip:color-mix(in srgb, var(--sc-c-red) calc(35% * var(--sc-glow)), transparent); }
+.sc-popup[data-color="green"]  .sc-popup-box { --line:color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)); --lip:color-mix(in srgb, color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)) calc(35% * var(--sc-glow)), transparent); }
+.sc-popup[data-color="yellow"] .sc-popup-box { --line:var(--sc-c-yellow); --lip:color-mix(in srgb, var(--sc-c-yellow) calc(35% * var(--sc-glow)), transparent); }
+.sc-popup[data-color="purple"] .sc-popup-box { --line:var(--sc-c-purple); --lip:color-mix(in srgb, var(--sc-c-purple) calc(35% * var(--sc-glow)), transparent); }
+
+/* Header: a hairline under the title, not a coloured cap */
+.sc-popup-header {
+  position:relative; display:flex; flex-direction:column; align-items:center; gap:2px;
+  padding:16px 44px 12px; border-bottom:1px solid color-mix(in srgb, var(--sc-sheen) 8%, transparent);
+}
+.sc-popup-header > .sc-text { --fs:19px; font-size:var(--fs); --ink:var(--line); text-transform:var(--sc-caps); }
+.sc-popup-header > .sc-icon-button { position:absolute; right:8px; top:8px; --size:34px; }
+.sc-popup-sub { font:600 11px var(--sc-font); letter-spacing:calc(.14em * var(--sc-tracking)); text-transform:var(--sc-caps); color:var(--soft); }
+
+.sc-popup-body { display:flex; flex-direction:column; align-items:center; gap:14px; padding:18px 20px 20px; text-align:center; }
+.sc-popup-message { margin:0; line-height:1.4; }
+.sc-popup-message .sc-text { --fs:14px; font-size:var(--fs); --ink:var(--sc-ink); white-space:normal; line-height:1.4; font-weight:600; }
+.sc-popup-hint { margin:0; font-size:12px; line-height:1.4; color:var(--soft); }
+.sc-popup-value { margin:0; padding:0 16px 4px; line-height:1; }
+.sc-popup-value .sc-text { --fs:26px; font-size:var(--fs); --ink:var(--line); }
+.sc-popup-section {
+  align-self:stretch; display:flex; flex-direction:column; align-items:center; gap:12px;
+  padding:14px; border:1px solid color-mix(in srgb, var(--sc-sheen) 7%, transparent); border-radius:var(--sc-r); background:color-mix(in srgb, color-mix(in srgb, var(--sc-panel) 68%, var(--sc-shade)) 50%, transparent);
+}
+.sc-popup-actions { display:flex; justify-content:center; gap:10px; width:100%; }
+.sc-popup-actions[data-layout="stack"] { flex-direction:column; align-items:stretch; }
+.sc-popup-actions[data-layout="stack"] .sc-button { width:100%; min-width:0; }
+.sc-panel {   /* PORTED layout: stretches to the popup and lays its content out, only the surface is this style's */
+  align-self:stretch; box-sizing:border-box; padding:14px; border:1px solid color-mix(in srgb, var(--sc-sheen) 7%, transparent); border-radius:var(--sc-r); background:color-mix(in srgb, color-mix(in srgb, var(--sc-panel) 68%, var(--sc-shade)) 50%, transparent);
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px;
+}

@@ -1,0 +1,84 @@
+/*
+  Button — Pixel Retro
+  Requires: ../../core.css, ../sc.js
+
+  ONE element. No pseudo-elements, no clip-path, no stacked boxes, no SVG — so there is nothing behind the
+  button that could show through at a corner, which is what every layered attempt kept doing.
+
+  data-texture="dots" adds the halftone the reference has: a fine grain over the fill only — it sits below
+  the two corner gradients in the stack, so the frame colour stays clean, exactly as in the original.
+
+  How the shape is made:
+    · the frame is a real CSS border — thin on top/right/bottom, deliberately thicker on the LEFT, exactly
+      as measured on the reference (3px vs 13px on a 145px-tall button)
+    · border-radius rounds all four corners
+    · the two 45° corners are two diagonal gradients in the frame colour, painted over the fill: a hard
+      colour stop on a 225°/45° gradient is a triangle in that corner
+    · the fill is a third gradient underneath them
+
+  Because the outline is a plain rounded rectangle and the cut corners are FILLED rather than cut away,
+  the silhouette has no notches at all. Nothing to mask, nothing to leak, and it themes from --line with
+  color-mix, so every data-color works without generating anything.
+
+  Numbers measured off the reference button (365 x 145):
+    corner cut 30px (0.21 of the height) · radius 12px (0.083) · border 3px, left 13px (0.021 / 0.09)
+    fill rgb(120,47,17) at the top to rgb(170,68,25) at the bottom — 30%/58% of the frame colour over a
+    dark maroon, because mixing with black comes out too green
+*/
+.sc-button {
+  --h:54px;
+  --cut:calc(var(--h) * var(--sc-cut));           /* leg of the 45° corner, in the frame colour */
+  --r:calc(var(--h) * .083 * var(--sc-round));
+  --edge:var(--sc-px);                               /* one art pixel */
+  --spine:max(var(--edge), calc(var(--h) * var(--sc-spine)));         /* the thicker left edge */
+  --fs:calc(var(--h) * .38);
+  --grain:#0000;                        /* data-texture="dots" switches this on */
+  --grain-cell:3px;                     /* measured: the reference's texture correlates over ~2-3px */
+  /* a solid toy-like fill: the accent itself, lighter at the top and a touch darker at the bottom (--sc-button-fill still scales it) */
+  --fill-top:var(--line); --fill-bot:var(--line);                    /* flat: pixel art shades in hard steps, never a blend */
+  --lipc:color-mix(in srgb, var(--line) 62%, var(--sc-shade));      /* the underside: the same colour, darker */
+  --sc-outline:color-mix(in srgb, var(--line) 38%, var(--sc-shade));              /* the outline: the same colour, darkest — never one brown for every button */
+  --lipH:calc(var(--sc-px) * 2);
+  --label:var(--sc-button-label);                                   /* always the light label — it carries a dark outline, like the icons do */
+  box-sizing:border-box;
+  display:inline-flex; align-items:center; justify-content:center; gap:calc(var(--fs) * .4);
+  height:var(--h); min-width:calc(var(--h) * 2.5); padding:0 calc(var(--h) * .34);
+  border:var(--edge) solid var(--sc-outline); border-left-width:var(--spine);
+  border-radius:var(--r);
+  background:
+    linear-gradient(225deg, var(--line) calc(var(--cut) * .7071), #0000 0),   /* top-right corner */
+    linear-gradient( 45deg, var(--line) calc(var(--cut) * .7071), #0000 0),   /* bottom-left corner */
+    radial-gradient(var(--grain) .55px, #0000 .9px) 0 0 / var(--grain-cell) var(--grain-cell),
+    linear-gradient(180deg, color-mix(in srgb, var(--sc-sheen) 22%, transparent) 0 var(--sc-px), color-mix(in srgb, var(--sc-sheen) 10%, transparent) var(--sc-px) 45%, #0000 45%),   /* soft top light */
+    linear-gradient(var(--fill-top), var(--fill-bot));
+  background-clip:padding-box;
+  appearance:none; cursor:pointer; vertical-align:middle;
+  font-family:var(--sc-font); font-size:var(--fs); font-weight:var(--sc-weight); line-height:1; white-space:nowrap; text-transform:uppercase; letter-spacing:.04em;
+  box-shadow:inset 0 calc(var(--lipH) * -1) 0 var(--lipc), inset 0 var(--sc-px) 0 color-mix(in srgb, var(--sc-sheen) 35%, transparent);           /* dark step at the bottom, light pixel row on top */
+  clip-path:var(--sc-notch);                                                                         /* the 8-bit corner */
+  padding-bottom:calc(var(--lipH) * .6);                                                            /* the label sits on the face, not on the lip */
+  filter:drop-shadow(0 0 calc(var(--h) * .09) color-mix(in srgb, var(--line) calc(24% * var(--sc-glow)), #0000));
+  -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none;
+  user-select:none; -webkit-user-select:none;
+  transition:translate .06s, filter .12s;
+}
+.sc-button > .sc-text { --fs:inherit; --ink:var(--label); font-size:var(--fs); --o:max(2px, calc(var(--fs) * .09)); -webkit-text-stroke:0; text-shadow:var(--o) 0 0 var(--sc-outline), calc(var(--o) * -1) 0 0 var(--sc-outline), 0 var(--o) 0 var(--sc-outline), 0 calc(var(--o) * -1) 0 var(--sc-outline), 0 calc(var(--o) * 2) 0 var(--sc-outline); }   /* white letters with the icon outline */
+.sc-button > img { height:calc(var(--fs) * 1.25); width:auto; flex:none; pointer-events:none; filter:drop-shadow(1px 0 0 var(--sc-outline)) drop-shadow(-1px 0 0 var(--sc-outline)) drop-shadow(0 1px 0 var(--sc-outline)) drop-shadow(0 -1px 0 var(--sc-outline)); }   /* the white glyph gets the same dark edge as the letters */
+
+/* The halftone. It is one more layer in the same background stack — still a single element. */
+/* dark = the quiet, secondary button: a neutral slate fill (the warm base tint would turn it maroon) and a pale label */
+.sc-button[data-color="dark"] { --fill-top:var(--sc-raise); --fill-bot:var(--sc-raise); --label:color-mix(in srgb, var(--sc-ink) 97%, var(--sc-shade)); }
+.sc-button[data-texture="dots"] { --grain:color-mix(in srgb, var(--sc-sheen) 9%, transparent); }   /* ~±8 per channel, matching the reference */
+
+.sc-button[data-size="sm"] { --h:40px; }
+.sc-button[data-size="lg"] { --h:68px; }
+.sc-button[data-width="full"] { display:flex; width:100%; min-width:0; }
+
+.sc-button:active, .sc-button.sc-pressed { translate:0 calc(var(--lipH) * .6); box-shadow:inset 0 calc(var(--lipH) * -.35) 0 var(--lipc); padding-bottom:calc(var(--lipH) * .2); filter:brightness(1.06); }
+.sc-button:focus-visible { outline:2px solid var(--line); outline-offset:3px; }
+
+.sc-button:disabled, .sc-button[aria-disabled="true"] {
+  --line:var(--sc-edge); --fill-top:var(--sc-panel); --fill-bot:var(--sc-panel); --label:var(--sc-dim);   /* a quiet stone-grey plate, lilac label — still outlined, still readable */
+  cursor:not-allowed; translate:none; filter:none; --lipc:color-mix(in srgb, var(--sc-raise) 65%, var(--sc-shade)); opacity:.9;
+}
+.sc-button:disabled > img { filter:grayscale(1) opacity(.45); }

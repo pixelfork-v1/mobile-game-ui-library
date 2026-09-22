@@ -1,0 +1,17 @@
+/* theme: Desert Ops · base: tactical-dark
+   Dry military field kit: burnt earth, sand and brass. Square, matte, almost no glow. */
+@import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700&display=swap');
+:root {
+  --sc-font: 'Saira Condensed', 'Arial Narrow', sans-serif;
+  --sc-weight: 700;
+  --sc-ground: #15110B;  --sc-well: #1C170F;  --sc-panel: #262015;  --sc-raise: #362D1E;  --sc-edge: #5E5138;
+  --sc-ink: #F3E9D2;     --sc-dim: #A39270;
+  --sc-accent: var(--sc-c-yellow);
+  --sc-c-sky: #6FB3C9;   --sc-c-blue: #5F86C4;  --sc-c-cyan: #7CCBD0;   --sc-c-mint: #7DC9A8;
+  --sc-c-green: #8DB04A; --sc-c-olive: #A9A544; --sc-c-yellow: #E3B04B; --sc-c-orange: #D9772B;
+  --sc-c-red: #D1493F;   --sc-c-pink: #C9708C;  --sc-c-purple: #9A7CC2;
+  --sc-c-white: #EADFC4; --sc-c-dark: #6E6248;
+  --sc-button-tint: #1C170F;  --sc-button-label: #FFF3D6;
+  --sc-round: .35;  --sc-cut: .34;  --sc-spine: .12;  --sc-glow: .25;
+  --sc-caps: uppercase;  --sc-tracking: 1.4;
+}

@@ -1,0 +1,14 @@
+{
+  "_note": "Selectors the reference style has that this style deliberately does not need. Each one was checked by eye. tools/check_style.py skips them, so anything it still prints is a NEW gap.",
+  "reviewed": {
+    "[data-pos=\"right\"])[data-size=\"sm\"]": "hint: the pointer is already small here; no separate side+sm size needed",
+    "[data-variant=\"glossy\"])[data-shape=\"round\"]": "icon-button: round is handled once for every variant via --r:50%",
+    "[data-variant=\"glossy\"])[data-shape=\"round\"]::after": "icon-button: no glossy face layer in this style",
+    "[data-variant=\"glossy\"])[data-shape=\"round\"]::before": "icon-button: no shine dot in this style",
+    ".sc-popup-header:has(.sc-popup-sub) + .sc-popup-body": "popup: the subtitle sits inline under the title, not as a hanging tag, so the body needs no extra top padding",
+    ".sc-progress:has(> img[data-sc-icon]) .sc-progress-label": "progress: the icon sits beside the bar, not overlapping it, so the label stays centred",
+    ".sc-slider:focus-visible .sc-slider-thumb": "slider: focus ring is drawn on the track instead of the sheared thumb",
+    ".sc-tabbar-item[aria-selected=\"true\"] > .sc-bubble": "tabbar: the selected item does not lift in this style, so the badge does not move",
+    ".sc-timer[data-variant=\"pill\"].sc-warn .sc-text": "timer: the general .sc-warn text rule already covers the pill"
+  }
+}

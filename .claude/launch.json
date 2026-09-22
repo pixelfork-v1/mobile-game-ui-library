@@ -6,9 +6,9 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": [
         "tools/serve.py",
-        "8765"
+        "8767"
       ],
-      "port": 8765
+      "port": 8767
     }
   ]
 }

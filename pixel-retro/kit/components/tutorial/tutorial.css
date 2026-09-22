@@ -1,0 +1,32 @@
+/*
+  Tutorial Hand — Pixel Retro
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file selector-for-selector: the geometry (fixed hand anchored at its fingertip
+  via --tipx/--tipy, tap / swipe / drag gestures driven by --dx/--dy, the four blockers, the spotlight) is
+  behaviour and must not change between styles. Only the colours differ: accent ring, darker dim.
+*/
+.sc-tut-layer { position:fixed; inset:0; z-index:1150; pointer-events:none; }
+.sc-tut-block { position:fixed; pointer-events:auto; background:transparent; }
+.sc-tut-spot {
+  position:fixed; pointer-events:none; border-radius:var(--sc-r);
+  box-shadow:0 0 0 200vmax color-mix(in srgb, var(--sc-scrim) 72%, transparent), inset 0 0 0 2px var(--sc-accent), 0 0 22px -2px color-mix(in srgb, var(--sc-accent) 55%, transparent);
+  animation:sc-tut-fade .25s ease-out;
+}
+.sc-tut-hand {
+  --hs:64px;
+  position:fixed; left:0; top:0; width:var(--hs); height:var(--hs); object-fit:contain; pointer-events:none;
+  transform-origin:var(--tipx) var(--tipy); filter:drop-shadow(0 4px 8px rgba(0,0,0,.6));
+}
+.sc-tut-hand[data-gesture="tap"]         { animation:sc-tut-tap 1.1s ease-in-out infinite; }
+.sc-tut-hand[data-gesture^="swipe"],
+.sc-tut-hand[data-gesture="drag"]        { animation:sc-tut-move 1.4s cubic-bezier(.45,0,.3,1) infinite; }
+@keyframes sc-tut-tap  { 0%, 100% { transform:translate(10px, 14px) scale(1); } 45% { transform:translate(0, 0) scale(.88); } 60% { transform:translate(0, 0) scale(.88); } }
+@keyframes sc-tut-move { 0% { transform:translate(0, 0) scale(.9); opacity:0; } 12% { opacity:1; transform:translate(0, 0) scale(.9); }
+                         70% { transform:translate(var(--dx), var(--dy)) scale(.9); opacity:1; } 90%, 100% { transform:translate(var(--dx), var(--dy)) scale(1); opacity:0; } }
+.sc-tut-ring {
+  position:fixed; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:0; pointer-events:none;
+  border:2px solid var(--sc-accent); box-shadow:0 0 12px -1px color-mix(in srgb, var(--sc-accent) 55%, transparent); animation:sc-tut-ring 1.1s ease-out infinite;
+}
+@keyframes sc-tut-ring { 0%, 40% { transform:scale(.3); opacity:0; } 50% { opacity:1; } 100% { transform:scale(1.4); opacity:0; } }
+@keyframes sc-tut-fade { from { opacity:0; } }
+@media (prefers-reduced-motion:reduce) { .sc-tut-hand, .sc-tut-ring { animation:none; } }

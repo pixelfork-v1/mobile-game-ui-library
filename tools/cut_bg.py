@@ -18,12 +18,31 @@ ap = argparse.ArgumentParser()
 ap.add_argument('src'); ap.add_argument('out')
 ap.add_argument('--tol', type=int, default=30, help='how far a pixel may differ from the corner colour and still count as background')
 ap.add_argument('--pad', type=int, default=8, help='transparent margin left around the icon')
+ap.add_argument('--mono', action='store_true',
+                help='single-colour glyph on a flat background: alpha comes from brightness, so holes inside the '
+                     'shape (a gear centre, a door) become transparent too, and the edge stays perfectly smooth')
+ap.add_argument('--tint', default='#FFFFFF', help='--mono only: the colour the glyph is painted in')
 a = ap.parse_args()
 
 im = Image.open(a.src).convert('RGB')
 arr = np.asarray(im).astype(np.int16)
 h, w, _ = arr.shape
 bg = np.median(np.concatenate([arr[0], arr[-1], arr[:, 0], arr[:, -1]]), axis=0)   # the frame's own colour
+
+if a.mono:
+    lum = arr.mean(axis=2) / 255.0
+    dark_bg = float(np.mean(bg)) < 128
+    alpha = np.clip(lum if dark_bg else 1.0 - lum, 0, 1)
+    lo, hi = 0.10, 0.92                                   # ignore sensor-ish noise, treat near-white as solid
+    alpha = np.clip((alpha - lo) / (hi - lo), 0, 1)
+    tint = tuple(int(a.tint.lstrip('#')[i:i + 2], 16) for i in (0, 2, 4))
+    rgb = np.zeros((h, w, 3), 'uint8'); rgb[..., 0], rgb[..., 1], rgb[..., 2] = tint
+    img = Image.fromarray(np.dstack([rgb, (alpha * 255).astype('uint8')]), 'RGBA')
+    box = img.split()[-1].point(lambda v: 255 if v > 8 else 0).getbbox()
+    img = img.crop((max(0, box[0] - a.pad), max(0, box[1] - a.pad), min(w, box[2] + a.pad), min(h, box[3] + a.pad)))
+    img.save(a.out, optimize=True)
+    print(f'{a.out}  {img.size[0]}x{img.size[1]}  mono glyph, holes kept')
+    raise SystemExit
 
 close = (np.abs(arr - bg).max(axis=2) <= a.tol)
 out = np.zeros((h, w), bool)                       # background reachable from the edge

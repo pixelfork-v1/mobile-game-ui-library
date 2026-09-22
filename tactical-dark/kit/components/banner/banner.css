@@ -1,0 +1,34 @@
+/*
+  Title Banner — Tactical Dark
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file: sizes driven by --b-fs, the band sc.js wraps round the text, and both
+  entrance animations (unfurl, drop). Skin: no ribbon and no folded tails — the reference's header plate,
+  a bar with pointed ends, a thin accent edge and a near-white title.
+*/
+:where(.sc-banner) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-banner {
+  --b-fs:18px; --b-h:calc(var(--b-fs) * 2.3); --cut:calc(var(--b-h) * .5);
+  position:relative; display:inline-flex; box-sizing:border-box; height:var(--b-h); margin:0;
+  font-family:var(--sc-font); white-space:nowrap; user-select:none; -webkit-user-select:none; vertical-align:middle;
+  filter:drop-shadow(0 0 8px var(--lip));
+}
+.sc-banner[data-size="sm"] { --b-fs:13px; }
+.sc-banner[data-size="lg"] { --b-fs:26px; }
+.sc-banner::before {                       /* the accent edge: the same pointed shape, one pixel bigger */
+  content:""; position:absolute; inset:0; background:color-mix(in srgb, var(--line) 70%, #0000);
+  clip-path:polygon(var(--cut) 0, calc(100% - var(--cut)) 0, 100% 50%, calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 50%);
+}
+.sc-banner-band {
+  position:relative; display:flex; align-items:center; justify-content:center; box-sizing:border-box; width:100%; height:100%;
+  min-width:calc(var(--b-h) * 3.6); padding:0 calc(var(--b-fs) * 1.6);
+  background:linear-gradient(90deg, color-mix(in srgb, var(--sc-panel) 94%, var(--sc-shade)), color-mix(in srgb, var(--line) 22%, color-mix(in srgb, var(--sc-panel) 94%, var(--sc-shade))) 50%, color-mix(in srgb, var(--sc-panel) 94%, var(--sc-shade)));
+  clip-path:polygon(calc(var(--cut) + 1.5px) 1.5px, calc(100% - var(--cut) - 1.5px) 1.5px, calc(100% - 2.1px) 50%,
+                    calc(100% - var(--cut) - 1.5px) calc(100% - 1.5px), calc(var(--cut) + 1.5px) calc(100% - 1.5px), 2.1px 50%);
+}
+.sc-banner-band > .sc-text { --fs:var(--b-fs); --ink:var(--sc-ink); font-size:var(--fs); letter-spacing:calc(.14em * var(--sc-tracking)); text-transform:var(--sc-caps); }
+
+.sc-banner[data-animate="unfurl"] { animation:sc-banner-unfurl .4s cubic-bezier(.2,1.2,.5,1) backwards; }
+.sc-banner[data-animate="drop"]   { animation:sc-banner-drop .4s cubic-bezier(.2,1.3,.5,1) backwards; }
+@keyframes sc-banner-unfurl { from { transform:scaleX(.2); opacity:0; } }
+@keyframes sc-banner-drop   { from { transform:translateY(-40%); opacity:0; } }
+@media (prefers-reduced-motion:reduce) { .sc-banner { animation:none !important; } }
