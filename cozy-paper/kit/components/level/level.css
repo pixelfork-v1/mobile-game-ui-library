@@ -1,0 +1,32 @@
+/*
+  Level Badge — Cozy Paper
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file (sizes, pop, and the XP-bar integration where the badge sits on a
+  progress bar's left end). Skin: sc.js inserts the badge art <img>; this style hides it and draws a
+  hexagon plate in CSS instead, so the number stays near-white on a dark accent-tinted plate.
+*/
+:where(.sc-level) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-level {
+  --lv:40px;
+  position:relative; display:inline-grid; place-items:center; flex:none; vertical-align:middle;
+  width:var(--lv); height:var(--lv); font-family:var(--sc-font); user-select:none; -webkit-user-select:none;
+  filter:drop-shadow(0 0 .8px color-mix(in srgb, var(--line) 80%, #0000)) drop-shadow(0 0 .8px color-mix(in srgb, var(--line) 80%, #0000));
+}
+.sc-level::before {
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(color-mix(in srgb, var(--line) 38%, color-mix(in srgb, var(--sc-well) 97%, var(--sc-surface-shade))), color-mix(in srgb, var(--line) 18%, color-mix(in srgb, var(--sc-well) 70%, var(--sc-surface-shade))));
+  clip-path:polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+}
+.sc-level[data-size="sm"] { --lv:28px; }
+.sc-level[data-size="lg"] { --lv:56px; }
+.sc-level > img { display:none; }
+.sc-level > .sc-text { --fs:calc(var(--lv) * .4); --ink:var(--sc-ink); font-size:var(--fs); position:relative; font-variant-numeric:tabular-nums; }
+.sc-level.sc-pop { animation:sc-level-pop .45s cubic-bezier(.2,1.5,.5,1); }
+@keyframes sc-level-pop { 0% { scale:1; } 35% { scale:1.3; } 100% { scale:1; } }
+
+/* On a progress bar's left end (like an XP bar) */
+.sc-progress > .sc-level {
+  --lv:max(30px, calc(var(--h) * 2.1)); position:relative; z-index:2; margin-right:calc(var(--lv) * -.3);
+}
+.sc-progress:has(> .sc-level) .sc-progress-label { padding-left:calc(var(--h) * .6); }
+@media (prefers-reduced-motion:reduce) { .sc-level.sc-pop { animation:none; } }

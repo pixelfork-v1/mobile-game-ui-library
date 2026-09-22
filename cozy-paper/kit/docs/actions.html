@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Action Buttons — Cozy Paper UI Kit</title>
+<link rel="stylesheet" href="../core.css">
+<link rel="stylesheet" href="../components/actions/actions.css">
+<link rel="stylesheet" href="../components/joystick/joystick.css">
+<link rel="stylesheet" href="../components/bubble/bubble.css">
+<link rel="stylesheet" href="../components/button/button.css">
+<link rel="stylesheet" href="docs.css">
+<script src="../sc.js"></script>
+<script src="docs.js"></script>
+<style>
+.row { width:100%; display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:center; gap:30px; }
+/* its own full-width line, so changing text can never push the buttons sideways */
+.log { flex:0 0 100%; width:100%; margin:10px 0 0; min-height:1.5em; color:#dce6ff; font:14px/1.5 system-ui; text-align:center; }
+</style>
+</head>
+<body>
+<script>
+SCDocs.page({
+  title: 'Action Buttons',
+  lead: 'Round glossy buttons for the game actions — jump, fire, dash. They sit opposite the Joystick and report press and release, so holding works.',
+  hero: `<div class="row">
+  <div class="sc-actions" data-layout="cluster">
+    <button class="sc-action" data-value="dash" data-icon="rocket" data-color="yellow" data-size="sm">Dash</button>
+    <button class="sc-action" data-value="jump" data-icon="jump" data-color="green" data-size="lg">Jump</button>
+  </div>
+</div>`,
+  css: ['components/actions/actions.css'],
+  usageNote: 'Put them in the bottom area of the HUD screen, on the opposite side from the joystick. Listen on the group.',
+  usage: `<div class="sc-actions" id="acts" data-layout="cluster">
+  <button class="sc-action" data-value="jump" data-icon="jump" data-size="lg" data-color="green">Jump</button>
+  <button class="sc-action" data-value="fire" data-icon="fireball" data-color="red">Fire</button>
+</div>
+
+<script>
+  acts.addEventListener('press',   e => game.start(e.detail.value));   // holding works
+  acts.addEventListener('release', e => game.stop(e.detail.value));
+<\/script>`,
+  examples: [
+    { title: 'Sizes and colors', desc: 'sm / md / lg (56 / 72 / 92 px). The main action is usually the biggest one, bottom-right.',
+      html: `<div class="row">
+  <button class="sc-action" data-value="a" data-icon="sword" data-size="sm" data-color="sky">Sm</button>
+  <button class="sc-action" data-value="b" data-icon="shield" data-color="red">Md</button>
+  <button class="sc-action" data-value="c" data-icon="fireball" data-size="lg" data-color="yellow">Lg</button>
+  <button class="sc-action" data-value="d" data-icon="potion" data-color="purple"></button>
+</div>` },
+    { title: 'Layouts', desc: 'cluster (staggered, easy for a thumb), row, column, grid.',
+      html: `<div class="row">
+  <div class="sc-actions" data-layout="cluster"><button class="sc-action" data-value="1" data-icon="sword" data-size="sm"></button><button class="sc-action" data-value="2" data-icon="jump" data-size="lg" data-color="green"></button></div>
+  <div class="sc-actions" data-layout="row"><button class="sc-action" data-value="1" data-icon="fireball" data-color="red"></button><button class="sc-action" data-value="2" data-icon="bomb" data-color="yellow"></button></div>
+  <div class="sc-actions" data-layout="grid"><button class="sc-action" data-value="1" data-icon="sword" data-size="sm"></button><button class="sc-action" data-value="2" data-icon="crosshair" data-size="sm" data-color="yellow"></button><button class="sc-action" data-value="3" data-icon="fireball" data-size="sm" data-color="red"></button><button class="sc-action" data-value="4" data-icon="potion" data-size="sm" data-color="purple"></button></div>
+</div>` },
+    { title: 'Counts and locked', desc: 'data-badge shows how many are left (needs bubble.css); disabled greys the button out.',
+      html: `<div class="row">
+  <button class="sc-action" data-value="bomb" data-icon="bomb" data-color="purple" data-badge="3">Bomb</button>
+  <button class="sc-action" data-value="potion" data-icon="potion" data-color="green" data-badge="0" data-badge-color="dark" disabled>Heal</button>
+</div>` },
+    { title: 'Live: press and hold', desc: 'press fires when the thumb goes down, release when it lifts — good for charging or continuous fire.',
+      html: `<div class="row">
+  <div class="sc-actions" id="liveActs" data-layout="cluster">
+    <button class="sc-action" data-value="shield" data-icon="shield" data-color="sky" data-size="sm">Shield</button>
+    <button class="sc-action" data-value="fire" data-icon="fireball" data-color="red" data-size="lg">Fire</button>
+  </div>
+</div>
+<p class="log" id="actLog">press a button</p>`,
+      setup(p) {
+        const log = p.querySelector('#actLog'); let t0 = 0;
+        p.querySelector('#liveActs').addEventListener('press', e => { t0 = Date.now(); log.textContent = e.detail.value + ' pressed…'; });
+        p.querySelector('#liveActs').addEventListener('release', e => log.textContent = `${e.detail.value} released after ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+      } },
+  ],
+  api: [
+    ['data-value', 'text', '', 'Required. Name the game receives.'],
+    ['data-icon', 'icon-name or path', '', 'Picture on the button.'],
+    ['data-size', 'sm md lg', 'md', '56 / 72 / 92 px.'],
+    ['data-color', 'sky blue green yellow orange red purple pink mint', 'sky', ''],
+    ['data-badge', 'number', '', 'Count bubble (needs bubble.css).'],
+    ['text inside', 'text', '', 'Small label under the icon.'],
+    ['disabled', 'boolean', '', 'Locked.'],
+    ['.sc-actions data-layout', 'cluster row column grid', 'cluster', 'Arrangement.'],
+  ],
+  js: `acts.addEventListener('press',   e => shoot(e.detail.value));
+acts.addEventListener('release', e => stopShooting(e.detail.value));
+SC.setBadge(acts.querySelector('[data-value="bomb"]'), 2);   // ammo left`,
+  rules: [
+    'Use <b>1–3 buttons</b> on a phone. The main action is <code class="inline">data-size="lg"</code>, bottom-right; helpers are smaller and higher.',
+    'Always pair with the <b>Joystick on the opposite side</b> inside <code class="inline">.sc-screen-bottom</code>.',
+    'Handle <b>both</b> <code class="inline">press</code> and <code class="inline">release</code> — tapping and holding must both work.',
+    'Use <code class="inline">data-badge</code> for limited actions (bombs, potions) and <code class="inline">disabled</code> while on cooldown.',
+    'Icons: use a kit icon, or generate a matching one with <code class="inline">kit/assets/IMAGE-PROMPTS.md</code>.',
+  ],
+});
+</script>
+</body>
+</html>

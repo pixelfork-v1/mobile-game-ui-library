@@ -1,0 +1,52 @@
+/*
+  Countdown Timer — Cozy Paper
+  Requires: ../../core.css, ../sc.js
+
+  Two looks, and the DEFAULT is the ring — data-variant="pill" is the opt-in, matching sc.js.
+  The ring is a conic gradient masked into a band; digits stay near-white until the timer runs low, when
+  the whole thing turns red. State through colour, meaning through contrast.
+*/
+:where(.sc-timer) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-timer {
+  --s:48px;
+  position:relative; display:inline-grid; place-items:center; box-sizing:border-box;
+  width:var(--s); height:var(--s); font-family:var(--sc-font); vertical-align:middle;
+}
+.sc-timer[data-size="sm"] { --s:36px; }
+.sc-timer[data-size="lg"] { --s:72px; }
+/* the ring is an SVG circle driven by stroke-dashoffset from sc.js — style the strokes, not a box */
+.sc-timer svg { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); overflow:visible; }
+.sc-timer .sc-timer-bg    { fill:var(--sc-well); stroke:color-mix(in srgb, var(--sc-sheen) 11%, transparent); stroke-width:1.5; }
+.sc-timer .sc-timer-track { fill:none; stroke:color-mix(in srgb, var(--sc-panel) 94%, var(--sc-sheen)); stroke-width:4; }
+.sc-timer .sc-timer-ring  {
+  fill:none; stroke:var(--line); stroke-width:4; stroke-linecap:round;
+  filter:drop-shadow(0 0 4px var(--lip));
+}
+.sc-timer > .sc-text {
+  position:relative; --fs:calc(var(--s) * .3); --ink:var(--sc-ink); font-size:var(--fs);
+  font-variant-numeric:tabular-nums; letter-spacing:calc(.02em * var(--sc-tracking));
+}
+
+/* pill */
+.sc-timer[data-variant="pill"] {
+  --s:28px; --cut:calc(var(--s) * .3);
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  width:auto; height:var(--s); padding:0 calc(var(--s) * .45);
+  border:1px solid color-mix(in srgb, var(--sc-sheen) 12%, transparent); background:color-mix(in srgb, var(--sc-well) 78%, transparent);
+  clip-path:polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+}
+.sc-timer[data-variant="pill"][data-size="sm"] { --s:22px; }
+.sc-timer[data-variant="pill"][data-size="lg"] { --s:36px; }
+.sc-timer[data-variant="pill"] > .sc-text { --fs:calc(var(--s) * .5); }
+.sc-timer[data-variant="pill"] > img[data-sc-icon] { width:calc(var(--s) * .72); height:calc(var(--s) * .72); margin-left:calc(var(--s) * -.12); object-fit:contain; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-timer[data-variant="pill"] .sc-timer-bg,
+.sc-timer[data-variant="pill"] .sc-timer-track,
+.sc-timer[data-variant="pill"] .sc-timer-ring { display:none; }
+
+.sc-timer.sc-warn { --line:var(--sc-c-red); --lip:color-mix(in srgb, var(--sc-c-red) calc(45% * var(--sc-glow)), transparent); }
+.sc-timer.sc-warn > .sc-text { --ink:color-mix(in srgb, var(--sc-c-red) 49%, var(--sc-ink)); }
+.sc-timer.sc-warn[data-variant="pill"] { border-color:var(--sc-c-red); box-shadow:0 0 12px -3px color-mix(in srgb, var(--sc-c-red) 45%, transparent); }
+.sc-timer.sc-warn { animation:sc-timer-pulse .5s ease-in-out infinite alternate; }
+.sc-timer.sc-done { animation:none; opacity:.5; }
+@keyframes sc-timer-pulse { to { transform:scale(1.08); } }
+@media (prefers-reduced-motion:reduce) { .sc-timer.sc-warn { animation:none; } }

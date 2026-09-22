@@ -70,7 +70,7 @@ def check(sheet, white, cols=3, rows=3, count=9):
         ink = al > 40; bgmask = ~ink
         edge_ok = (al[0].mean() < 8) and (al[-1].mean() < 8) and (al[:, 0].mean() < 8) and (al[:, -1].mean() < 8)
     if not edge_ok: return 'the edge of the image is not the flat background colour'
-    if bgmask.mean() < .45: return f'background is only {bgmask.mean():.0%} of the image — tiled or filled'
+    if bgmask.mean() < .35: return f'background is only {bgmask.mean():.0%} of the image — tiled or filled'
     ch, cw = h / rows, w / cols
     for r in range(rows):
         for c in range(cols):

@@ -1,0 +1,65 @@
+/*
+  Icon Button — Cozy Paper
+  Requires: ../../core.css, super-casual/kit/sc.js (and the style's assets/offsets.css for optical centering)
+*/
+.sc-icon-button {
+  --size:52px;
+  position:relative; box-sizing:border-box; width:var(--size); height:var(--size); padding:0; flex:none;
+  display:inline-grid; place-items:center; vertical-align:middle; cursor:pointer;
+  font-family:var(--sc-font);
+  -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none; user-select:none; -webkit-user-select:none;
+  transition:box-shadow .12s, background .12s, transform .06s;
+}
+.sc-icon-button[data-size="sm"] { --size:42px; --r:6px; }
+.sc-icon-button[data-size="lg"] { --size:66px; --r:10px; }
+.sc-icon-button[data-shape="round"] { --r:50%; }
+
+.sc-icon-button > img {
+  width:52%; height:52%; object-fit:contain; pointer-events:none;
+  translate:var(--ox, 0%) var(--oy, 0%);
+}
+.sc-icon-button > img[data-flip] { transform:scaleX(-1); translate:calc(var(--ox, 0%) * -1) var(--oy, 0%); }
+
+.sc-icon-button:active, .sc-icon-button.sc-pressed {
+  background:linear-gradient(var(--base), var(--band));
+  box-shadow:0 0 18px -2px var(--lip), inset 0 0 12px -4px var(--line);
+  transform:translateY(1px);
+}
+.sc-icon-button:disabled { cursor:not-allowed; transform:none; filter:grayscale(1) brightness(.7); }
+
+/* Round: every variant can be a circle; the icon shrinks a touch so it clears the curve */
+.sc-icon-button[data-shape="round"] > img { width:48%; height:48%; }
+
+/* Flat: the neutral one — dark, bordered, no accent colour (PORTED meaning: it is NOT borderless) */
+.sc-icon-button[data-variant="flat"] {
+  border:1.5px solid color-mix(in srgb, var(--sc-edge) 99%, var(--sc-sheen)); border-radius:calc(var(--size) * .16 * var(--sc-round));
+  background:linear-gradient(var(--sc-raise), color-mix(in srgb, var(--sc-raise) 69%, var(--sc-surface-shade))); box-shadow:inset 0 1px 0 color-mix(in srgb, var(--sc-sheen) 7%, transparent);
+}
+.sc-icon-button[data-variant="flat"] > img { width:66%; height:66%; }   /* flat buttons carry items (boosters, shortcuts): let the item fill the tile */
+.sc-icon-button[data-variant="flat"][data-shape="round"] { border-radius:50%; }
+.sc-icon-button[data-variant="flat"]:active, .sc-icon-button[data-variant="flat"].sc-pressed { background:linear-gradient(color-mix(in srgb, var(--sc-raise) 69%, var(--sc-surface-shade)), var(--sc-raise)); box-shadow:none; }
+
+/* Ring: a pale edge on a dim fill — reads on any background, no accent */
+.sc-icon-button[data-variant="ring"] {
+  border:1.5px solid color-mix(in srgb, var(--sc-ink) 97%, var(--sc-shade)); border-radius:calc(var(--size) * .16 * var(--sc-round));
+  background:color-mix(in srgb, color-mix(in srgb, var(--sc-panel) 80%, var(--sc-surface-shade)) 72%, transparent); box-shadow:0 0 10px -3px color-mix(in srgb, color-mix(in srgb, var(--sc-ink) 97%, var(--sc-shade)) 40%, transparent);
+}
+.sc-icon-button[data-variant="ring"][data-shape="round"] { border-radius:50%; }
+.sc-icon-button[data-variant="ring"][data-shape="round"] > img { margin-bottom:0; }
+
+/* With a label: icon on top, text underneath — works on every variant (PORTED grid layout) */
+/* this style's font is wide: the tile grows with its label instead of letting the word touch the frame */
+.sc-icon-button:has(> .sc-text) { width:auto; min-width:var(--size); padding-inline:calc(var(--size) * .13); height:calc(var(--size) * 1.14); grid-template-rows:1fr auto; padding-top:calc(var(--size) * .08); padding-bottom:calc(var(--size) * .1); }
+.sc-icon-button:has(> .sc-text) > img { width:calc(var(--size) * .58); height:100%; align-self:end; justify-self:center; }
+.sc-icon-button > .sc-text { --fs:calc(var(--size) * .2); --ink:var(--sc-ink); font-size:var(--fs); letter-spacing:calc(.06em * var(--sc-tracking)); text-transform:var(--sc-caps); }
+
+/* ---- Clean Flat: the default icon button is SOLID colour with a soft lip, like the text button — a white glyph on a
+   pale tint was unreadable. Flat / ring variants stay light and their glyphs go dark (text follows the icon). ---- */
+.sc-icon-button:not([data-variant]), .sc-icon-button[data-variant="glossy"] {
+  background:var(--line); border-color:color-mix(in srgb, var(--line) 80%, var(--sc-shade));
+  box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--line) 76%, var(--sc-shade));
+}
+.sc-icon-button:not([data-variant])::after, .sc-icon-button[data-variant="glossy"]::after { content:none; }
+/* its white glyph stays white on the solid fill: the glyph rule in core.css (tools/glyph_list.py) covers solid icon buttons too */
+.sc-icon-button[data-color="dark"] { --line:var(--sc-panel); border-color:var(--sc-edge); --sc-glyph-on-button:var(--sc-glyph-filter); }
+.sc-icon-button[data-color="dark"] { box-shadow:inset 0 -3px 0 var(--sc-edge); }

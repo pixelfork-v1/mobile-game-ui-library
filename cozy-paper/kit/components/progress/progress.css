@@ -1,0 +1,51 @@
+/*
+  Progress Bar — Cozy Paper
+  Requires: ../../core.css, super-casual/kit/sc.js
+  An outlined pill track with a bottom edge; the fill is the accent with the button's top band. Label on the bar.
+*/
+:where(.sc-progress) { --line:color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)); --lip:color-mix(in srgb, color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)) calc(35% * var(--sc-glow)), transparent); }
+.sc-progress {
+  --h:16px;
+  position:relative; display:flex; align-items:center; width:100%; min-width:80px; box-sizing:border-box;
+  font-family:var(--sc-font); user-select:none; -webkit-user-select:none;
+}
+.sc-progress[data-size="sm"] { --h:10px; }
+.sc-progress[data-size="lg"] { --h:24px; }
+
+.sc-progress-bar { position:relative; flex:1; height:var(--h); }
+.sc-progress-track {
+  position:absolute; inset:0; overflow:hidden; box-sizing:border-box;
+  background:var(--sc-well); border:2px solid var(--sc-outline); border-radius:999px; box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--sc-well) 70%, var(--sc-surface-shade));
+}
+.sc-progress-fill {
+  position:absolute; left:0; top:0; bottom:0; width:var(--pct, 0%); border-radius:999px;
+  /* the fill is the BRIGHT accent (--line), not the dark button tint (--base) */
+  background:linear-gradient(180deg, color-mix(in srgb, var(--sc-sheen) 30%, transparent) 0%, color-mix(in srgb, var(--sc-sheen) 12%, transparent) 38%, #0000 46%), var(--line);
+  box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--line) 76%, var(--sc-shade)), 0 0 10px -1px var(--lip);
+  transition:width .45s cubic-bezier(.3,.9,.4,1);
+}
+.sc-progress[data-value="0"] .sc-progress-fill { visibility:hidden; }
+
+.sc-progress-label { position:absolute; inset:0; z-index:1; display:grid; place-items:center; line-height:1; }
+.sc-progress-label .sc-text {
+  --fs:calc(var(--h) * .62); --ink:var(--sc-ink); font-size:var(--fs); font-variant-numeric:tabular-nums;
+  text-shadow:0 0 3px var(--sc-panel), 0 0 2px var(--sc-panel);   /* dark text with a white halo: it sits half on the fill, half on the track */    /* the label sits half on the bright fill, half on the dark track */
+}
+.sc-progress[data-size="sm"] .sc-progress-label { display:none; }
+
+.sc-progress > img[data-sc-icon] {
+  position:relative; z-index:2; flex:none; width:calc(var(--h) * 1.6); height:calc(var(--h) * 1.6);
+  margin-right:calc(var(--h) * .4); object-fit:contain; pointer-events:none; translate:var(--ox, 0%) var(--oy, 0%);
+}
+/* Star markers — PORTED: each marker holds TWO stacked images (empty + lit); without sizing them they render
+   at the icon's natural 160px, which is what put giant stars over the bar */
+.sc-progress-marker {
+  position:absolute; top:50%; left:var(--at); z-index:2; width:calc(var(--h) * 1.5); height:calc(var(--h) * 1.5);
+  min-width:20px; min-height:20px; transform:translate(-50%, -50%); pointer-events:none;
+}
+.sc-progress-marker img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+.sc-progress-marker img:first-child { opacity:.7; }
+.sc-progress-marker img:last-child { opacity:0; }
+.sc-progress-marker.sc-lit img:last-child { opacity:1; filter:drop-shadow(0 0 5px color-mix(in srgb, var(--sc-c-yellow) 50%, transparent)); animation:sc-marker-pop .4s cubic-bezier(.2,1.5,.5,1); }
+@keyframes sc-marker-pop { from { transform:scale(.3); } 60% { transform:scale(1.3); } }
+.sc-progress:has(.sc-progress-marker) .sc-progress-label { display:none; }

@@ -1,0 +1,200 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cozy Paper — every component</title>
+<link rel="stylesheet" href="../core.css">
+<link rel="stylesheet" href="../assets/offsets.css">
+<link rel="stylesheet" href="../components/screen/screen.css">
+<link rel="stylesheet" href="../components/button/button.css">
+<link rel="stylesheet" href="../components/icon-button/icon-button.css">
+<link rel="stylesheet" href="../components/counter/counter.css">
+<link rel="stylesheet" href="../components/slot/slot.css">
+<link rel="stylesheet" href="../components/popup/popup.css">
+<link rel="stylesheet" href="../components/progress/progress.css">
+<link rel="stylesheet" href="../components/title/title.css">
+<link rel="stylesheet" href="../components/stars/stars.css">
+<link rel="stylesheet" href="../components/timer/timer.css">
+<link rel="stylesheet" href="../components/float/float.css">
+<link rel="stylesheet" href="../components/bubble/bubble.css">
+<link rel="stylesheet" href="../components/toggle/toggle.css">
+<link rel="stylesheet" href="../components/slider/slider.css">
+<link rel="stylesheet" href="../components/checkbox/checkbox.css">
+<link rel="stylesheet" href="../components/tabs/tabs.css">
+<link rel="stylesheet" href="../components/tabbar/tabbar.css">
+<link rel="stylesheet" href="../components/tag/tag.css">
+<link rel="stylesheet" href="../components/banner/banner.css">
+<link rel="stylesheet" href="../components/hint/hint.css">
+<link rel="stylesheet" href="../components/toast/toast.css">
+<link rel="stylesheet" href="../components/row/row.css">
+<link rel="stylesheet" href="../components/loading/loading.css">
+<link rel="stylesheet" href="../components/alert/alert.css">
+<link rel="stylesheet" href="../components/level/level.css">
+<link rel="stylesheet" href="../components/topbar/topbar.css">
+<link rel="stylesheet" href="../components/shopcard/shopcard.css">
+<link rel="stylesheet" href="../components/tutorial/tutorial.css">
+<link rel="stylesheet" href="../components/joystick/joystick.css">
+<link rel="stylesheet" href="../components/actions/actions.css">
+<script src="../sc.js" data-assets="../assets/"></script>
+<style>
+  html,body { margin:0; background:var(--sc-ground); color:var(--sc-ink); font-family:var(--sc-font); }
+  main { max-width:860px; margin:0 auto; padding:30px 20px 90px; }
+  h1 { font-size:19px; letter-spacing:.14em; text-transform:uppercase; color:var(--sc-dim); margin:0 0 6px; font-weight:700; }
+  .note { margin:0 0 24px; font:13px/1.5 system-ui; color:var(--sc-dim); }
+  section { padding:20px; margin-bottom:14px; border:1px solid var(--sc-edge); border-radius:var(--sc-r); background:var(--sc-panel); }
+  h2 { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--sc-dim); margin:0 0 16px; font-weight:600; }
+  .row { display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+  .col { display:flex; flex-direction:column; gap:14px; align-items:stretch; }
+  .zone { position:relative; width:100%; height:170px; border:1px dashed var(--sc-edge); border-radius:8px; }
+</style></head><body><main>
+<h1>Cozy Paper — 30 components</h1>
+<p class="note">Same markup and the same sc.js as the Super Casual kit. Only the CSS differs.</p>
+
+<section><h2>Button</h2><div class="row">
+  <button class="sc-button" data-color="sky">Sell</button>
+  <button class="sc-button" data-color="mint">Fuse</button>
+  <button class="sc-button" data-color="orange" data-texture="dots">Equip</button>
+  <button class="sc-button" data-color="red" data-size="sm">Drop</button>
+  <button class="sc-button" data-color="green" data-size="lg">Confirm</button>
+  <button class="sc-button" disabled>Locked</button>
+</div></section>
+
+<section><h2>Icon button</h2><div class="row">
+  <button class="sc-icon-button" data-icon="settings" data-color="sky" data-badge="3" aria-label="Settings"></button>
+  <button class="sc-icon-button" data-icon="pause" data-color="cyan" aria-label="Pause"></button>
+  <button class="sc-icon-button" data-icon="close" data-color="red" data-size="sm" aria-label="Close"></button>
+  <button class="sc-icon-button" data-icon="play" data-color="green" data-size="lg" aria-label="Play"></button>
+  <button class="sc-icon-button" data-variant="ring" data-icon="back" data-color="sky" aria-label="Back"></button>
+  <button class="sc-icon-button" data-variant="flat" data-icon="home" aria-label="Home">Home</button>
+</div></section>
+
+<section><h2>Counter · Level · Top bar</h2><div class="col">
+  <div class="row">
+    <div class="sc-counter" data-icon="coin" data-value="349810"></div>
+    <div class="sc-counter" data-icon="gem" data-value="85" data-plus="cyan"></div>
+    <div class="sc-counter" data-icon="heart" data-value="3" data-max="5" data-size="sm"></div>
+    <span class="sc-level" data-value="21"></span>
+    <span class="sc-level" data-value="7" data-size="sm" data-color="orange"></span>
+  </div>
+  <div class="sc-topbar" data-name="Vasquez" data-level="21" data-avatar="avatar">
+    <div class="sc-topbar-res">
+      <div class="sc-counter" data-icon="coin" data-value="2400" data-size="sm"></div>
+      <div class="sc-counter" data-icon="gem" data-value="85" data-size="sm" data-plus="cyan"></div>
+    </div>
+  </div>
+</div></section>
+
+<section><h2>Progress · Loading · Timer · Stars</h2><div class="col">
+  <div class="sc-progress" data-value="72" data-color="sky" data-label="percent"></div>
+  <div class="sc-progress" data-value="850" data-max="1000" data-color="green" data-label="value" data-icon="star"></div>
+  <div class="sc-loading" id="loader" data-value="64" data-icon="energy" data-tips="Potions heal between fights|Open chests for rare loot"></div>
+  <div class="row">
+    <div class="sc-timer" data-variant="pill" data-seconds="5400" data-format="long"></div>
+    <div class="sc-timer" data-variant="pill" data-seconds="42"></div>
+    <div class="sc-timer" data-seconds="90"></div>
+    <div class="sc-timer" data-seconds="20" data-size="lg"></div>
+    <div class="sc-stars" data-value="3" data-max="5"></div>
+    <div class="sc-stars" data-value="2" data-max="3" data-size="lg"></div>
+  </div>
+</div></section>
+
+<section><h2>Toggle · Slider · Checkbox</h2><div class="col">
+  <div class="row">
+    <button class="sc-toggle" data-checked="true" aria-label="Sound"></button>
+    <button class="sc-toggle" aria-label="Music"></button>
+    <button class="sc-toggle" data-checked="true" data-color="green" data-size="sm" aria-label="Haptics"></button>
+    <button class="sc-toggle" data-checked="true" disabled aria-label="Locked"></button>
+  </div>
+  <div class="sc-slider" data-value="40" data-label="percent" aria-label="Volume"></div>
+  <div class="sc-slider" data-value="3" data-max="5" data-label="value" data-color="green" aria-label="Quality"></div>
+  <div class="row">
+    <button class="sc-checkbox" data-checked>Don't show again</button>
+    <button class="sc-checkbox">Remember me</button>
+    <button class="sc-checkbox" disabled>Locked</button>
+  </div>
+</div></section>
+
+<section><h2>Tabs · Tab bar</h2><div class="col">
+  <div class="sc-tabs" data-value="daily">
+    <button data-value="daily" data-icon="calendar-color">Daily</button>
+    <button data-value="quest" data-icon="quest-color">Quest</button>
+    <button data-value="event" data-icon="trophy" data-alert>Event</button>
+  </div>
+  <nav class="sc-tabbar" data-value="play" style="max-width:420px">
+    <button data-value="shop" data-icon="shop-color" data-badge="2">Market</button>
+    <button data-value="play" data-icon="home-color">Base</button>
+    <button data-value="rank" data-icon="trophy">Rank</button>
+    <button data-value="set" data-icon="settings-color">Setup</button>
+  </nav>
+</div></section>
+
+<section><h2>Slot · Shop card · Tag · Banner</h2><div class="col">
+  <div class="row">
+    <div class="sc-slot" data-icon="coin" data-count="1000" data-color="yellow"></div>
+    <div class="sc-slot" data-icon="gem" data-count="80" data-color="sky" data-tag="NEW"></div>
+    <div class="sc-slot" data-icon="chest" data-color="purple" data-tag="RARE" data-size="lg"></div>
+    <div class="sc-slot" data-icon="key" data-count="3" data-color="green" data-size="sm"></div>
+    <div class="sc-slot" data-icon="heart" data-color="red" data-state="locked"></div>
+  </div>
+  <div class="row">
+    <div class="sc-shopcard" data-icon="gem-pile" data-amount="500" data-price="$4.99" data-color="purple" data-tag="BEST" data-bonus="+20% bonus"></div>
+    <div class="sc-shopcard" data-icon="coin-pile" data-amount="5000" data-price="45" data-price-icon="gem" data-color="yellow"></div>
+    <div class="sc-shopcard" data-icon="watering-can" data-amount="5" data-price="900" data-price-icon="coin" data-color="red"></div>
+  </div>
+  <div class="row">
+    <span class="sc-tag">Normal</span>
+    <span class="sc-tag" data-color="sky">Rare</span>
+    <span class="sc-tag" data-color="purple">Epic</span>
+    <span class="sc-tag" data-color="yellow">Legendary</span>
+    <h2 class="sc-banner">Loadout</h2>
+  </div>
+</div></section>
+
+<section><h2>Item rows</h2><div class="col">
+  <div class="sc-row" data-color="yellow">
+    <div class="sc-slot" data-icon="coin" data-count="1000" data-size="sm" data-color="yellow"></div>
+    <div class="sc-row-body">
+      <span class="sc-row-title">Harvest three crops</span>
+      <div class="sc-progress" data-value="2" data-max="3" data-label="value" data-size="sm" data-color="yellow"></div>
+    </div>
+    <button class="sc-button" data-color="yellow" data-size="sm">Claim</button>
+  </div>
+  <div class="sc-row" data-variant="leader" data-color="green">
+    <span class="sc-row-rank">1</span>
+    <span class="sc-row-avatar" data-icon="helmet"></span>
+    <span class="sc-row-title">Vasquez</span>
+    <span class="sc-row-score" data-icon="star">9,412</span>
+  </div>
+</div></section>
+
+<section><h2>Screen title · Popup · Toast · Hint</h2><div class="col">
+  <div class="row" style="gap:24px">
+    <h1 class="sc-title" data-color="blue">Harvest done</h1>
+    <h1 class="sc-title" data-color="red" data-size="sm">Failed</h1>
+  </div>
+  <div class="row">
+    <button class="sc-button" data-color="sky" data-size="sm" onclick="SC.popup.open('p1')">Popup</button>
+    <button class="sc-button" data-color="green" data-size="sm" onclick="SC.toast('Supply drop secured', {kind:'success', icon:'chest'})">Toast</button>
+    <button class="sc-button" data-color="red" data-size="sm" onclick="SC.toast('Not enough gold', {kind:'error', icon:'coin'})">Error toast</button>
+    <span class="sc-hint" data-at="bottom">Tap to play</span>
+  </div>
+</div></section>
+
+<section><h2>Controls</h2><div class="row" style="justify-content:space-between">
+  <div class="sc-joystick" data-color="sky"></div>
+  <div class="sc-joystick" data-variant="dpad" data-color="mint"></div>
+  <div class="sc-actions" data-layout="cluster">
+    <button class="sc-action" data-value="dash" data-icon="rocket" data-color="yellow" data-size="sm">Dash</button>
+    <button class="sc-action" data-value="fire" data-icon="fireball" data-color="red" data-size="lg">Fire</button>
+  </div>
+</div></section>
+
+<div class="sc-popup" id="p1" hidden data-title="Supply Drop" data-sub="Sector 7" data-closable>
+  <div class="sc-popup-box"><div class="sc-popup-header"></div><div class="sc-popup-body">
+    <p class="sc-popup-message">A crate landed nearby. Reach it before the timer runs out.</p>
+    <p class="sc-popup-value">+2,400</p>
+    <div class="sc-popup-actions">
+      <button class="sc-button" data-color="dark" data-size="sm" onclick="SC.popup.close('p1')">Later</button>
+      <button class="sc-button" data-color="green" data-size="sm" onclick="SC.popup.close('p1')">Go</button>
+    </div>
+  </div></div>
+</div>
+</main></body></html>

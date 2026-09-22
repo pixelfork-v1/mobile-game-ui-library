@@ -9,6 +9,12 @@ while it was built. It is now complete: 30 components, 90 icons, 10 blocks, its 
 CDN tag, fix the repo URLs (the GitHub account was renamed advme → pixelfork-v1, Pages is 404), add a `cdn`
 block to Tactical Dark's registry, and decide whether it ships from the same repo and tag.
 
+## Done — style 6: Cozy Paper (`cozy-paper/`)
+Warm cream paper (a generated, seamless paper tile under every paper surface), stitched popup seam, earthy accents
+that carry white labels, Grandstander + Chewy. Spec: `cozy-paper/STYLE.md`. Ported from Clean Flat, so it keeps
+every owner rule (one colour per button, coloured tab bars, counter/plus/badge). 30 components · 10 blocks · docs ·
+bundle · 147 icons (90 shared, 36 farm/cooking/animal items, coloured nav set, baskets and crates).
+
 ## Done — style 5: Clean Flat (`clean-flat/`)
 The first light style: white cards on pale grey-blue, flat saturated colour, rounded, soft shadows, no outlines.
 Accents darkened until a white label reads 3:1; the bright gold button carries a dark label and a dark glyph.

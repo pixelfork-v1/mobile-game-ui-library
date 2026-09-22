@@ -1,0 +1,49 @@
+/*
+  Item Row — Cozy Paper
+  Requires: ../../core.css, super-casual/kit/sc.js
+  A dark strip with a hairline edge and a 2px accent bar down its left side.
+*/
+.sc-row {
+  --row-accent:var(--sc-edge); --title:var(--sc-ink);
+  position:relative; display:flex; align-items:center; gap:12px; box-sizing:border-box;
+  width:100%; min-width:0; min-height:68px; overflow:hidden;
+  padding:10px 12px; border:1px solid color-mix(in srgb, var(--sc-sheen) 8%, transparent); border-radius:var(--sc-r);
+  background-color:var(--sc-panel);
+  font-family:var(--sc-font); user-select:none; -webkit-user-select:none;
+}
+.sc-row::before {                                   /* the accent edge */
+  content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:var(--row-accent);
+  box-shadow:0 0 10px -1px var(--row-accent);
+}
+.sc-row[data-color="yellow"] { --row-accent:var(--sc-c-yellow); }
+.sc-row[data-color="blue"]   { --row-accent:var(--sc-c-blue); }
+.sc-row[data-color="sky"]    { --row-accent:color-mix(in srgb, var(--sc-c-sky) 87%, var(--sc-ink)); }
+.sc-row[data-color="green"]  { --row-accent:color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)); }
+.sc-row[data-color="purple"] { --row-accent:var(--sc-c-purple); }
+.sc-row[data-color="red"]    { --row-accent:var(--sc-c-red); }
+.sc-row[data-color="dark"]   { --row-accent:var(--sc-edge); }
+.sc-row[data-color="white"]  { --row-accent:color-mix(in srgb, var(--sc-ink) 97%, var(--sc-shade)); }
+
+.sc-row-body { flex:1; min-width:0; display:flex; flex-direction:column; gap:7px; }
+.sc-row-title { min-width:0; overflow:hidden; white-space:nowrap; line-height:1.1; padding:1px 0 2px; }
+.sc-row-title.sc-long { -webkit-mask-image:linear-gradient(90deg, #000 82%, transparent); mask-image:linear-gradient(90deg, #000 82%, transparent); }
+.sc-row-title > .sc-text { --fs:16px; --ink:var(--title); font-size:var(--fs); }
+.sc-row > .sc-row-title { flex:1; }
+
+.sc-row[data-variant="leader"] { min-height:50px; padding:6px 14px 6px 10px; gap:10px; }
+.sc-row-rank {
+  flex:none; display:grid; place-items:center; min-width:28px; height:26px; padding:0 6px; box-sizing:border-box;
+  border:1px solid color-mix(in srgb, var(--sc-sheen) 10%, transparent); border-radius:calc(var(--sc-r) * 0.5); background:var(--sc-well);
+}
+.sc-row-rank > .sc-text { --fs:14px; --ink:var(--sc-dim); font-size:var(--fs); font-variant-numeric:tabular-nums; }
+.sc-row-avatar {
+  flex:none; position:relative; width:38px; height:38px; box-sizing:border-box; overflow:hidden;
+  border:1px solid var(--row-accent); border-radius:calc(var(--sc-r) * 0.75); background:var(--sc-well);
+}
+.sc-row-avatar > img { position:absolute; inset:3px; width:calc(100% - 6px); height:calc(100% - 6px); object-fit:contain; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-row-score { flex:none; margin-left:auto; display:flex; align-items:center; gap:9px; }
+.sc-row-score > img { width:24px; height:24px; object-fit:contain; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-row-score > .sc-text { --fs:18px; --ink:var(--sc-ink); font-size:var(--fs); min-width:52px; text-align:right; font-variant-numeric:tabular-nums; }
+.sc-row > .sc-button, .sc-row > .sc-icon-button { flex:none; }
+.sc-row > .sc-button { min-width:88px; }
+.sc-row[data-state="done"] { opacity:.5; }

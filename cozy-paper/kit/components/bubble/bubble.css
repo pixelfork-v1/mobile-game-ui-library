@@ -1,0 +1,36 @@
+/*
+  Count Bubble — Cozy Paper
+  Requires: ../../core.css, super-casual/kit/sc.js and the host component CSS.
+  A small solid accent chip. The number is dark so it reads on the bright fill.
+*/
+:where(.sc-bubble) { --line:var(--sc-c-red); --lip:color-mix(in srgb, var(--sc-c-red) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble {
+  position:absolute; right:-6px; top:-6px; z-index:4;
+  display:grid; place-items:center; box-sizing:border-box;
+  min-width:19px; height:19px; padding:0 5px;
+  border-radius:calc(var(--sc-r) * 1.25); background:var(--line);
+  box-shadow:0 0 10px -2px var(--lip);
+  pointer-events:none; user-select:none; -webkit-user-select:none;
+}
+.sc-bubble > .sc-text { --fs:11px; --ink:color-mix(in srgb, var(--sc-well) 93%, var(--sc-surface-shade)); font-size:var(--fs); font-variant-numeric:tabular-nums; }
+
+/* data-badge-color maps onto the accent */
+.sc-bubble[data-color="sky"]    { --line:color-mix(in srgb, var(--sc-c-sky) 87%, var(--sc-ink)); --lip:color-mix(in srgb, color-mix(in srgb, var(--sc-c-sky) 87%, var(--sc-ink)) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="blue"]   { --line:var(--sc-c-blue); --lip:color-mix(in srgb, var(--sc-c-blue) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="green"]  { --line:color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)); --lip:color-mix(in srgb, color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="yellow"] { --line:var(--sc-c-yellow); --lip:color-mix(in srgb, var(--sc-c-yellow) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="orange"] { --line:color-mix(in srgb, var(--sc-c-orange) 90%, var(--sc-ink)); --lip:color-mix(in srgb, color-mix(in srgb, var(--sc-c-orange) 90%, var(--sc-ink)) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="red"]    { --line:var(--sc-c-red); --lip:color-mix(in srgb, var(--sc-c-red) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="purple"] { --line:var(--sc-c-purple); --lip:color-mix(in srgb, var(--sc-c-purple) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="pink"]   { --line:var(--sc-c-pink); --lip:color-mix(in srgb, var(--sc-c-pink) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="mint"]   { --line:var(--sc-c-mint); --lip:color-mix(in srgb, var(--sc-c-mint) calc(45% * var(--sc-glow)), transparent); }
+.sc-bubble[data-color="dark"]   { --line:color-mix(in srgb, var(--sc-dim) 73%, var(--sc-shade)); --lip:#0000; }
+
+/* ---- Clean Flat: a clean notification badge — solid colour, white number, a white ring that separates it from
+   whatever it sits on, and a soft shadow. Round for one digit, a pill for more. ---- */
+.sc-bubble {
+  min-width:20px; height:20px; padding:0 6px; right:-7px; top:-7px;
+  border-radius:999px;
+  box-shadow:0 0 0 2px var(--sc-panel), 0 2px 6px color-mix(in srgb, var(--sc-shade) 30%, transparent);
+}
+.sc-bubble > .sc-text { --fs:12px; --ink:#FFFFFF; font-weight:900; text-shadow:none; line-height:1; }
