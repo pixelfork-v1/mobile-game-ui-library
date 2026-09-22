@@ -44,7 +44,7 @@
   /* accents: ONE value per colour name; fills, glows and tinted text are derived from it below */
   --sc-accent: var(--sc-c-sky);            /* what a component uses when it has no data-color */
   --sc-c-sky: #108CFF;    --sc-c-blue: #4A63FF;   --sc-c-cyan: #1499A8;   --sc-c-mint: #189F7A;
-  --sc-c-green: #2A9F47;  --sc-c-olive: #77982D;  --sc-c-yellow: #B38300; --sc-c-orange: #EF5F00;
+  --sc-c-green: #2A9F47;  --sc-c-olive: #77982D;  --sc-c-yellow: #C97900; --sc-c-orange: #EF5F00;
   --sc-c-red: #FF4859;    --sc-c-pink: #FF3B95;   --sc-c-purple: #8C5CFF;
   --sc-c-white: #5A6478;  --sc-c-dark: #8A94A8;
   /* the button: its fill is the accent mixed into this tint, its label the accent mixed into this light */
@@ -52,7 +52,7 @@
   --sc-button-label: #FFFFFF;
   --sc-button-fill: 1.7;                     /* how much accent is in the fill: 1 = this style's tinted glass, 1.7 = solid accent */
   --sc-button-label-mix: 0;             /* how much of the accent is mixed into the label (0 = the plain label colour) */
-  --sc-button-dark-label: 'yellow';        /* only the bright gold button carries a dark label — and its glyph turns dark with it (button.css) */
+  --sc-button-dark-label: '';              /* none: every coloured button is white text + white icon (one colour per button); fills are dark enough for white
   --sc-label-outline: none;                 /* flat: labels are not outlined — every white label must clear its fill on its own */   /* what makes white text readable on a gold fill: every label on a fill carries this outline */   /* colour names whose button label is the dark outline colour instead (light fills) */
   --sc-scrim: #EEF2F8;                     /* the veil laid over the game behind popups and result screens (text sits on it, so a light theme makes it light) */
   /* shape and type */
@@ -466,14 +466,11 @@ img[src*="assets/"][src$="/wrench.png"]) { filter:var(--sc-glyph-on-button); }
   transition:translate .06s, filter .12s;
 }
 .sc-button > .sc-text { --fs:inherit; --ink:var(--label); font-size:var(--fs); -webkit-text-stroke:0; text-shadow:0 1px 0 color-mix(in srgb, var(--sc-outline) 55%, transparent); }   /* white letters with the icon outline */
-.sc-button > img { height:calc(var(--fs) * 1.25); width:auto; flex:none; pointer-events:none; filter:none; }   /* the white glyph gets the same dark edge as the letters */
+.sc-button > img { height:calc(var(--fs) * 1.25); width:auto; flex:none; pointer-events:none; }   /* no filter here: the glyph rule in core.css colours glyphs to match the label */
 
 /* The halftone. It is one more layer in the same background stack — still a single element. */
 /* dark = the quiet, secondary button: a neutral slate fill (the warm base tint would turn it maroon) and a pale label */
-.sc-button[data-color="dark"] { --line:var(--sc-well); --fill-top:var(--sc-panel); --fill-bot:var(--sc-raise); --label:var(--sc-ink); --lipc:var(--sc-edge); --sc-outline:var(--sc-edge); }   /* the quiet secondary: white with a grey edge */
-/* yellow: a bright gold fill needs a DARK label — and then its glyph goes dark too (text follows the icon) */
-.sc-button[data-color="yellow"] { --line:#FFC21A; --label:var(--sc-ink); --sc-glyph-on-button:var(--sc-glyph-filter); }
-.sc-button[data-color="yellow"] > .sc-text { text-shadow:0 1px 0 color-mix(in srgb, #FFFFFF 45%, transparent); }
+.sc-button[data-color="dark"] { --line:var(--sc-well); --fill-top:var(--sc-panel); --fill-bot:var(--sc-raise); --label:var(--sc-ink); --lipc:var(--sc-edge); --sc-outline:var(--sc-edge); --sc-glyph-on-button:var(--sc-glyph-filter); }   /* the quiet secondary: white with a grey edge — dark label AND dark glyph (one colour per button) */
 .sc-button[data-texture="dots"] { --grain:color-mix(in srgb, var(--sc-sheen) 9%, transparent); }   /* ~±8 per channel, matching the reference */
 
 .sc-button[data-size="sm"] { --h:40px; }
@@ -553,7 +550,6 @@ img[src*="assets/"][src$="/wrench.png"]) { filter:var(--sc-glyph-on-button); }
 }
 .sc-icon-button:not([data-variant])::after, .sc-icon-button[data-variant="glossy"]::after { content:none; }
 /* its white glyph stays white on the solid fill: the glyph rule in core.css (tools/glyph_list.py) covers solid icon buttons too */
-.sc-icon-button[data-color="yellow"] { --line:#FFC21A; --sc-glyph-on-button:var(--sc-glyph-filter); }
 .sc-icon-button[data-color="dark"] { --line:var(--sc-panel); border-color:var(--sc-edge); --sc-glyph-on-button:var(--sc-glyph-filter); }
 .sc-icon-button[data-color="dark"] { box-shadow:inset 0 -3px 0 var(--sc-edge); }
 

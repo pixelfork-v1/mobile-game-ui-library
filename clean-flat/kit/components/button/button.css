@@ -63,14 +63,11 @@
   transition:translate .06s, filter .12s;
 }
 .sc-button > .sc-text { --fs:inherit; --ink:var(--label); font-size:var(--fs); -webkit-text-stroke:0; text-shadow:0 1px 0 color-mix(in srgb, var(--sc-outline) 55%, transparent); }   /* white letters with the icon outline */
-.sc-button > img { height:calc(var(--fs) * 1.25); width:auto; flex:none; pointer-events:none; filter:none; }   /* the white glyph gets the same dark edge as the letters */
+.sc-button > img { height:calc(var(--fs) * 1.25); width:auto; flex:none; pointer-events:none; }   /* no filter here: the glyph rule in core.css colours glyphs to match the label */
 
 /* The halftone. It is one more layer in the same background stack — still a single element. */
 /* dark = the quiet, secondary button: a neutral slate fill (the warm base tint would turn it maroon) and a pale label */
-.sc-button[data-color="dark"] { --line:var(--sc-well); --fill-top:var(--sc-panel); --fill-bot:var(--sc-raise); --label:var(--sc-ink); --lipc:var(--sc-edge); --sc-outline:var(--sc-edge); }   /* the quiet secondary: white with a grey edge */
-/* yellow: a bright gold fill needs a DARK label — and then its glyph goes dark too (text follows the icon) */
-.sc-button[data-color="yellow"] { --line:#FFC21A; --label:var(--sc-ink); --sc-glyph-on-button:var(--sc-glyph-filter); }
-.sc-button[data-color="yellow"] > .sc-text { text-shadow:0 1px 0 color-mix(in srgb, #FFFFFF 45%, transparent); }
+.sc-button[data-color="dark"] { --line:var(--sc-well); --fill-top:var(--sc-panel); --fill-bot:var(--sc-raise); --label:var(--sc-ink); --lipc:var(--sc-edge); --sc-outline:var(--sc-edge); --sc-glyph-on-button:var(--sc-glyph-filter); }   /* the quiet secondary: white with a grey edge — dark label AND dark glyph (one colour per button) */
 .sc-button[data-texture="dots"] { --grain:color-mix(in srgb, var(--sc-sheen) 9%, transparent); }   /* ~±8 per channel, matching the reference */
 
 .sc-button[data-size="sm"] { --h:40px; }

@@ -61,6 +61,5 @@
 }
 .sc-icon-button:not([data-variant])::after, .sc-icon-button[data-variant="glossy"]::after { content:none; }
 /* its white glyph stays white on the solid fill: the glyph rule in core.css (tools/glyph_list.py) covers solid icon buttons too */
-.sc-icon-button[data-color="yellow"] { --line:#FFC21A; --sc-glyph-on-button:var(--sc-glyph-filter); }
 .sc-icon-button[data-color="dark"] { --line:var(--sc-panel); border-color:var(--sc-edge); --sc-glyph-on-button:var(--sc-glyph-filter); }
 .sc-icon-button[data-color="dark"] { box-shadow:inset 0 -3px 0 var(--sc-edge); }
