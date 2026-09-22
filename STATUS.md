@@ -9,6 +9,12 @@ while it was built. It is now complete: 30 components, 90 icons, 10 blocks, its 
 CDN tag, fix the repo URLs (the GitHub account was renamed advme → pixelfork-v1, Pages is 404), add a `cdn`
 block to Tactical Dark's registry, and decide whether it ships from the same repo and tag.
 
+## Done — style 5: Clean Flat (`clean-flat/`)
+The first light style: white cards on pale grey-blue, flat saturated colour, rounded, soft shadows, no outlines.
+Accents darkened until a white label reads 3:1; the bright gold button carries a dark label and a dark glyph.
+Nunito + Fredoka. Spec: `clean-flat/STYLE.md`. Ported from Fantasy RPG Casual. 30 components · 10 blocks · docs · bundle · 155 icons
+(tab bars use the coloured nav set N1).
+
 ## Done — style 4: Pixel Retro (`pixel-retro/`)
 Hard pixels: notched corners (`--sc-notch` clip-path), flat colour with hard shading steps, segmented bars, Sweetie 16
 palette (CC0), Jersey 10 labels + Press Start 2P titles. Spec: `pixel-retro/STYLE.md`. Ported from Fantasy RPG Casual.

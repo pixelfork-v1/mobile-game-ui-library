@@ -106,7 +106,10 @@ for n in COLOURS:
         # Measured where the label sits — the middle of the top→bottom fill gradient.
         lmix = num('--sc-button-label-mix') / 100 if '--sc-button-label-mix' in tok else .35
         darks = tok.get('--sc-button-dark-label', '').strip("'\" ").split()
-        label = colour('--sc-outline') if n in darks else mix(c, blabel, lmix)
+        if n in darks:     # a dark label: the outline colour in a dark style, the ink in a light one (its outline is pale)
+            o = colour('--sc-outline'); label = o if lum(o) < .2 else ink
+        else:
+            label = mix(c, blabel, lmix)
         mid = mix(c, tint, min(1, .44 * fill))
         if tok.get('--sc-label-outline', 'none').strip() not in ('none', ''):
             # outlined labels (paint-order stroke): the letter meets its outline, and the outline meets the fill

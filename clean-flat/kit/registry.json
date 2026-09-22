@@ -1,0 +1,2779 @@
+{
+  "name": "clean-flat-ui-kit",
+  "title": "Clean Flat UI Kit",
+  "description": "Chunky, glossy mobile game UI for hyper-casual and casual 2D/3D web games. Plain HTML + CSS components that float above any game canvas (Three.js, Babylon, Phaser, PixiJS).",
+  "version": "0.1.0",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Chunky glossy game button with outlined 3D text.",
+      "whenToUse": "Any action the player taps: play, retry, claim, buy, confirm, cancel.",
+      "files": [
+        "components/button/button.css"
+      ],
+      "docs": "components/button/button.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-button\" data-color=\"green\">Play</button>",
+      "props": {
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "sky"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-width": {
+          "type": "enum",
+          "values": [
+            "full"
+          ],
+          "optional": true
+        },
+        "disabled": {
+          "type": "boolean",
+          "optional": true
+        },
+        "data-icon": {
+          "type": "icon",
+          "optional": true,
+          "description": "Leading icon by name (see icons)"
+        },
+        "data-badge": {
+          "type": "number",
+          "optional": true,
+          "description": "Corner count; requires components/bubble/bubble.css. See bubble component."
+        },
+        "data-badge-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "blue"
+        }
+      },
+      "js": {
+        "SC.setLabel(el, text)": "Change the label and keep the 3D text in sync",
+        "SC.setIcon(el, name)": "Change the icon",
+        "SC.setBadge(el, count, color?)": "Set the corner count (requires bubble CSS); null removes it."
+      },
+      "rules": [
+        "One lg button per screen for the main action",
+        "green = positive/continue/rewarded video, yellow = main play, red = destructive/quit, dark = cancel, purple = premium",
+        "Popups use sm or md; secondary left, primary right",
+        "Labels 1-2 words",
+        "Never override colors with custom CSS; use data-color"
+      ],
+      "examples": [
+        {
+          "title": "Main action",
+          "html": "<button class=\"sc-button\" data-color=\"yellow\" data-size=\"lg\">PLAY</button>"
+        },
+        {
+          "title": "Yes / No",
+          "html": "<button class=\"sc-button\" data-color=\"dark\" data-size=\"sm\">No</button>\n<button class=\"sc-button\" data-color=\"green\" data-size=\"sm\">Yes</button>"
+        },
+        {
+          "title": "With icon",
+          "html": "<button class=\"sc-button\" data-color=\"green\" data-icon=\"video\">x2 Claim</button>"
+        },
+        {
+          "title": "Full width",
+          "html": "<button class=\"sc-button\" data-color=\"green\" data-width=\"full\">RESUME</button>"
+        },
+        {
+          "title": "Disabled",
+          "html": "<button class=\"sc-button\" data-color=\"purple\" disabled>Locked</button>"
+        }
+      ]
+    },
+    {
+      "name": "icon-button",
+      "type": "registry:ui",
+      "title": "Icon Button",
+      "description": "Square or round button showing only an icon, with optional label underneath.",
+      "whenToUse": "Pause, close, settings, back/next arrows, menu shortcuts (Daily, Mail, Shop).",
+      "files": [
+        "components/icon-button/icon-button.css"
+      ],
+      "docs": "components/icon-button/icon-button.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-icon-button\" data-icon=\"pause\" aria-label=\"Pause\"></button>",
+      "props": {
+        "data-icon": {
+          "type": "icon",
+          "required": true,
+          "description": "Icon name (see icons)"
+        },
+        "data-variant": {
+          "type": "enum",
+          "values": [
+            "glossy",
+            "flat",
+            "ring"
+          ],
+          "default": "glossy"
+        },
+        "data-shape": {
+          "type": "enum",
+          "values": [
+            "square",
+            "round"
+          ],
+          "default": "square"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "sky",
+          "description": "glossy only"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "aria-label": {
+          "type": "string",
+          "description": "Required when there is no visible label"
+        },
+        "disabled": {
+          "type": "boolean",
+          "optional": true
+        },
+        "label": {
+          "type": "text",
+          "optional": true,
+          "description": "Plain text inside \u2192 label under the icon (use with flat)"
+        },
+        "data-badge": {
+          "type": "number",
+          "optional": true,
+          "description": "Corner count; requires components/bubble/bubble.css. See bubble component."
+        },
+        "data-badge-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "blue"
+        }
+      },
+      "js": {
+        "SC.setIcon(el, name)": "Change the icon",
+        "SC.setBadge(el, count, color?)": "Set the corner count (requires bubble CSS); null removes it."
+      },
+      "rules": [
+        "Pause in gameplay: top-left, ring or glossy sky",
+        "Close on popups: glossy red with data-icon=\"close\", top-right",
+        "Glossy for important actions, flat for menus/navigation, ring over busy game scenes",
+        "Always add aria-label when there is no visible label",
+        "Only use icon names from icons; never invent names or draw icons with code"
+      ],
+      "examples": [
+        {
+          "title": "Pause",
+          "html": "<button class=\"sc-icon-button\" data-variant=\"ring\" data-icon=\"pause\" aria-label=\"Pause\"></button>"
+        },
+        {
+          "title": "Close",
+          "html": "<button class=\"sc-icon-button\" data-color=\"red\" data-size=\"sm\" data-icon=\"close\" aria-label=\"Close\"></button>"
+        },
+        {
+          "title": "Round next",
+          "html": "<button class=\"sc-icon-button\" data-shape=\"round\" data-color=\"green\" data-icon=\"arrow-right\" aria-label=\"Next\"></button>"
+        },
+        {
+          "title": "With label",
+          "html": "<button class=\"sc-icon-button\" data-variant=\"flat\" data-size=\"lg\" data-icon=\"trophy\">Rank</button>"
+        }
+      ]
+    },
+    {
+      "name": "counter",
+      "type": "registry:ui",
+      "title": "Resource Counter",
+      "description": "Icon + dark pill + number, with optional \"+\" button. Builds itself from attributes.",
+      "whenToUse": "Showing coins, gems, energy, lives, tickets \u2014 usually top-right of the HUD or home screen.",
+      "files": [
+        "components/counter/counter.css"
+      ],
+      "docs": "components/counter/counter.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-counter\" data-icon=\"coin\" data-value=\"350\"></div>",
+      "props": {
+        "data-icon": {
+          "type": "icon",
+          "required": true
+        },
+        "data-value": {
+          "type": "number",
+          "required": true
+        },
+        "data-max": {
+          "type": "number",
+          "optional": true,
+          "description": "Shows value/max"
+        },
+        "data-plus": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "optional": true,
+          "description": "Adds a \"+\" button in this color"
+        },
+        "data-format": {
+          "type": "enum",
+          "values": [
+            "full",
+            "short"
+          ],
+          "default": "full"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        }
+      },
+      "events": {
+        "plus": "Dispatched on the counter when its \"+\" button is tapped"
+      },
+      "js": {
+        "SC.setValue(el, value, { animate })": "Change the value with count-up animation and bump",
+        "SC.format(n, \"short\")": "Format a number like counters do"
+      },
+      "rules": [
+        "Top-right, 12px from edges; most important resource furthest right",
+        "\"+\" color matches resource: coin orange, gem purple, energy blue, cash/ticket green",
+        "Only add \"+\" when it opens a way to get more",
+        "Energy and lives use data-max",
+        "Use data-format=\"short\" when values can pass 100,000",
+        "Always update with SC.setValue(); never write inner HTML or edit inner text"
+      ],
+      "examples": [
+        {
+          "title": "HUD resources",
+          "html": "<div class=\"sc-counter\" data-icon=\"energy\" data-value=\"5\" data-max=\"5\" data-plus=\"blue\"></div>\n<div class=\"sc-counter\" data-icon=\"coin\" data-value=\"349810\" data-plus=\"orange\"></div>\n<div class=\"sc-counter\" data-icon=\"gem\" data-value=\"120\" data-plus=\"purple\"></div>"
+        },
+        {
+          "title": "Read-only",
+          "html": "<div class=\"sc-counter\" data-icon=\"heart\" data-value=\"3\"></div>"
+        },
+        {
+          "title": "Short format",
+          "html": "<div class=\"sc-counter\" data-size=\"sm\" data-icon=\"coin\" data-value=\"12500\" data-format=\"short\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "slot",
+      "type": "registry:ui",
+      "title": "Reward Slot",
+      "description": "Colored card with an item icon, count, optional tag and claimed/locked state. Builds itself from attributes.",
+      "whenToUse": "Rewards, prizes, loot, shop contents, level requirements.",
+      "files": [
+        "components/slot/slot.css"
+      ],
+      "docs": "components/slot/slot.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-slot\" data-icon=\"gem\" data-count=\"300\" data-color=\"purple\"></div>",
+      "props": {
+        "data-icon": {
+          "type": "icon",
+          "required": true
+        },
+        "data-count": {
+          "type": "number",
+          "optional": true
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "white",
+            "dark",
+            "green",
+            "sky",
+            "purple",
+            "yellow",
+            "red",
+            "lavender"
+          ],
+          "default": "dark"
+        },
+        "data-tag": {
+          "type": "string",
+          "optional": true,
+          "description": "Short label on top edge: BONUS, NEW, HOT, x2"
+        },
+        "data-state": {
+          "type": "enum",
+          "values": [
+            "claimed",
+            "locked"
+          ],
+          "optional": true
+        },
+        "data-format": {
+          "type": "enum",
+          "values": [
+            "full",
+            "short"
+          ],
+          "default": "full"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-badge": {
+          "type": "number",
+          "optional": true,
+          "description": "Corner count; requires components/bubble/bubble.css. See bubble component."
+        },
+        "data-badge-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "blue"
+        }
+      },
+      "js": {
+        "SC.setValue(el, count)": "Animate the count",
+        "SC.popIn(elements, { stagger, delay })": "Reveal elements one after another",
+        "SC.setBadge(el, count, color?)": "Set the corner count (requires bubble CSS); null removes it."
+      },
+      "rules": [
+        "Rarity by color: white/dark common, green/sky uncommon, purple epic, yellow legendary, red special, lavender premium",
+        "Reward screens: 4-column grid, md size, reveal with SC.popIn()",
+        "Popups and rows: sm size",
+        "Tags: one short word or x2; at most one tagged slot per group",
+        "locked for unavailable rewards, claimed after collecting",
+        "Update counts with SC.setValue(); never write inner HTML"
+      ],
+      "examples": [
+        {
+          "title": "Reward grid",
+          "html": "<div class=\"sc-slot\" data-icon=\"coin\" data-count=\"1000\" data-color=\"white\" data-tag=\"BONUS\"></div>\n<div class=\"sc-slot\" data-icon=\"gift\" data-count=\"1\" data-color=\"dark\"></div>\n<div class=\"sc-slot\" data-icon=\"clover\" data-count=\"5\" data-color=\"green\"></div>\n<div class=\"sc-slot\" data-icon=\"gem\" data-count=\"300\" data-color=\"purple\"></div>"
+        },
+        {
+          "title": "States",
+          "html": "<div class=\"sc-slot\" data-size=\"sm\" data-icon=\"clover\" data-color=\"green\" data-state=\"claimed\"></div>\n<div class=\"sc-slot\" data-size=\"sm\" data-icon=\"chest\" data-color=\"yellow\" data-state=\"locked\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "popup",
+      "type": "registry:ui",
+      "title": "Popup",
+      "description": "Modal window with header, title, optional sub tag and close button built automatically; author writes only the content.",
+      "whenToUse": "Confirmations, level start info, pause menu, downloads, purchase confirm, any modal over the game.",
+      "files": [
+        "components/popup/popup.css"
+      ],
+      "docs": "components/popup/popup.md",
+      "dependencies": [
+        "core",
+        "button",
+        "icon-button"
+      ],
+      "html": "<div class=\"sc-popup\" id=\"exit\" data-color=\"purple\" data-title=\"Exit Game\" hidden>\n  <p class=\"sc-popup-message\">Do you really want to exit the game?</p>\n  <div class=\"sc-popup-actions\">\n    <button class=\"sc-button\" data-color=\"dark\" data-size=\"sm\" data-close>No</button>\n    <button class=\"sc-button\" data-color=\"green\" data-size=\"sm\">Yes</button>\n  </div>\n</div>",
+      "props": {
+        "data-title": {
+          "type": "string",
+          "required": true
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "blue",
+            "red",
+            "purple"
+          ],
+          "default": "blue"
+        },
+        "data-sub": {
+          "type": "string",
+          "optional": true,
+          "description": "Small tag under the title"
+        },
+        "data-closable": {
+          "type": "enum",
+          "values": [
+            "false"
+          ],
+          "optional": true
+        },
+        "data-backdrop": {
+          "type": "enum",
+          "values": [
+            "static"
+          ],
+          "optional": true
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "Start closed"
+        }
+      },
+      "slots": {
+        ".sc-popup-message": "Outlined message text",
+        ".sc-popup-value": "Big yellow highlighted value",
+        ".sc-popup-hint": "Small soft text",
+        ".sc-panel": "Light inset card grouping items",
+        ".sc-popup-section": "Darker bottom area",
+        ".sc-popup-actions": "Button row; data-layout=\"stack\" for vertical",
+        "[data-close]": "Any element that closes the popup when tapped"
+      },
+      "events": {
+        "open": "Popup opened",
+        "close": "Popup closed"
+      },
+      "js": {
+        "SC.popup.open(id)": "Open",
+        "SC.popup.close(id)": "Close",
+        "SC.popup.toggle(id)": "Toggle"
+      },
+      "rules": [
+        "blue = info/neutral, red = warning/hard/destructive, purple = premium/special",
+        "Title 1-3 words, message 1-2 sentences, at most 3 buttons",
+        "Two buttons: sm, secondary left, primary right; three or more: data-layout=\"stack\"",
+        "Pause the game on open, resume on close",
+        "Required choices: data-closable=\"false\" + data-backdrop=\"static\"",
+        "Only one popup open at a time; never write the header or close button manually"
+      ],
+      "examples": [
+        {
+          "title": "Pause menu",
+          "html": "<div class=\"sc-popup\" id=\"pause\" data-title=\"PAUSED\" data-sub=\"LEVEL 12\" hidden>\n  <div class=\"sc-popup-actions\" data-layout=\"stack\">\n    <button class=\"sc-button\" data-color=\"green\" data-size=\"lg\" data-close>RESUME</button>\n    <button class=\"sc-button\" data-color=\"yellow\">Restart</button>\n    <button class=\"sc-button\" data-color=\"red\">Quit</button>\n  </div>\n</div>"
+        },
+        {
+          "title": "Level start",
+          "html": "<div class=\"sc-popup\" id=\"level\" data-color=\"red\" data-title=\"LEVEL 54\" data-sub=\"HARD\" hidden>\n  <div class=\"sc-panel\">\n    <div class=\"sc-slot\" data-size=\"sm\" data-icon=\"gem\" data-count=\"24\" data-color=\"white\"></div>\n  </div>\n  <div class=\"sc-popup-section\">\n    <div class=\"sc-popup-actions\"><button class=\"sc-button\" data-color=\"yellow\">PLAY</button></div>\n  </div>\n</div>"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress Bar",
+      "description": "Bar showing progress toward a goal, with optional label, left icon and star markers. Builds itself from attributes.",
+      "whenToUse": "XP, level score, health, energy, loading, timers.",
+      "files": [
+        "components/progress/progress.css"
+      ],
+      "docs": "components/progress/progress.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-progress\" data-value=\"72\" data-color=\"green\" data-label=\"percent\"></div>",
+      "props": {
+        "data-value": {
+          "type": "number",
+          "required": true
+        },
+        "data-max": {
+          "type": "number",
+          "default": 100
+        },
+        "data-label": {
+          "type": "string",
+          "optional": true,
+          "description": "percent | value | any text"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "blue",
+            "sky",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "blue"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-icon": {
+          "type": "icon",
+          "optional": true
+        },
+        "data-stars": {
+          "type": "string",
+          "optional": true,
+          "description": "Comma-separated percent positions, e.g. \"33,66,100\""
+        }
+      },
+      "events": {
+        "star": "A star marker lit up (detail.index)"
+      },
+      "js": {
+        "SC.setValue(el, value)": "Animate fill and label"
+      },
+      "rules": [
+        "green = health/level progress, blue = XP, orange = timers/loading, red = low health/danger, yellow = max/complete",
+        "Health: data-icon=\"heart\" green; switch to red below 25%",
+        "Level goals in HUD: data-stars=\"33,66,100\", no label",
+        "XP: data-label=\"value\"",
+        "Always update with SC.setValue()",
+        "Width comes from the container"
+      ],
+      "examples": [
+        {
+          "title": "Health",
+          "html": "<div class=\"sc-progress\" data-icon=\"heart\" data-value=\"85\" data-color=\"green\"></div>"
+        },
+        {
+          "title": "XP",
+          "html": "<div class=\"sc-progress\" data-icon=\"star\" data-value=\"723\" data-max=\"1000\" data-label=\"value\"></div>"
+        },
+        {
+          "title": "Level stars",
+          "html": "<div class=\"sc-progress\" data-value=\"0\" data-max=\"3000\" data-stars=\"33,66,100\" data-color=\"green\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "title",
+      "type": "registry:ui",
+      "title": "Screen Title",
+      "description": "Big gradient headline with black outline, 3D edge and optional entrance animation.",
+      "whenToUse": "Result and event screens: CLEAR!, FAILED, LEVEL UP, NEW RECORD, PAUSED.",
+      "files": [
+        "components/title/title.css"
+      ],
+      "docs": "components/title/title.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<h1 class=\"sc-title\" data-color=\"gold\" data-animate=\"drop\">CLEAR!</h1>",
+      "props": {
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "gold",
+            "red",
+            "blue",
+            "green",
+            "purple",
+            "white"
+          ],
+          "default": "gold"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "lg"
+        },
+        "data-animate": {
+          "type": "enum",
+          "values": [
+            "drop",
+            "pop",
+            "shake"
+          ],
+          "optional": true
+        }
+      },
+      "js": {
+        "SC.setLabel(el, text)": "Change the text",
+        "SC.replay(el)": "Play the entrance animation again"
+      },
+      "rules": [
+        "One title per screen, at the top",
+        "win gold+drop, fail red+shake, level up blue, reward purple+pop, neutral white",
+        "1-2 words, UPPERCASE, optional !",
+        "lg for result screens; md if longer than 8 letters",
+        "Not for popup headers (popups use data-title)"
+      ],
+      "examples": [
+        {
+          "title": "Win",
+          "html": "<h1 class=\"sc-title\" data-color=\"gold\" data-animate=\"drop\">CLEAR!</h1>"
+        },
+        {
+          "title": "Fail",
+          "html": "<h1 class=\"sc-title\" data-color=\"red\" data-animate=\"shake\">FAILED</h1>"
+        }
+      ]
+    },
+    {
+      "name": "stars",
+      "type": "registry:ui",
+      "title": "Star Rating",
+      "description": "Row or arc of filled/empty stars with pop-in animation. Builds itself from data-value.",
+      "whenToUse": "Level results, level select buttons, item quality, ratings.",
+      "files": [
+        "components/stars/stars.css"
+      ],
+      "docs": "components/stars/stars.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-stars\" data-value=\"2\" data-layout=\"arc\" data-size=\"lg\" data-animate></div>",
+      "props": {
+        "data-value": {
+          "type": "number",
+          "required": true
+        },
+        "data-max": {
+          "type": "number",
+          "default": 3,
+          "description": "1-5"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-layout": {
+          "type": "enum",
+          "values": [
+            "row",
+            "arc"
+          ],
+          "default": "row"
+        },
+        "data-animate": {
+          "type": "boolean",
+          "optional": true
+        }
+      },
+      "events": {
+        "star": "Fired as each earned star appears (detail.index)"
+      },
+      "js": {
+        "SC.setValue(el, value)": "Newly earned stars pop in"
+      },
+      "rules": [
+        "Result screens: arc + lg + data-animate, under the Screen Title",
+        "Fail screens: data-value=\"0\", no animation",
+        "Level select/lists: sm, row",
+        "Play a sound on each star event",
+        "3 stars for levels; data-max=\"5\" only for ratings/item quality"
+      ],
+      "examples": [
+        {
+          "title": "Success",
+          "html": "<div class=\"sc-stars\" data-value=\"2\" data-layout=\"arc\" data-size=\"lg\" data-animate></div>"
+        },
+        {
+          "title": "Level button",
+          "html": "<div class=\"sc-stars\" data-size=\"sm\" data-value=\"3\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "timer",
+      "type": "registry:ui",
+      "title": "Countdown Timer",
+      "description": "Ring or pill countdown that starts when shown, warns near the end and fires done at 0.",
+      "whenToUse": "Continue offers, level time limits, energy refills, limited-time events.",
+      "files": [
+        "components/timer/timer.css"
+      ],
+      "docs": "components/timer/timer.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-timer\" data-seconds=\"5\" data-warn=\"3\"></div>",
+      "props": {
+        "data-seconds": {
+          "type": "number",
+          "required": true
+        },
+        "data-variant": {
+          "type": "enum",
+          "values": [
+            "ring",
+            "pill"
+          ],
+          "default": "ring"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "yellow",
+            "green",
+            "sky",
+            "blue",
+            "red",
+            "purple",
+            "orange"
+          ],
+          "default": "yellow"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-format": {
+          "type": "enum",
+          "values": [
+            "clock",
+            "long"
+          ],
+          "default": "clock",
+          "description": "pill only"
+        },
+        "data-icon": {
+          "type": "icon",
+          "optional": true,
+          "description": "pill only"
+        },
+        "data-warn": {
+          "type": "number",
+          "optional": true,
+          "description": "Seconds left when it turns red and pulses"
+        },
+        "data-autostart": {
+          "type": "enum",
+          "values": [
+            "false"
+          ],
+          "optional": true
+        }
+      },
+      "events": {
+        "tick": "Every whole second (detail.left)",
+        "done": "Reached 0"
+      },
+      "js": {
+        "SC.timer.start(el)": "Start/resume",
+        "SC.timer.pause(el)": "Pause",
+        "SC.timer.reset(el, seconds?)": "Restart",
+        "SC.timer.add(el, seconds)": "Add time",
+        "SC.timer.left(el)": "Whole seconds left"
+      },
+      "rules": [
+        "Ring for short decisions (3-10s) with data-warn=\"3\"",
+        "Pill for level clocks and refills; data-format=\"long\" for multi-day events",
+        "Always handle the done event",
+        "Pause gameplay timers when the game pauses",
+        "Level time limits top-center in the HUD"
+      ],
+      "examples": [
+        {
+          "title": "Continue offer",
+          "html": "<div class=\"sc-timer\" data-seconds=\"5\" data-size=\"lg\" data-warn=\"3\"></div>"
+        },
+        {
+          "title": "Level clock",
+          "html": "<div class=\"sc-timer\" data-variant=\"pill\" data-seconds=\"90\" data-warn=\"10\"></div>"
+        },
+        {
+          "title": "Event",
+          "html": "<div class=\"sc-timer\" data-variant=\"pill\" data-format=\"long\" data-icon=\"calendar\" data-seconds=\"1292400\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "float",
+      "type": "registry:ui",
+      "title": "Floating Text",
+      "description": "JavaScript-only feedback text that floats up and fades at a tap, element or screen position.",
+      "whenToUse": "Points, coins, damage, healing, XP, combos \u2014 anywhere the player needs instant feedback.",
+      "files": [
+        "components/float/float.css"
+      ],
+      "docs": "components/float/float.md",
+      "dependencies": [
+        "core"
+      ],
+      "js": {
+        "SC.float(text, target, { color, size, icon, style })": "Show floating text; target = pointer event | element | {x, y} | null (center)"
+      },
+      "options": {
+        "color": {
+          "type": "enum",
+          "values": [
+            "white",
+            "gold",
+            "green",
+            "red",
+            "sky",
+            "purple"
+          ],
+          "default": "white"
+        },
+        "size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "icon": {
+          "type": "icon",
+          "optional": true
+        },
+        "style": {
+          "type": "enum",
+          "values": [
+            "rise",
+            "pop"
+          ],
+          "default": "rise"
+        }
+      },
+      "rules": [
+        "white points, gold coins, green heal/bonus, red damage/miss, sky XP, purple gems",
+        "Show it where the action happened",
+        "Tiny text: +/- numbers or one word",
+        "pop + lg only for special moments",
+        "Pair coin floats with SC.setValue() on the coin counter",
+        "For canvas objects convert world position to page pixels and pass {x, y}"
+      ],
+      "examples": [
+        {
+          "title": "Tap",
+          "js": "canvas.addEventListener('pointerdown', e => SC.float('+50', e));"
+        },
+        {
+          "title": "Coin pickup",
+          "js": "SC.float('+5', coinEl, { icon: 'coin', color: 'gold' });"
+        },
+        {
+          "title": "Combo",
+          "js": "SC.float('COMBO x3!', null, { size: 'lg', color: 'gold', style: 'pop' });"
+        }
+      ]
+    },
+    {
+      "name": "bubble",
+      "type": "registry:ui",
+      "title": "Count Bubble",
+      "description": "Small glossy top-right count attached to a Button, Icon Button or Reward Slot.",
+      "whenToUse": "Booster stock, unread messages or available rewards on an existing component.",
+      "files": [
+        "components/bubble/bubble.css"
+      ],
+      "docs": "components/bubble/bubble.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-icon-button\" data-icon=\"key\" data-badge=\"3\" aria-label=\"Key booster, 3 available\"></button>",
+      "props": {
+        "data-badge": {
+          "type": "number",
+          "optional": true,
+          "description": "Non-negative safe integer on the host. 0 is visible; >99 shows 99+. Missing, empty or invalid hides."
+        },
+        "data-badge-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "blue"
+        }
+      },
+      "events": [],
+      "js": {
+        "SC.setBadge(el, count, color?)": "Set count and optionally color. null removes the bubble. Existing color is preserved when omitted."
+      },
+      "rules": [
+        "Load bubble CSS plus the selected host component (button, icon-button or slot) and its dependencies; core alone does not style the host.",
+        "Set data-badge on the host; never write .sc-bubble markup by hand.",
+        "Leave at least 8px top/right outside the host; keep the entire badge within the screen margin and avoid clipping.",
+        "Zero remains visible; remove data-badge to hide. Disabling the host is a separate game decision.",
+        "Use data-badge-color for the bubble independently of the host data-color.",
+        "Keep accessible labels on icon-only buttons and slots in sync with the exact count.",
+        "Avoid overlap with long slot tags. Slot reward quantity stays bottom-right."
+      ],
+      "examples": [
+        {
+          "title": "Booster stock",
+          "html": "<button class=\"sc-icon-button\" data-icon=\"key\" data-badge=\"3\" aria-label=\"Key booster, 3 available\"></button>"
+        },
+        {
+          "title": "Unread messages",
+          "html": "<button class=\"sc-icon-button\" data-icon=\"mail\" data-badge=\"125\" data-badge-color=\"red\" aria-label=\"Mail, 125 unread\"></button>"
+        },
+        {
+          "title": "Update or remove",
+          "js": "SC.setBadge(booster, 2); SC.setBadge(booster, null);"
+        }
+      ]
+    },
+    {
+      "name": "screen",
+      "type": "registry:layout",
+      "title": "Screen Shell",
+      "description": "Full-page mobile layout above the game canvas: top bar, centered middle, bottom bar. Scales a 400x870 design to any phone, never scrolls, keeps 12px + safe-area edge margins.",
+      "whenToUse": "The root of every full-page UI: gameplay HUD, start, pause, success, fail, shop, settings, loading.",
+      "files": [
+        "components/screen/screen.css"
+      ],
+      "docs": "components/screen/screen.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-screen\" data-backdrop=\"dim\" id=\"win\" hidden>\n  <div class=\"sc-screen-top\">\u2026</div>\n  <div class=\"sc-screen-middle\">\u2026</div>\n  <div class=\"sc-screen-bottom\">\u2026</div>\n</div>",
+      "props": {
+        "data-backdrop": {
+          "type": "enum",
+          "values": [
+            "none",
+            "dim",
+            "solid"
+          ],
+          "default": "none",
+          "description": "none = game visible and tappable (HUD); dim = dark see-through, blocks game; solid = opaque dark"
+        },
+        "data-width": {
+          "type": "number",
+          "default": 400,
+          "description": "Design width in px"
+        },
+        "data-height": {
+          "type": "number",
+          "default": 870,
+          "description": "Design height in px"
+        },
+        "data-fit": {
+          "type": "enum",
+          "values": [
+            "screen",
+            "parent"
+          ],
+          "default": "screen",
+          "description": "parent = fill the parent box (previews only)"
+        },
+        "data-enter": {
+          "type": "enum",
+          "values": [
+            "fade",
+            "pop",
+            "none"
+          ],
+          "default": "fade"
+        },
+        "hidden": {
+          "type": "boolean",
+          "optional": true,
+          "description": "Start hidden; show with SC.screen.show"
+        }
+      },
+      "parts": {
+        ".sc-screen-top": "Row at the top edge. data-align between|start|center|end (default between); data-stack = column.",
+        ".sc-screen-middle": "Column filling the free space, content centered.",
+        ".sc-screen-bottom": "Row at the bottom edge. data-align (default center); data-stack = column."
+      },
+      "events": {
+        "show": "Screen was shown",
+        "hide": "Screen finished hiding"
+      },
+      "js": {
+        "SC.screen.show(el|id)": "Show a hidden screen",
+        "SC.screen.hide(el|id)": "Fade out and hide",
+        "SC.screen.fit()": "Re-measure all screens"
+      },
+      "rules": [
+        "Every full-page UI is one .sc-screen; never write custom scale/resize code or position:fixed layouts.",
+        "Never scroll; if content does not fit 400x870, remove or shrink it.",
+        "HUD: data-backdrop none. Menus/results over the game: dim. Screens replacing the game: solid.",
+        "Resources and pause in the top bar; main actions in the bottom bar; titles, stars, rewards in the middle.",
+        "Do not add edge margins or safe-area padding. Add viewport-fit=cover to the viewport meta.",
+        "One screen per layer at a time; switch with SC.screen.show/hide. Keep .sc-popup outside .sc-screen.",
+        "Size content for the 400px design width (width:100% inside a region, never 100vw)."
+      ],
+      "examples": [
+        {
+          "title": "Gameplay HUD",
+          "html": "<div class=\"sc-screen\" id=\"hud\">\n  <div class=\"sc-screen-top\">\n    <div class=\"sc-counter\" data-icon=\"coin\" data-value=\"1250\"></div>\n    <button class=\"sc-icon-button\" data-icon=\"pause\" aria-label=\"Pause\"></button>\n  </div>\n</div>"
+        },
+        {
+          "title": "Result screen",
+          "html": "<div class=\"sc-screen\" data-backdrop=\"dim\" id=\"win\" hidden>\n  <div class=\"sc-screen-middle\">\n    <h1 class=\"sc-title\" data-color=\"gold\" data-animate=\"drop\">CLEAR!</h1>\n    <div class=\"sc-stars\" data-value=\"3\" data-layout=\"arc\" data-size=\"lg\" data-animate></div>\n  </div>\n  <div class=\"sc-screen-bottom\" data-stack>\n    <button class=\"sc-button\" data-color=\"green\" data-size=\"lg\">Next</button>\n  </div>\n</div>"
+        },
+        {
+          "title": "Switch screens",
+          "js": "SC.screen.hide('hud'); SC.screen.show('win');"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Glossy ON/OFF settings switch with a sliding thumb, native keyboard activation and accessible state.",
+      "whenToUse": "Binary settings that take effect immediately, such as sound, music and vibration.",
+      "files": [
+        "components/toggle/toggle.css"
+      ],
+      "docs": "components/toggle/toggle.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-toggle\" data-checked aria-label=\"Sound\"></button>",
+      "props": {
+        "data-checked": {
+          "type": "enum",
+          "values": [
+            "",
+            "true",
+            "false"
+          ],
+          "optional": true,
+          "description": "Bare or true means ON. Missing, false or invalid means OFF. Direct edits render silently."
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "green",
+          "description": "ON color; OFF stays muted dark."
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "description": "96\u00d744, 104\u00d748 or 120\u00d756 px."
+        },
+        "disabled": {
+          "type": "boolean",
+          "optional": true,
+          "description": "Native disabled attribute; blocks user interaction."
+        },
+        "aria-label": {
+          "type": "string",
+          "description": "Required stable setting name unless aria-labelledby references an external label."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "optional": true,
+          "description": "External label ID; alternative to aria-label."
+        }
+      },
+      "events": [
+        {
+          "name": "change",
+          "detail": {
+            "checked": "boolean"
+          },
+          "description": "Bubbles once per user activation, after state updates. Helpers emit only when requested and changed."
+        }
+      ],
+      "js": {
+        "SC.setChecked(el, boolean, {emit?})": "Set state; alias of SC.toggle.set. Silent by default. emit:true notifies only on a changed value.",
+        "SC.toggle.get(el)": "Read a boolean.",
+        "SC.toggle.set(el, boolean, {emit?})": "Set state immediately. Requires a boolean. Can restore a disabled switch.",
+        "SC.toggle.toggle(el, {emit?})": "Invert; silent unless emit:true."
+      },
+      "rules": [
+        "Use a native button with only sc-toggle, and put the visible setting name outside.",
+        "Always supply a stable accessible name; runtime owns type=button, role=switch and aria-checked.",
+        "Set state through data-checked or SC.setChecked / SC.toggle. Do not set aria-checked or .checked.",
+        "Listen for change to apply and save settings; do not invert again in a click or key handler.",
+        "Use native disabled, not aria-disabled alone, to lock interaction.",
+        "Keep a consistent ON palette and preserve the 44px minimum height and focus outline space.",
+        "No image assets required. Do not use SC.setLabel or SC.setIcon on a toggle.",
+        "No automatic persistence or form submission; game code owns settings and side effects."
+      ],
+      "examples": [
+        {
+          "title": "Sound enabled",
+          "html": "<button class=\"sc-toggle\" data-checked aria-label=\"Sound\"></button>"
+        },
+        {
+          "title": "Music disabled",
+          "html": "<button class=\"sc-toggle\" data-checked=\"false\" aria-label=\"Music\"></button>"
+        },
+        {
+          "title": "Unavailable setting",
+          "html": "<button class=\"sc-toggle\" data-checked disabled aria-label=\"Cloud saves\"></button>"
+        },
+        {
+          "title": "Restore silently",
+          "js": "SC.setChecked(soundToggle, true);"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Glossy track with a round thumb for picking an amount. Drag, tap-to-jump and keyboard.",
+      "whenToUse": "Sound/music volume, sensitivity, brightness, difficulty levels.",
+      "files": [
+        "components/slider/slider.css"
+      ],
+      "docs": "components/slider/slider.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-slider\" data-value=\"70\" data-label=\"percent\" aria-label=\"Music\"></div>",
+      "props": {
+        "data-value": {
+          "type": "number",
+          "default": "data-min",
+          "description": "Snapped to step, clamped to range"
+        },
+        "data-min": {
+          "type": "number",
+          "default": 0
+        },
+        "data-max": {
+          "type": "number",
+          "default": 100
+        },
+        "data-step": {
+          "type": "number",
+          "default": 1
+        },
+        "data-label": {
+          "type": "enum",
+          "values": [
+            "percent",
+            "value"
+          ],
+          "optional": true
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "sky"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-icon": {
+          "type": "icon",
+          "optional": true
+        },
+        "disabled": {
+          "type": "boolean",
+          "optional": true,
+          "description": "Also disabled inside fieldset[disabled]"
+        },
+        "aria-label": {
+          "type": "string",
+          "required": true,
+          "description": "Setting name"
+        }
+      },
+      "events": {
+        "input": "Value changed while dragging or by key (detail.value)",
+        "change": "User finished changing the value (detail.value)"
+      },
+      "js": {
+        "SC.slider.get(el)": "Current number",
+        "SC.slider.set(el, value, {emit?})": "Set value; silent unless emit:true; invalid values ignored"
+      },
+      "rules": [
+        "Use for amounts; use Toggle for ON/OFF.",
+        "Always set aria-label and show a visible text label next to it.",
+        "Apply on input, save on change; restore saved values silently with SC.slider.set.",
+        "Fill the row; keep at least 160px wide.",
+        "Sound/music icons are not in the kit yet; use text labels."
+      ],
+      "examples": [
+        {
+          "title": "Volume",
+          "html": "<div class=\"sc-slider\" data-value=\"80\" data-label=\"percent\" aria-label=\"Sound\"></div>"
+        },
+        {
+          "title": "Difficulty 1-5",
+          "html": "<div class=\"sc-slider\" data-min=\"1\" data-max=\"5\" data-value=\"3\" data-label=\"value\" data-color=\"orange\" aria-label=\"Difficulty\"></div>"
+        },
+        {
+          "title": "Listen and restore",
+          "js": "music.addEventListener('change', e => save(e.detail.value)); SC.slider.set(music, saved);"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Chunky tick box with optional outlined label; glossy colored box with the kit check icon when checked.",
+      "whenToUse": "Choices listed together or confirmed later: don't show again, terms, mission checklists.",
+      "files": [
+        "components/checkbox/checkbox.css"
+      ],
+      "docs": "components/checkbox/checkbox.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-checkbox\" data-checked>Don't show again</button>",
+      "props": {
+        "data-checked": {
+          "type": "enum",
+          "values": [
+            "",
+            "true",
+            "false"
+          ],
+          "optional": true,
+          "description": "Bare or true = checked"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "green"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "disabled": {
+          "type": "boolean",
+          "optional": true
+        },
+        "children": {
+          "type": "text",
+          "optional": true,
+          "description": "Label; without it add aria-label"
+        }
+      },
+      "events": {
+        "change": "User toggled it (detail.checked)"
+      },
+      "js": {
+        "SC.checkbox.get(el)": "boolean",
+        "SC.checkbox.set(el, boolean, {emit?})": "Silent unless emit; throws on non-boolean",
+        "SC.checkbox.toggle(el, {emit?})": "Invert"
+      },
+      "rules": [
+        "Checkbox for listed/confirmed choices; Toggle for instant settings.",
+        "Native <button>; label as text inside or aria-label when empty.",
+        "Listen for change; never add a click handler that flips state.",
+        "Use real booleans with SC.checkbox.set; never hand-build the box or draw a check.",
+        "Keep labels 1-4 words."
+      ],
+      "examples": [
+        {
+          "title": "With label",
+          "html": "<button class=\"sc-checkbox\" data-checked>Don't show again</button>"
+        },
+        {
+          "title": "Icon only",
+          "html": "<button class=\"sc-checkbox\" data-color=\"sky\" aria-label=\"Mission 1 done\"></button>"
+        },
+        {
+          "title": "Listen",
+          "js": "box.addEventListener('change', e => save(e.detail.checked));"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Segmented row of 2-4 tabs; exactly one selected (glossy), others muted dark. Optional icons, badges and auto panels.",
+      "whenToUse": "Switching lists inside a popup or screen: Daily/Weekly, Coins/Gems, Friends/Global, Skins/Items.",
+      "files": [
+        "components/tabs/tabs.css"
+      ],
+      "docs": "components/tabs/tabs.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-tabs\" data-value=\"daily\">\n  <button data-value=\"daily\">Daily</button>\n  <button data-value=\"weekly\">Weekly</button>\n</div>",
+      "props": {
+        "data-value": {
+          "type": "string",
+          "optional": true,
+          "description": "On .sc-tabs: selected tab value (default first enabled)"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "blue"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        }
+      },
+      "parts": {
+        "button[data-value]": "Each tab (required unique data-value). Optional data-icon, data-panel (element id to show when selected), data-badge, disabled."
+      },
+      "events": {
+        "change": "User picked another tab (detail.value)"
+      },
+      "js": {
+        "SC.tabs.get(el)": "Selected value",
+        "SC.tabs.set(el, value, {emit?})": "Select; silent unless emit; false if unknown/disabled"
+      },
+      "rules": [
+        "2-4 tabs, 1-word labels; use Bottom Tab Bar for main navigation.",
+        "Tabs are plain <button data-value> directly inside .sc-tabs; no classes/roles/click handlers by hand.",
+        "Prefer data-panel to show content; otherwise listen for change.",
+        "Full width at the top of a popup body or screen middle.",
+        "data-badge (red) for new items on a tab (load bubble.css).",
+        "Long labels shrink to fit (then the icon hides); still keep labels to one short word."
+      ],
+      "examples": [
+        {
+          "title": "Text tabs",
+          "html": "<div class=\"sc-tabs\" data-value=\"daily\"><button data-value=\"daily\">Daily</button><button data-value=\"weekly\">Weekly</button></div>"
+        },
+        {
+          "title": "Icons and panels",
+          "html": "<div class=\"sc-tabs\" data-value=\"coins\"><button data-value=\"coins\" data-icon=\"coin\" data-panel=\"coinList\">Coins</button><button data-value=\"gems\" data-icon=\"gem\" data-panel=\"gemList\">Gems</button></div>"
+        },
+        {
+          "title": "Listen",
+          "js": "tabs.addEventListener('change', e => showList(e.detail.value));"
+        }
+      ]
+    },
+    {
+      "name": "tabbar",
+      "type": "registry:ui",
+      "title": "Bottom Tab Bar",
+      "description": "Bottom navigation bar for home/menu screens; selected item rises on a glossy block with its label. Badges and auto screen switching.",
+      "whenToUse": "Main navigation between home-level screens (Shop, Chests, Play, Rank, Settings). Never during gameplay.",
+      "files": [
+        "components/tabbar/tabbar.css"
+      ],
+      "docs": "components/tabbar/tabbar.md",
+      "dependencies": [
+        "core",
+        "screen",
+        "bubble"
+      ],
+      "html": "<div class=\"sc-screen-bottom\">\n  <nav class=\"sc-tabbar\" data-value=\"play\">\n    <button data-value=\"shop\" data-icon=\"cash\">Shop</button>\n    <button data-value=\"play\" data-icon=\"star\">Play</button>\n    <button data-value=\"rank\" data-icon=\"trophy\">Rank</button>\n  </nav>\n</div>",
+      "props": {
+        "data-value": {
+          "type": "string",
+          "optional": true,
+          "description": "Selected item value"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "indigo"
+        }
+      },
+      "parts": {
+        "button[data-value][data-icon]": "Item; text = 1-word label; optional data-panel (screen id), data-badge, disabled"
+      },
+      "events": {
+        "change": "User picked another item (detail.value)"
+      },
+      "js": {
+        "SC.tabbar.get(el)": "Selected value",
+        "SC.tabbar.set(el, value, {emit?})": "Select (same as SC.tabs.set)"
+      },
+      "rules": [
+        "Home/menu screens only; 3-5 items; main action in the middle.",
+        "Place in .sc-screen-bottom of its own always-visible .sc-screen layer; no margins (bleeds to edges).",
+        "Each item needs data-icon from the kit list and a 1-word label.",
+        "Switch screens with data-panel or listen for change.",
+        "Red badges for collectables, green for good news; clear when opened."
+      ],
+      "examples": [
+        {
+          "title": "Home navigation",
+          "html": "<nav class=\"sc-tabbar\" data-value=\"play\"><button data-value=\"shop\" data-icon=\"cash\" data-panel=\"shopScreen\">Shop</button><button data-value=\"play\" data-icon=\"star\" data-panel=\"playScreen\">Play</button><button data-value=\"rank\" data-icon=\"trophy\" data-badge=\"2\" data-badge-color=\"green\" data-panel=\"rankScreen\">Rank</button></nav>"
+        }
+      ]
+    },
+    {
+      "name": "tag",
+      "type": "registry:ui",
+      "title": "Tag Ribbon",
+      "description": "Small glossy sticker labels (NEW, HOT, SALE, -50%, x2), standalone or attached to buttons/icon buttons/tabs via data-tag.",
+      "whenToUse": "Highlight a new, hot, discounted or boosted item.",
+      "files": [
+        "components/tag/tag.css"
+      ],
+      "docs": "components/tag/tag.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-button\" data-color=\"yellow\" data-tag=\"HOT\">Shop</button>",
+      "props": {
+        "data-tag": {
+          "type": "string",
+          "optional": true,
+          "description": "On .sc-button/.sc-icon-button/tab: tag text"
+        },
+        "data-tag-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "red"
+        },
+        "data-tag-pos": {
+          "type": "enum",
+          "values": [
+            "top-left",
+            "top-right",
+            "top"
+          ],
+          "default": "top-left"
+        }
+      },
+      "parts": {
+        ".sc-tag": "Standalone tag: data-color (default red), data-size sm|md|lg, data-tilt"
+      },
+      "events": [],
+      "js": {
+        "el.dataset.tag = 'SALE'": "Add/change; removeAttribute('data-tag') removes"
+      },
+      "rules": [
+        "One short capital word.",
+        "red HOT/SALE, green NEW/FREE, yellow BEST, purple discounts, sky multipliers.",
+        "One tag per item; max 2-3 tagged items per screen.",
+        "Leave ~10px around tagged hosts; no overflow:hidden parent.",
+        "Starburst stickers are images; never draw them."
+      ],
+      "examples": [
+        {
+          "title": "On a button",
+          "html": "<button class=\"sc-button\" data-color=\"green\" data-tag=\"-50%\" data-tag-color=\"purple\" data-tag-pos=\"top-right\">Buy</button>"
+        },
+        {
+          "title": "Standalone",
+          "html": "<span class=\"sc-tag\" data-color=\"green\">NEW</span>"
+        }
+      ]
+    },
+    {
+      "name": "banner",
+      "type": "registry:ui",
+      "title": "Title Banner Ribbon",
+      "description": "Ribbon banner with folded tails for short announcements above a character/reward.",
+      "whenToUse": "NEW SKIN!, SEASON RESULT, LEVEL UP, BIG WIN above a reveal or result.",
+      "files": [
+        "components/banner/banner.css"
+      ],
+      "docs": "components/banner/banner.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-banner\" data-color=\"pink\" data-animate=\"unfurl\">NEW SKIN!</div>",
+      "props": {
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "dark",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "orange"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-animate": {
+          "type": "enum",
+          "values": [
+            "unfurl",
+            "drop"
+          ],
+          "optional": true
+        }
+      },
+      "events": [],
+      "js": {
+        "SC.setLabel(el, text)": "Change text",
+        "SC.replay(el)": "Replay entrance"
+      },
+      "rules": [
+        "1-3 capital words; use Screen Title for CLEAR!/FAILED.",
+        "Centered above what it announces.",
+        "Leave ~1 banner-height of space on each side for tails.",
+        "pink new skin, orange season/results, purple rare, green level up.",
+        "data-animate=unfurl on reward reveals."
+      ],
+      "examples": [
+        {
+          "title": "New skin",
+          "html": "<div class=\"sc-banner\" data-color=\"pink\" data-animate=\"unfurl\">NEW SKIN!</div>"
+        }
+      ]
+    },
+    {
+      "name": "hint",
+      "type": "registry:ui",
+      "title": "Hint Bubble",
+      "description": "White speech bubble with a pointer; tap-to-show via data-hint or programmatic tutorial hints.",
+      "whenToUse": "Info explanations, item effects, tutorial steps.",
+      "files": [
+        "components/hint/hint.css"
+      ],
+      "docs": "components/hint/hint.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-icon-button\" data-icon=\"info\" data-hint=\"Win 3 levels to unlock\" aria-label=\"Info\"></button>",
+      "props": {
+        "data-hint": {
+          "type": "string",
+          "optional": true,
+          "description": "On any element: bubble text shown on tap"
+        },
+        "data-hint-pos": {
+          "type": "enum",
+          "values": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          "default": "top"
+        }
+      },
+      "parts": {
+        ".sc-hint": "Static bubble: data-pos top|bottom|left|right (side it sits on), data-size sm|md"
+      },
+      "events": [],
+      "js": {
+        "SC.hint.show(target, text, {pos, duration})": "Show floating bubble; duration 0 = stay; returns bubble or null",
+        "SC.hint.hide(target?)": "Hide one or all"
+      },
+      "rules": [
+        "Max ~8 words; longer text in a Popup.",
+        "data-hint on info buttons and non-obvious items.",
+        "Tutorials: SC.hint.show(..., {duration:0}); hide when the player acts; one at a time.",
+        "Pick the side with most free space."
+      ],
+      "examples": [
+        {
+          "title": "Tap to show",
+          "html": "<div class=\"sc-slot\" data-icon=\"clover\" data-count=\"5\" data-hint=\"Lucky clover: +10% coins\"></div>"
+        },
+        {
+          "title": "Tutorial",
+          "js": "SC.hint.show(playBtn, 'Tap Play to start!', { duration: 0 });"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast Message",
+      "description": "Short self-hiding message pill at the top/bottom of the screen; queued; JS only.",
+      "whenToUse": "Feedback for an action: not enough coins, saved, purchase complete, +1 life.",
+      "files": [
+        "components/toast/toast.css"
+      ],
+      "docs": "components/toast/toast.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "",
+      "props": {},
+      "events": [],
+      "js": {
+        "SC.toast(text, {kind, icon, duration, pos})": "kind info|success|error|reward (default info); icon kit name; duration ms (default 1800); pos top|bottom (default top)"
+      },
+      "rules": [
+        "1-5 words; questions go in a Popup.",
+        "error = failed action, success = worked, reward = small gain, info otherwise.",
+        "Don't toast what is already visible; use SC.float near the object.",
+        "Top by default.",
+        "Never call every frame."
+      ],
+      "examples": [
+        {
+          "title": "Not enough coins",
+          "js": "SC.toast('Not enough coins!', { kind: 'error', icon: 'coin' });"
+        }
+      ]
+    },
+    {
+      "name": "row",
+      "type": "registry:layout",
+      "title": "Item Row",
+      "description": "Colored card row layout for missions, leaderboards and friend lists; filled with kit parts plus row parts.",
+      "whenToUse": "Lists: daily missions, achievements, leaderboards, friends, inbox.",
+      "files": [
+        "components/row/row.css"
+      ],
+      "docs": "components/row/row.md",
+      "dependencies": [
+        "core",
+        "slot",
+        "progress",
+        "button"
+      ],
+      "html": "<div class=\"sc-row\" data-color=\"yellow\">\n  <div class=\"sc-slot\" data-icon=\"coin\" data-count=\"500\" data-size=\"sm\" data-color=\"white\"></div>\n  <div class=\"sc-row-body\">\n    <span class=\"sc-row-title\">Win 3 levels</span>\n    <div class=\"sc-progress\" data-value=\"3\" data-max=\"3\" data-label=\"value\" data-color=\"green\"></div>\n  </div>\n  <button class=\"sc-button\" data-color=\"orange\" data-size=\"sm\">Claim</button>\n</div>",
+      "props": {
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "white",
+            "yellow",
+            "blue",
+            "sky",
+            "green",
+            "purple",
+            "red",
+            "dark"
+          ],
+          "default": "white"
+        },
+        "data-variant": {
+          "type": "enum",
+          "values": [
+            "leader"
+          ],
+          "optional": true
+        },
+        "data-state": {
+          "type": "enum",
+          "values": [
+            "done"
+          ],
+          "optional": true
+        }
+      },
+      "parts": {
+        ".sc-row-body": "Middle column",
+        ".sc-row-title": "Text",
+        ".sc-row-rank": "Rank badge",
+        ".sc-row-avatar[data-icon]": "Framed picture",
+        ".sc-row-score[data-icon]": "Right score"
+      },
+      "events": [],
+      "js": {
+        "SC.setLabel(part, text)": "Update title/rank/score text"
+      },
+      "rules": [
+        "Mission: white+Go in progress, yellow+orange Claim when complete, data-state=done + disabled dark Done after claim.",
+        "Leaderboard: data-variant=leader; player row yellow.",
+        "Column with 8-10px gaps inside popup body or screen middle; never scroll the page.",
+        "Short titles.",
+        "avatar/helmet icons for player pictures."
+      ],
+      "examples": [
+        {
+          "title": "Leaderboard row",
+          "html": "<div class=\"sc-row\" data-variant=\"leader\" data-color=\"blue\"><span class=\"sc-row-rank\">4</span><span class=\"sc-row-avatar\" data-icon=\"avatar\"></span><span class=\"sc-row-title\">Player</span><span class=\"sc-row-score\" data-icon=\"trophy\">5154</span></div>"
+        }
+      ]
+    },
+    {
+      "name": "loading",
+      "type": "registry:ui",
+      "title": "Loading Bar",
+      "description": "Loading screen part: big progress bar with percent label, bouncing icon and rotating tips; done() hides its screen.",
+      "whenToUse": "Game start while assets load.",
+      "files": [
+        "components/loading/loading.css"
+      ],
+      "docs": "components/loading/loading.md",
+      "dependencies": [
+        "core",
+        "progress",
+        "screen"
+      ],
+      "html": "<div class=\"sc-screen\" data-backdrop=\"solid\" id=\"loadingScreen\">\n  <div class=\"sc-screen-middle\"><h1 class=\"sc-title\" data-color=\"gold\">MY GAME</h1></div>\n  <div class=\"sc-screen-bottom\"><div class=\"sc-loading\" id=\"loader\" data-icon=\"coin\" data-tips=\"Tap to jump|Collect coins\"></div></div>\n</div>",
+      "props": {
+        "data-value": {
+          "type": "number",
+          "default": 0
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "blue",
+            "sky",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "orange"
+        },
+        "data-icon": {
+          "type": "icon",
+          "optional": true
+        },
+        "data-tips": {
+          "type": "string",
+          "optional": true,
+          "description": "Tips separated by |"
+        },
+        "data-label": {
+          "type": "string",
+          "default": "Loading"
+        }
+      },
+      "events": {
+        "done": "Reached 100 via SC.loading.set/done"
+      },
+      "js": {
+        "SC.loading.set(el, pct)": "Update",
+        "SC.loading.done(el)": "Fill, fire done, hide parent screen"
+      },
+      "rules": [
+        "Solid Screen Shell: title middle, .sc-loading bottom.",
+        "Real progress, never backwards.",
+        "2-5 short tips.",
+        "Start the game on done."
+      ],
+      "examples": [
+        {
+          "title": "Update",
+          "js": "SC.loading.set('loader', 42); loader.addEventListener('done', startGame);"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Notification Dot",
+      "description": "Red '!' icon or small dot on a host corner meaning something new (no number).",
+      "whenToUse": "New mail, free reward available, unlocked item, unseen tab.",
+      "files": [
+        "components/alert/alert.css"
+      ],
+      "docs": "components/alert/alert.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<button class=\"sc-icon-button\" data-icon=\"mail\" data-alert aria-label=\"Mail, new\"></button>",
+      "props": {
+        "data-alert": {
+          "type": "enum",
+          "values": [
+            "",
+            "icon",
+            "dot",
+            "false"
+          ],
+          "optional": true,
+          "description": "On .sc-button/.sc-icon-button/.sc-slot/tab/tab bar item"
+        }
+      },
+      "parts": {
+        ".sc-alert": "Standalone inline marker (data-alert=dot for dot)"
+      },
+      "events": [],
+      "js": {
+        "SC.setAlert(el, true|false|'dot')": "Show icon, remove, or dot"
+      },
+      "rules": [
+        "No number; counts use data-badge; never both.",
+        "Clear when opened.",
+        "Max 2-3 per screen; dot for secondary.",
+        "Update host aria-label."
+      ],
+      "examples": [
+        {
+          "title": "Tab bar",
+          "html": "<button data-value=\"shop\" data-icon=\"shop\" data-alert>Shop</button>"
+        }
+      ]
+    },
+    {
+      "name": "level",
+      "type": "registry:ui",
+      "title": "Level Badge",
+      "description": "Shield badge with the level number; standalone or on a Progress Bar's left end (XP bar).",
+      "whenToUse": "Player level, hero/item level, XP bars.",
+      "files": [
+        "components/level/level.css"
+      ],
+      "docs": "components/level/level.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<span class=\"sc-level\" data-value=\"5\"></span>",
+      "props": {
+        "data-value": {
+          "type": "number",
+          "required": true
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-level (on .sc-progress)": {
+          "type": "number",
+          "optional": true,
+          "description": "Badge on the bar's left end"
+        }
+      },
+      "events": [],
+      "js": {
+        "SC.setValue(level, n)": "Update with pop"
+      },
+      "rules": [
+        "Player/hero/item levels and XP bars.",
+        "No data-icon together with data-level on a bar.",
+        "Pop only on real level-ups.",
+        "Max 3 digits."
+      ],
+      "examples": [
+        {
+          "title": "XP bar",
+          "html": "<div class=\"sc-progress\" data-value=\"723\" data-max=\"1000\" data-label=\"value\" data-level=\"5\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "topbar",
+      "type": "registry:ui",
+      "title": "Top Bar",
+      "description": "Home screen top bar: avatar + level + name (profile button) on the left, resource counters on the right.",
+      "whenToUse": "Top of home/menu screens.",
+      "files": [
+        "components/topbar/topbar.css"
+      ],
+      "docs": "components/topbar/topbar.md",
+      "dependencies": [
+        "core",
+        "level",
+        "counter"
+      ],
+      "html": "<div class=\"sc-topbar\" data-name=\"Player\" data-level=\"12\">\n  <div class=\"sc-counter\" data-icon=\"coin\" data-value=\"349810\" data-format=\"short\" data-size=\"sm\"></div>\n  <div class=\"sc-counter\" data-icon=\"gem\" data-value=\"120\" data-plus=\"purple\" data-size=\"sm\"></div>\n</div>",
+      "props": {
+        "data-name": {
+          "type": "string",
+          "optional": true
+        },
+        "data-level": {
+          "type": "number",
+          "optional": true
+        },
+        "data-avatar": {
+          "type": "icon",
+          "default": "avatar"
+        }
+      },
+      "parts": {
+        "children": "1-3 .sc-counter (data-size=sm)"
+      },
+      "events": {
+        "profile": "Player block tapped"
+      },
+      "js": {
+        "topbar.dataset.level = '13'": "Update level",
+        "topbar.dataset.name = 'X'": "Update name"
+      },
+      "rules": [
+        "Home/menu screens only, in .sc-screen-top.",
+        "sm counters, short format for big numbers.",
+        "Max 3 resources (2 with a name).",
+        "Open profile on the profile event."
+      ],
+      "examples": [
+        {
+          "title": "Home top bar",
+          "html": "<div class=\"sc-topbar\" data-name=\"Farid\" data-level=\"12\"><div class=\"sc-counter\" data-icon=\"coin\" data-value=\"349810\" data-format=\"short\" data-size=\"sm\"></div></div>"
+        }
+      ]
+    },
+    {
+      "name": "shopcard",
+      "type": "registry:ui",
+      "title": "Shop Card",
+      "description": "Shop offer card with pack picture, amount, optional tag/bonus and a price button; fires buy.",
+      "whenToUse": "Shop screens and offer popups: currency packs, lives, chests, boosters.",
+      "files": [
+        "components/shopcard/shopcard.css"
+      ],
+      "docs": "components/shopcard/shopcard.md",
+      "dependencies": [
+        "core",
+        "button",
+        "tag"
+      ],
+      "html": "<div class=\"sc-shopcard\" data-icon=\"gem-pile\" data-amount=\"500\" data-price=\"$4.99\" data-color=\"purple\" data-tag=\"BEST\"></div>",
+      "props": {
+        "data-icon": {
+          "type": "icon",
+          "required": true
+        },
+        "data-amount": {
+          "type": "number",
+          "optional": true
+        },
+        "data-price": {
+          "type": "string",
+          "required": true
+        },
+        "data-price-icon": {
+          "type": "enum",
+          "values": [
+            "coin",
+            "gem"
+          ],
+          "optional": true
+        },
+        "data-bonus": {
+          "type": "string",
+          "optional": true
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink"
+          ],
+          "default": "blue"
+        },
+        "data-tag": {
+          "type": "string",
+          "optional": true
+        },
+        "data-state": {
+          "type": "enum",
+          "values": [
+            "sold"
+          ],
+          "optional": true
+        }
+      },
+      "events": {
+        "buy": "Price tapped (detail.price, detail.currency)"
+      },
+      "js": {
+        "card.dataset.state = 'sold'": "Mark sold out"
+      },
+      "rules": [
+        "2-3 per row; same color per currency.",
+        "gem-pile/coin-pile for currency packs.",
+        "Max one BEST and one discount tag per row.",
+        "Handle buy: check balance, toast if short, update counters.",
+        "Never fake real-money purchases."
+      ],
+      "examples": [
+        {
+          "title": "Coin price",
+          "html": "<div class=\"sc-shopcard\" data-icon=\"heart\" data-amount=\"5\" data-price=\"200\" data-price-icon=\"coin\" data-color=\"red\"></div>"
+        }
+      ]
+    },
+    {
+      "name": "tutorial",
+      "type": "registry:ui",
+      "title": "Tutorial Hand",
+      "description": "Animated pointing hand for tutorials (tap/swipe/drag) with optional spotlight and hint; promise-based steps.",
+      "whenToUse": "First-time tutorials and gameplay gesture hints.",
+      "files": [
+        "components/tutorial/tutorial.css"
+      ],
+      "docs": "components/tutorial/tutorial.md",
+      "dependencies": [
+        "core",
+        "hint"
+      ],
+      "html": "",
+      "props": {},
+      "events": [],
+      "js": {
+        "await SC.tutorial.point(target, {gesture, to, text, spotlight, once})": "gesture tap|swipe-up|swipe-down|swipe-left|swipe-right|drag; resolves true on target tap, false if cleared/replaced",
+        "SC.tutorial.clear()": "Remove",
+        "SC.tutorial.active": "Boolean"
+      },
+      "rules": [
+        "One step at a time; await each point().",
+        "Spotlight for menu steps; off for gameplay gestures.",
+        "Hint text ~6 words, action first.",
+        "Only the first time; save progress.",
+        "Swipes point at a big element."
+      ],
+      "examples": [
+        {
+          "title": "Two steps",
+          "js": "await SC.tutorial.point(playBtn, { text: 'Tap Play!' }); await SC.tutorial.point(gift, { text: 'Open your gift' });"
+        }
+      ]
+    },
+    {
+      "name": "joystick",
+      "type": "registry:ui",
+      "title": "Joystick / D-Pad",
+      "description": "On-screen movement control: thumbstick or 4-way D-pad, fixed or follow-the-thumb, free/8/4 directions; touch, mouse and WASD/arrows.",
+      "whenToUse": "Any game the player moves a character in (runner, shooter, adventure, platformer).",
+      "files": [
+        "components/joystick/joystick.css"
+      ],
+      "docs": "components/joystick/joystick.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-joystick\" id=\"stick\" data-color=\"sky\"></div>",
+      "props": {
+        "data-variant": {
+          "type": "enum",
+          "values": [
+            "stick",
+            "dpad"
+          ],
+          "default": "stick"
+        },
+        "data-mode": {
+          "type": "enum",
+          "values": [
+            "fixed",
+            "follow"
+          ],
+          "default": "fixed",
+          "description": "follow needs a .sc-joystick-zone parent"
+        },
+        "data-snap": {
+          "type": "enum",
+          "values": [
+            "free",
+            "8",
+            "4"
+          ],
+          "default": "free"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "sky"
+        },
+        "data-keys": {
+          "type": "enum",
+          "values": [
+            "false"
+          ],
+          "optional": true,
+          "description": "turn off keyboard control"
+        },
+        "data-arrows": {
+          "type": "enum",
+          "values": [
+            "false"
+          ],
+          "optional": true,
+          "description": "hide the direction arrows"
+        },
+        "data-knob": {
+          "type": "enum",
+          "values": [
+            "solid",
+            "ghost"
+          ],
+          "default": "solid",
+          "description": "ghost: grey, half see-through middle"
+        }
+      },
+      "events": {
+        "move": "detail {x, y, angle, distance, dir} \u2014 x/y \u22121\u20261, y+ is down",
+        "end": "released (x/y back to 0)"
+      },
+      "js": {
+        "SC.joystick.get(el)": "{ x, y, angle, distance, dir, active }"
+      },
+      "rules": [
+        "One per game, bottom-left in .sc-screen-bottom, Action Buttons bottom-right.",
+        "free = smooth, 8 = eight-way, 4/dpad = classic.",
+        "follow mode for full-screen games; fixed to keep it in place.",
+        "Use distance as speed; always handle end to stop the player.",
+        "Never write the inner parts (knob, arrows, pad)."
+      ],
+      "examples": [
+        {
+          "title": "Move a character",
+          "js": "stick.addEventListener('move', e => player.move(e.detail.x, e.detail.y)); stick.addEventListener('end', () => player.stop());"
+        },
+        {
+          "title": "Follow the thumb",
+          "html": "<div class=\"sc-joystick-zone\"><div class=\"sc-joystick\" data-mode=\"follow\"></div></div>"
+        }
+      ]
+    },
+    {
+      "name": "actions",
+      "type": "registry:ui",
+      "title": "Action Buttons",
+      "description": "Round glossy game action buttons (jump/fire/dash) with press+release events, counts and layouts; pairs with the Joystick.",
+      "whenToUse": "Gameplay actions on the opposite side from the joystick.",
+      "files": [
+        "components/actions/actions.css"
+      ],
+      "docs": "components/actions/actions.md",
+      "dependencies": [
+        "core",
+        "bubble"
+      ],
+      "html": "<div class=\"sc-actions\" data-layout=\"cluster\">\n  <button class=\"sc-action\" data-value=\"dash\" data-icon=\"rocket\" data-color=\"yellow\" data-size=\"sm\">Dash</button>\n  <button class=\"sc-action\" data-value=\"jump\" data-icon=\"jump\" data-color=\"green\" data-size=\"lg\">Jump</button>\n</div>",
+      "props": {
+        "data-layout": {
+          "type": "enum",
+          "values": [
+            "cluster",
+            "row",
+            "column",
+            "grid"
+          ],
+          "default": "cluster",
+          "description": "on .sc-actions"
+        },
+        "data-value": {
+          "type": "string",
+          "required": true,
+          "description": "on .sc-action"
+        },
+        "data-icon": {
+          "type": "icon",
+          "optional": true
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md"
+        },
+        "data-color": {
+          "type": "enum",
+          "values": [
+            "sky",
+            "blue",
+            "green",
+            "yellow",
+            "orange",
+            "red",
+            "purple",
+            "pink",
+            "mint"
+          ],
+          "default": "sky"
+        },
+        "data-badge": {
+          "type": "number",
+          "optional": true
+        },
+        "disabled": {
+          "type": "boolean",
+          "optional": true
+        }
+      },
+      "events": {
+        "press": "thumb down (detail.value)",
+        "release": "thumb up (detail.value)"
+      },
+      "js": {
+        "SC.setBadge(btn, n)": "ammo / uses left"
+      },
+      "rules": [
+        "1-3 buttons on a phone; main action lg bottom-right.",
+        "Pair with the Joystick on the other side in .sc-screen-bottom.",
+        "Handle press and release (tap and hold).",
+        "data-badge for limited actions, disabled on cooldown."
+      ],
+      "examples": [
+        {
+          "title": "Fire and dash",
+          "js": "acts.addEventListener('press', e => game.start(e.detail.value)); acts.addEventListener('release', e => game.stop(e.detail.value));"
+        }
+      ]
+    }
+  ],
+  "icons": {
+    "path": "assets/",
+    "names": [
+      "alert",
+      "anvil",
+      "apple-flat",
+      "armor",
+      "arrow-left",
+      "arrow-right",
+      "avatar",
+      "axe",
+      "back",
+      "balloon",
+      "battery",
+      "bell-flat",
+      "bomb",
+      "bomb-flat",
+      "booster",
+      "boots",
+      "bow",
+      "box-blue",
+      "box-blue-open",
+      "box-gold",
+      "box-gold-open",
+      "box-purple",
+      "box-purple-open",
+      "bulb-flat",
+      "calendar",
+      "calendar-color",
+      "calendar-glyph",
+      "cards-flat",
+      "cash",
+      "castle",
+      "chat",
+      "check",
+      "chest",
+      "clock",
+      "close",
+      "clover",
+      "coin",
+      "coin-pile",
+      "coins-big",
+      "coins-chest",
+      "coins-small",
+      "compass",
+      "crosshair",
+      "crown",
+      "crown-flat",
+      "crystal-ball",
+      "cupcake",
+      "dice-flat",
+      "donut",
+      "energy",
+      "envelope-flat",
+      "eye",
+      "fire",
+      "fireball",
+      "flag",
+      "flower-flat",
+      "friends",
+      "friends-color",
+      "gem",
+      "gem-green-flat",
+      "gem-pile",
+      "gem-pink",
+      "gem-purple-flat",
+      "gem-ring",
+      "gems-big",
+      "gems-chest",
+      "gems-small",
+      "gift",
+      "grid",
+      "hammer",
+      "hammer-flat",
+      "hand",
+      "heart",
+      "heart-empty",
+      "helmet",
+      "hint",
+      "home",
+      "home-color",
+      "hourglass",
+      "hourglass-flat",
+      "ice-cream",
+      "info",
+      "jump",
+      "key",
+      "lantern",
+      "leaderboard",
+      "lemon",
+      "letters",
+      "level-badge",
+      "lightning",
+      "lock",
+      "magnet",
+      "magnet-flat",
+      "mail",
+      "mail-color",
+      "map",
+      "map-color",
+      "meat",
+      "medal",
+      "medal-first",
+      "menu",
+      "minus",
+      "music",
+      "music-off",
+      "notification",
+      "pause",
+      "piggy-bank",
+      "pin",
+      "play",
+      "plus",
+      "potion",
+      "potion-blue",
+      "potion-green",
+      "potion-red",
+      "profile",
+      "profile-color",
+      "puzzle-flat",
+      "quest-color",
+      "radar",
+      "refresh",
+      "restart",
+      "ring",
+      "rocket",
+      "rocket-flat",
+      "ruby",
+      "scroll",
+      "search",
+      "settings",
+      "settings-color",
+      "share",
+      "shield",
+      "shield-glyph",
+      "shop",
+      "shop-color",
+      "shuffle",
+      "shuffle-flat",
+      "skull",
+      "sound",
+      "sound-off",
+      "spellbook",
+      "star",
+      "star-empty",
+      "star-silver",
+      "strawberry",
+      "sword",
+      "target",
+      "ticket",
+      "timer-glyph",
+      "trash",
+      "trophy",
+      "undo-glyph",
+      "video",
+      "warning",
+      "wifi",
+      "wrench"
+    ],
+    "note": "Use by name with data-icon (arrow-left is arrow-right mirrored). Every icon attribute also accepts a path, web address or data: image (e.g. data-icon=\"images/fox.png\"). SC.setImage(name, src) replaces a picture for the whole page, including built-ins: check, lock, alert, level-badge, hand, avatar, star, star-empty. New pictures: kit/assets/IMAGE-PROMPTS.md.",
+    "prompts": "assets/IMAGE-PROMPTS.md"
+  },
+  "blocks": [
+    {
+      "name": "hud",
+      "type": "registry:block",
+      "title": "Gameplay HUD",
+      "file": "blocks/hud.html",
+      "description": "In-game overlay: pause button, star-marker score bar, coins, lives, timer pill, booster buttons with counts, pause popup.",
+      "whenToUse": "Any level-based or score-based game while playing.",
+      "components": [
+        "screen",
+        "icon-button",
+        "progress",
+        "counter",
+        "timer",
+        "bubble",
+        "popup",
+        "button",
+        "float",
+        "toast"
+      ]
+    },
+    {
+      "name": "success",
+      "type": "registry:block",
+      "title": "Success",
+      "file": "blocks/success.html",
+      "description": "Level complete: title, star rating, XP bar with level badge, reward slots, Claim / x2 Claim, Home.",
+      "whenToUse": "After the player wins a level.",
+      "components": [
+        "screen",
+        "title",
+        "stars",
+        "progress",
+        "level",
+        "slot",
+        "tag",
+        "button",
+        "icon-button",
+        "counter",
+        "float"
+      ]
+    },
+    {
+      "name": "fail",
+      "type": "registry:block",
+      "title": "Fail",
+      "file": "blocks/fail.html",
+      "description": "Level failed: title, empty stars, so-close progress, timed continue offer (video/gems), Retry, Give up.",
+      "whenToUse": "When the player loses a level.",
+      "components": [
+        "screen",
+        "title",
+        "stars",
+        "progress",
+        "timer",
+        "button",
+        "counter",
+        "toast"
+      ]
+    },
+    {
+      "name": "pause",
+      "type": "registry:block",
+      "title": "Pause",
+      "file": "blocks/pause.html",
+      "description": "Pause popup over the game with quick setting toggles and Resume / Restart / Home.",
+      "whenToUse": "When the player pauses during a level.",
+      "components": [
+        "screen",
+        "popup",
+        "button",
+        "icon-button",
+        "toggle"
+      ]
+    },
+    {
+      "name": "start",
+      "type": "registry:block",
+      "title": "Start",
+      "file": "blocks/start.html",
+      "description": "Home screen: top bar, side shortcuts with alerts/badges/tags, title + PLAY, bottom tab bar switching screens.",
+      "whenToUse": "Main menu of casual games with meta features.",
+      "components": [
+        "screen",
+        "topbar",
+        "level",
+        "counter",
+        "title",
+        "button",
+        "icon-button",
+        "alert",
+        "bubble",
+        "tag",
+        "tabbar"
+      ]
+    },
+    {
+      "name": "reward",
+      "type": "registry:block",
+      "title": "Reward Reveal",
+      "file": "blocks/reward.html",
+      "description": "Chest opening / new item reveal: banner, shaking chest, item pop with glow, rarity tag, reward slots, Collect.",
+      "whenToUse": "Opening chests, unlocking skins/characters, big rewards.",
+      "components": [
+        "screen",
+        "banner",
+        "slot",
+        "tag",
+        "button",
+        "float"
+      ]
+    },
+    {
+      "name": "daily",
+      "type": "registry:block",
+      "title": "Daily Reward",
+      "file": "blocks/daily.html",
+      "description": "7-day daily reward popup with claimed/today/future states, big day-7 chest, Claim and next-reward countdown.",
+      "whenToUse": "Retention: daily login rewards.",
+      "components": [
+        "screen",
+        "popup",
+        "slot",
+        "tag",
+        "alert",
+        "button",
+        "icon-button",
+        "timer",
+        "counter",
+        "float"
+      ]
+    },
+    {
+      "name": "settings",
+      "type": "registry:block",
+      "title": "Settings",
+      "file": "blocks/settings.html",
+      "description": "Settings popup: toggles + volume sliders, vibration, language tabs, notifications checkbox, support/privacy/restore, version.",
+      "whenToUse": "Game settings from the menu or pause screen.",
+      "components": [
+        "screen",
+        "popup",
+        "button",
+        "icon-button",
+        "toggle",
+        "slider",
+        "tabs",
+        "checkbox",
+        "toast"
+      ]
+    },
+    {
+      "name": "shop",
+      "type": "registry:block",
+      "title": "Shop",
+      "file": "blocks/shop.html",
+      "description": "Shop screen: wallet counters, timed offer row, tabbed shop card grids, buy handling with balance checks.",
+      "whenToUse": "In-game store for currency packs and items.",
+      "components": [
+        "screen",
+        "counter",
+        "title",
+        "tabs",
+        "alert",
+        "shopcard",
+        "button",
+        "icon-button",
+        "tag",
+        "row",
+        "slot",
+        "timer",
+        "toast",
+        "float"
+      ]
+    },
+    {
+      "name": "loading-screen",
+      "type": "registry:block",
+      "title": "Loading",
+      "file": "blocks/loading.html",
+      "description": "Start-up flow: title + loading bar with tips \u2192 PLAY / tap to start \u2192 game HUD.",
+      "whenToUse": "Game start while assets load.",
+      "components": [
+        "screen",
+        "title",
+        "progress",
+        "loading",
+        "button",
+        "icon-button"
+      ]
+    }
+  ],
+  "bundle": {
+    "css": "../dist/kit.css",
+    "js": "../dist/kit.js",
+    "build": "python3 tools/build_kit.py",
+    "template": "templates/pixelfork-game/ (read AI.md)"
+  },
+  "blocksPreview": "blocks/preview.html?block=<file> \u2014 desktop device frames (docs only; remove the preview.js line when copying a block into a game)"
+}

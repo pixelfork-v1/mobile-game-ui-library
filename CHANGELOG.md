@@ -2,6 +2,27 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## Clean Flat v0.1.0 — the fifth style, the first light one (not yet published)
+- Agent: A (Claude) · Date: 2026-09-23 · local only
+- For the widest range of games (puzzle, word, trivia, merge, idle, board, kids, cozy). Ported from Fantasy RPG Casual
+  and flattened: light token values, white popup card with a soft shadow, Fredoka titles in the accent colour with a
+  short rounded bar, a plain rounded ribbon banner, white knobs, hairline edges in each element's own hue, softer lips.
+- Accents: each bright base darkened (hue kept) until a white label reads ≥3:1 on it. Yellow is the exception: a
+  bright gold fill with a DARK label, and its glyph turns dark with it (`--sc-glyph-on-button`), so text still
+  follows the icon colour. White glyph icons turn dark slate on light surfaces via `--sc-glyph-filter`.
+- `check_theme.py`: a dark button label is the outline colour in a dark style and the ink in a light one. Every base
+  (5) and example theme (3) passes.
+- Owner review: tab bars use COLOURED icons only (new sheet N1: home-color, shop-color, settings-color, map-color,
+  mail-color, calendar-color, profile-color, friends-color, quest-color; unselected items calmer, still in colour);
+  counter icons sit inside the pill; the "+" is a solid circle concentric with the pill's round end; the badge is a
+  solid pill with a white number, a white ring and a soft shadow; the default icon button is solid colour with a
+  white glyph. `tools/glyph_list.py` now also keeps white glyphs white on solid icon buttons (all styles regenerated).
+- Light surfaces darken toward a new `--sc-surface-shade` (soft grey-blue) instead of `--sc-shade`, so slots, shop
+  cards, rows and panels stay light; coloured lips still use `--sc-shade`.
+- Icons: 155 via Azure — 90 shared, 17 glyphs, 27 puzzle/casual items, 9 coloured nav icons, 12 packs and gift boxes.
+- Checked: all 10 blocks with real icons; every referenced icon exists; selectors clean; load order 0 differ;
+  contrast PASS for all five bases and three themes. Local commit before this style: `cba91dc`. Nothing pushed.
+
 ## Pixel Retro v0.1.0 — the fourth style (not yet published)
 - Agent: A (Claude) · Date: 2026-09-22 · local only
 - Chosen for breadth: roguelike, platformer, arcade, idle, retro RPG. Ported from Fantasy RPG Casual (token-driven,

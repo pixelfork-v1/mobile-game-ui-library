@@ -1,0 +1,34 @@
+/*
+  Tag Ribbon — Clean Flat
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file selector-for-selector (sizes, data-tilt, the attached variant and its
+  three data-pos anchors, the pop-in). Skin: the pack's rarity chip — same construction as the button:
+  a real border, and the two 45° corners filled with the frame colour by diagonal gradients. One element.
+*/
+:where(.sc-tag) { --line:var(--sc-c-red); --lip:color-mix(in srgb, var(--sc-c-red) calc(35% * var(--sc-glow)), transparent); }
+.sc-tag {
+  --t:13px; --cut:calc(var(--t) * .62); --sc-outline:color-mix(in srgb, var(--line) 80%, var(--sc-shade));
+  position:relative; display:inline-block; box-sizing:border-box; vertical-align:middle; white-space:nowrap; line-height:1;
+  padding:calc(var(--t) * .3) calc(var(--t) * .7);
+  border:2px solid var(--sc-outline); border-radius:999px;
+  background:
+    linear-gradient(225deg, var(--line) calc(var(--cut) * .7071), #0000 0),
+    linear-gradient( 45deg, var(--line) calc(var(--cut) * .7071), #0000 0),
+    linear-gradient(180deg, color-mix(in srgb, var(--line) 80%, var(--sc-sheen)) 0 45%, var(--line) 45%);
+  background-clip:padding-box;
+  box-shadow:0 0 10px -3px var(--lip);
+  font-family:var(--sc-font); pointer-events:none; user-select:none; -webkit-user-select:none;
+}
+.sc-tag[data-size="sm"] { --t:10px; }
+.sc-tag[data-size="lg"] { --t:16px; }
+.sc-tag[data-tilt] { rotate:-6deg; }
+.sc-tag > .sc-text { --fs:var(--t); --ink:var(--sc-ink); font-size:var(--fs); display:block; letter-spacing:.06em; text-transform:uppercase; text-shadow:0 1px 0 color-mix(in srgb, var(--sc-outline) 60%, transparent); }
+
+/* Attached to a host (built by sc.js from data-tag) */
+.sc-tag.sc-tag-attached { position:absolute; z-index:5; --t:11px; }
+.sc-tag-attached[data-pos="top-left"]  { left:-6px;  top:-8px; }
+.sc-tag-attached[data-pos="top-right"] { right:-6px; top:-8px; }
+.sc-tag-attached[data-pos="top"]       { left:50%; top:0; translate:-50% -55%; }
+.sc-tag-attached { animation:sc-tag-pop .28s cubic-bezier(.2,1.4,.5,1) backwards; }
+@keyframes sc-tag-pop { from { scale:.6; opacity:0; } }
+@media (prefers-reduced-motion:reduce) { .sc-tag-attached { animation:none; } }

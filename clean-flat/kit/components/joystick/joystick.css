@@ -1,0 +1,90 @@
+/*
+  Joystick / D-Pad — Clean Flat
+  Requires: ../../core.css, ../sc.js
+  Hollow and unobtrusive: a thin accent ring for the base, a flat knob, and a D-pad drawn as one plus with
+  the same two-layer method used in the other style (dark plus behind, accent plus on top).
+*/
+:where(.sc-joystick) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-joystick {
+  --js:150px; --knob:calc(var(--js) * .42);
+  position:relative; flex:none; width:var(--js); height:var(--js); box-sizing:border-box;
+  border:2.5px solid var(--sc-outline); border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--sc-well) 65%, transparent), color-mix(in srgb, color-mix(in srgb, var(--sc-well) 67%, var(--sc-surface-shade)) 65%, transparent));
+  box-shadow:0 0 22px -8px var(--lip);
+  touch-action:none; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent;
+  font-family:var(--sc-font);
+}
+.sc-joystick[data-size="sm"] { --js:120px; }
+.sc-joystick[data-size="lg"] { --js:180px; }
+.sc-joystick[data-mode="follow"] { position:absolute; opacity:0; transition:opacity .12s; pointer-events:none; }
+.sc-joystick[data-mode="follow"].sc-on { opacity:1; }
+.sc-joystick[data-arrows="false"] .sc-joystick-arrow { display:none; }
+
+.sc-joystick-arrow {
+  position:absolute; width:calc(var(--js) * .09); height:calc(var(--js) * .09); box-sizing:border-box;
+  border:calc(var(--js) * .022) solid color-mix(in srgb, var(--line) 55%, #0000);
+  border-left:0; border-bottom:0; transition:border-color .1s, scale .1s;
+}
+.sc-joystick-arrow[data-dir="up"]    { top:calc(var(--js) * .07); left:50%; translate:-50% 0; rotate:-45deg; }
+.sc-joystick-arrow[data-dir="down"]  { bottom:calc(var(--js) * .07); left:50%; translate:-50% 0; rotate:135deg; }
+.sc-joystick-arrow[data-dir="left"]  { left:calc(var(--js) * .07); top:50%; translate:0 -50%; rotate:-135deg; }
+.sc-joystick-arrow[data-dir="right"] { right:calc(var(--js) * .07); top:50%; translate:0 -50%; rotate:45deg; }
+.sc-joystick-arrow.sc-on { border-color:var(--line); scale:1.2; }
+
+.sc-joystick-knob {
+  --sc-outline:color-mix(in srgb, var(--line) 80%, var(--sc-shade));
+  position:absolute; left:50%; top:50%; width:var(--knob); height:var(--knob); box-sizing:border-box;
+  margin:calc(var(--knob) / -2); translate:var(--kx, 0px) var(--ky, 0px);
+  border:2.5px solid var(--sc-outline); border-radius:50%;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--sc-sheen) 30%, transparent) 0%, color-mix(in srgb, var(--sc-sheen) 12%, transparent) 38%, #0000 46%), var(--line);
+  box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--line) 76%, var(--sc-shade)), 0 0 16px -4px var(--lip);
+  transition:translate .12s ease-out, scale .1s;
+}
+.sc-joystick.sc-active .sc-joystick-knob { transition:scale .1s; scale:1.06; box-shadow:0 0 22px -3px var(--lip); }
+.sc-joystick[data-knob="ghost"] .sc-joystick-knob { background:color-mix(in srgb, var(--sc-dim) 50%, transparent); border-color:color-mix(in srgb, var(--sc-dim) 50%, transparent); box-shadow:none; }
+
+/* D-pad */
+.sc-joystick[data-variant="dpad"] { --arm:.86; --thick:.36; border-radius:22%; }
+.sc-joystick[data-variant="dpad"] .sc-joystick-knob { display:none; }
+.sc-joystick-cross, .sc-joystick-cross::before {
+  position:absolute; left:50%; top:50%; background:color-mix(in srgb, var(--line) 60%, #0000); border-radius:calc(var(--sc-r) * 0.5);
+  width:calc(var(--js) * var(--thick)); height:calc(var(--js) * var(--arm));
+  margin:calc(var(--js) * var(--arm) / -2) calc(var(--js) * var(--thick) / -2);
+}
+.sc-joystick-cross { display:block; }
+.sc-joystick-cross::before { content:""; rotate:90deg; }
+.sc-joystick-cross::after {
+  content:""; position:absolute; left:50%; top:50%; background:color-mix(in srgb, var(--line) 60%, #0000);
+  width:calc(var(--js) * var(--thick)); height:calc(var(--js) * var(--thick));
+  margin:calc(var(--js) * var(--thick) / -2); border-radius:calc(var(--sc-r) * 0.25);
+}
+.sc-joystick-fill, .sc-joystick-fill::before {
+  position:absolute; left:50%; top:50%; border-radius:calc(var(--sc-r) * 0.375);
+  background:linear-gradient(color-mix(in srgb, var(--line) 26%, color-mix(in srgb, var(--sc-well) 97%, var(--sc-surface-shade))), color-mix(in srgb, var(--line) 14%, color-mix(in srgb, var(--sc-well) 70%, var(--sc-surface-shade))));
+  width:calc(var(--js) * var(--thick) - 4px); height:calc(var(--js) * var(--arm) - 4px);
+  margin:calc((var(--js) * var(--arm) - 4px) / -2) calc((var(--js) * var(--thick) - 4px) / -2);
+}
+.sc-joystick-fill { display:block; }
+.sc-joystick-fill::before { content:""; rotate:90deg; }
+.sc-joystick-arm {
+  position:absolute; left:50%; top:50%; transform-origin:50% 0; pointer-events:none;
+  width:calc(var(--js) * var(--thick) - 4px); height:calc(var(--js) * var(--arm) / 2 - 2px);
+  margin-left:calc((var(--js) * var(--thick) - 4px) / -2);
+  --reach:calc(100% - var(--thick) / var(--arm) * 100%);
+  background:linear-gradient(to top, color-mix(in srgb, var(--line) 20%, #0000), #0000 var(--reach));
+  transform:rotate(var(--rot)); transition:background .08s, transform .08s;
+}
+.sc-joystick-arm[data-dir="up"] { --rot:180deg; } .sc-joystick-arm[data-dir="down"] { --rot:0deg; }
+.sc-joystick-arm[data-dir="left"] { --rot:90deg; } .sc-joystick-arm[data-dir="right"] { --rot:-90deg; }
+.sc-joystick-arm.sc-on {
+  transform:rotate(var(--rot)) translateY(calc(var(--js) * -.012));
+  background:linear-gradient(to top, color-mix(in srgb, var(--line) 70%, #0000), #0000 var(--reach));
+}
+/* D-pad arrows sit at the end of each arm, inside the plus (PORTED) */
+.sc-joystick[data-variant="dpad"] .sc-joystick-arrow { z-index:2; border-color:color-mix(in srgb, var(--sc-ink) 70%, transparent); }
+.sc-joystick[data-variant="dpad"] .sc-joystick-arrow.sc-on { border-color:var(--sc-sheen); scale:1.1; }
+.sc-joystick[data-variant="dpad"] .sc-joystick-arrow[data-dir="up"]    { top:calc(var(--js) * (.5 - var(--arm) / 2) + var(--js) * .05); }
+.sc-joystick[data-variant="dpad"] .sc-joystick-arrow[data-dir="down"]  { bottom:calc(var(--js) * (.5 - var(--arm) / 2) + var(--js) * .05); }
+.sc-joystick[data-variant="dpad"] .sc-joystick-arrow[data-dir="left"]  { left:calc(var(--js) * (.5 - var(--arm) / 2) + var(--js) * .05); }
+.sc-joystick[data-variant="dpad"] .sc-joystick-arrow[data-dir="right"] { right:calc(var(--js) * (.5 - var(--arm) / 2) + var(--js) * .05); }
+@media (prefers-reduced-motion:reduce) { .sc-joystick-knob, .sc-joystick-arrow, .sc-joystick-arm { transition:none; } }

@@ -1,0 +1,27 @@
+/*
+  Notification Dot — Clean Flat
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Super Casual file selector-for-selector (.sc-alert is the element, .sc-alert-attached the
+  modifier; default kind shows the alert icon, data-kind="dot" is the plain dot; tab-bar anchoring; pop +
+  pulse). Skin: a glowing red dot instead of a glossy one.
+*/
+.sc-alert {
+  --a:20px;
+  position:absolute; right:-7px; top:-7px; z-index:6; width:var(--a); height:var(--a); pointer-events:none;
+  animation:sc-alert-pop .3s cubic-bezier(.2,1.5,.5,1) backwards, sc-alert-pulse 1.6s ease-in-out .4s infinite;
+  filter:drop-shadow(0 0 5px color-mix(in srgb, var(--sc-c-red) 60%, transparent));
+}
+.sc-alert > img { width:100%; height:100%; object-fit:contain; display:block; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-alert[data-kind="dot"] {
+  --a:11px; right:-3px; top:-3px; box-sizing:border-box; border-radius:50%;
+  background:var(--sc-c-red); box-shadow:0 0 8px 0 color-mix(in srgb, var(--sc-c-red) 70%, transparent); filter:none;
+}
+.sc-alert:not(.sc-alert-attached) { position:relative; display:inline-block; right:auto; top:auto; vertical-align:middle; }
+
+/* Tab bar item: sit on the icon corner (this style's bar has no lift) */
+.sc-tabbar-item > .sc-alert { top:6px; right:calc(50% - var(--icon) / 2 - 9px); }
+.sc-tabbar-item[aria-selected="true"] > .sc-alert { top:6px; right:calc(50% - var(--icon-on) / 2 - 9px); }
+
+@keyframes sc-alert-pop   { from { scale:.2; opacity:0; } }
+@keyframes sc-alert-pulse { 0%, 100% { transform:scale(1); } 50% { transform:scale(1.12); } }
+@media (prefers-reduced-motion:reduce) { .sc-alert { animation:none; } }

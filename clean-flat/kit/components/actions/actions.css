@@ -1,0 +1,38 @@
+/*
+  Action Buttons — Clean Flat
+  Requires: ../../core.css, ../sc.js
+  Round, hollow and flat: a thin accent ring over a dark disc, the icon inside, the label under it in
+  near-white. Pressing fills the ring instead of squashing the button.
+*/
+:where(.sc-action) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-actions { display:flex; align-items:flex-end; gap:12px; }
+.sc-actions[data-layout="cluster"] > .sc-action:nth-child(odd) { margin-bottom:22px; }
+.sc-actions[data-layout="column"] { flex-direction:column; align-items:center; }
+.sc-actions[data-layout="grid"] { display:grid; grid-template-columns:repeat(2, auto); }
+.sc-action {
+  --size:72px;
+  position:relative; flex:none; box-sizing:border-box; width:var(--size); height:var(--size); padding:0; margin:0;
+  display:grid; place-items:center; cursor:pointer; appearance:none;
+  border:2px solid var(--line); border-radius:50%;
+  background:radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--line) 20%, color-mix(in srgb, var(--sc-well) 80%, var(--sc-surface-shade))), color-mix(in srgb, var(--sc-well) 67%, var(--sc-surface-shade)));
+  box-shadow:0 0 18px -6px var(--lip);
+  font-family:var(--sc-font);
+  -webkit-tap-highlight-color:transparent; touch-action:none; outline:none;
+  user-select:none; -webkit-user-select:none;
+  transition:background .1s, box-shadow .1s, scale .08s;
+}
+.sc-action[data-size="sm"] { --size:56px; }
+.sc-action[data-size="lg"] { --size:92px; }
+.sc-action > img { width:46%; height:46%; object-fit:contain; pointer-events:none; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-action:has(> .sc-text) > img { width:38%; height:38%; margin-top:calc(var(--size) * -.14); }
+.sc-action > .sc-text {
+  --fs:calc(var(--size) * .17); --ink:var(--sc-ink); font-size:var(--fs); line-height:1;
+  position:absolute; left:50%; bottom:11%; transform:translateX(-50%);
+  letter-spacing:calc(.04em * var(--sc-tracking)); text-transform:var(--sc-caps);
+}
+.sc-action:active, .sc-action.sc-pressed {
+  scale:.94; background:radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--line) 45%, color-mix(in srgb, var(--sc-well) 80%, var(--sc-surface-shade))), color-mix(in srgb, var(--sc-panel) 89%, var(--sc-surface-shade)));
+  box-shadow:0 0 26px -4px var(--lip);
+}
+.sc-action:focus-visible { outline:2px solid var(--line); outline-offset:3px; }
+.sc-action:disabled { cursor:not-allowed; filter:grayscale(1) brightness(.6); }
