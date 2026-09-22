@@ -1,0 +1,62 @@
+/*
+  Reward Slot — Neon Cyber
+  Requires: ../../core.css, super-casual/kit/sc.js   (same markup and attributes)
+  A dark cell with a hairline edge. Rarity is the border colour and the glow, not the fill.
+*/
+.sc-slot {
+  --size:84px; --slot:var(--sc-edge); --slot-glow:#0000;
+  position:relative; display:inline-block; vertical-align:middle; flex:none; box-sizing:border-box;
+  width:var(--size); height:var(--size);
+  border:var(--sc-line-sm) solid var(--slot); border-radius:var(--sc-r);
+  background:linear-gradient(color-mix(in srgb, var(--sc-raise) 84%, var(--sc-surface-shade)), color-mix(in srgb, var(--sc-panel) 80%, var(--sc-surface-shade)));
+  box-shadow:0 0 14px -4px var(--slot-glow), inset 0 1px 0 color-mix(in srgb, var(--sc-sheen) 7%, transparent);
+  font-family:var(--sc-font); user-select:none; -webkit-user-select:none;
+}
+.sc-slot[data-size="sm"] { --size:60px; border-radius:calc(var(--sc-r) * 0.75); }
+.sc-slot[data-size="lg"] { --size:104px; border-radius:calc(var(--sc-r) * 1.25); }
+
+/* Rarity = edge colour + glow */
+.sc-slot[data-color="white"]    { --slot:color-mix(in srgb, var(--sc-dim) 79%, var(--sc-sheen)); --slot-glow:color-mix(in srgb, color-mix(in srgb, var(--sc-dim) 79%, var(--sc-sheen)) calc(35% * var(--sc-glow)), transparent); }
+.sc-slot[data-color="dark"]     { --slot:var(--sc-edge); --slot-glow:#0000; }
+.sc-slot[data-color="green"]    { --slot:color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)); --slot-glow:color-mix(in srgb, color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)) calc(35% * var(--sc-glow)), transparent); }
+.sc-slot[data-color="sky"]      { --slot:color-mix(in srgb, var(--sc-c-sky) 87%, var(--sc-ink)); --slot-glow:color-mix(in srgb, color-mix(in srgb, var(--sc-c-sky) 87%, var(--sc-ink)) calc(35% * var(--sc-glow)), transparent); }
+.sc-slot[data-color="purple"]   { --slot:var(--sc-c-purple); --slot-glow:color-mix(in srgb, var(--sc-c-purple) calc(35% * var(--sc-glow)), transparent); }
+.sc-slot[data-color="yellow"]   { --slot:var(--sc-c-yellow); --slot-glow:color-mix(in srgb, var(--sc-c-yellow) calc(35% * var(--sc-glow)), transparent); }
+.sc-slot[data-color="red"]      { --slot:var(--sc-c-red); --slot-glow:color-mix(in srgb, var(--sc-c-red) calc(35% * var(--sc-glow)), transparent); }
+.sc-slot[data-color="lavender"] { --slot:var(--sc-c-pink); --slot-glow:color-mix(in srgb, var(--sc-c-pink) calc(35% * var(--sc-glow)), transparent); }
+
+.sc-slot > img[data-sc-icon] {
+  position:absolute; left:16%; top:12%; width:68%; height:68%; object-fit:contain; pointer-events:none;
+  translate:var(--ox, 0%) var(--oy, 0%);
+}
+.sc-slot-count { position:absolute; right:7%; bottom:5%; z-index:1; line-height:1; }
+.sc-slot-count .sc-text { --fs:calc(var(--size) * .2); --ink:var(--sc-ink); font-size:var(--fs); font-variant-numeric:tabular-nums; }
+
+/* Tag: a small flat chip on the top edge */
+.sc-slot-tag {
+  --t:calc(var(--size) * .13);
+  position:absolute; left:50%; top:calc(var(--size) * -.08); z-index:2; transform:translateX(-50%);
+  padding:calc(var(--t) * .28) calc(var(--t) * .55); white-space:nowrap; line-height:1;
+  background:color-mix(in srgb, var(--sc-panel) 80%, var(--sc-surface-shade)); border:1px solid var(--slot); border-radius:calc(var(--sc-r) * 0.5);
+}
+.sc-slot-tag .sc-text { --fs:var(--t); --ink:var(--slot); font-size:var(--fs); display:block; letter-spacing:calc(.1em * var(--sc-tracking)); }
+
+/* States: the overlay image needs its own size, or it renders at the icon's natural pixels */
+.sc-slot-state { position:absolute; z-index:3; pointer-events:none; object-fit:contain; }
+.sc-slot[data-state]::after { content:""; position:absolute; inset:0; border-radius:inherit; background:color-mix(in srgb, color-mix(in srgb, var(--sc-ground) 74%, var(--sc-surface-shade)) 70%, transparent); z-index:1; }
+.sc-slot[data-state="locked"]::after { background:color-mix(in srgb, var(--sc-well) 88%, transparent); }   /* locked: a closed, calm tile — the item is only a faint silhouette under it */
+/* claimed: the tick sits in the middle. This style puts the count bottom-right, so a corner tick would cover it. */
+.sc-slot[data-state="claimed"] .sc-slot-state { left:50%; top:44%; width:46%; height:46%; transform:translate(-50%,-50%);
+  filter:none; }
+.sc-slot[data-state="locked"]  .sc-slot-state { left:50%; top:50%; width:44%; height:44%; transform:translate(-50%,-50%); opacity:1;
+  filter:none; }   /* the lock gets the icon outline, like every white glyph on this style's surfaces */
+.sc-slot[data-state] .sc-slot-count { opacity:.5; }
+.sc-slot[data-state="locked"] { --slot:var(--sc-edge); --slot-glow:#0000; }
+.sc-slot[data-state="locked"] > img[data-sc-icon] { opacity:.14; filter:grayscale(1); }
+.sc-slot[data-state="locked"] .sc-slot-tag { opacity:.55; }
+
+.sc-pop-in { animation:sc-pop-in .3s cubic-bezier(.2,1.3,.5,1) both; animation-delay:var(--sc-delay, 0s); }
+@keyframes sc-pop-in { from { opacity:0; transform:scale(.7); } }
+
+.sc-slot.sc-bump .sc-slot-count .sc-text { animation:sc-slot-bump .3s ease-out; }
+@keyframes sc-slot-bump { 40% { transform:scale(1.3); } }

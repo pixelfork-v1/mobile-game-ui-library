@@ -45,6 +45,11 @@ def parts(sel):
     return frozenset(t)
 
 missing = 0
+# an unclosed /* silently swallows declarations up to the next */ — cheap to catch, invisible in the browser
+for f in [ROOT / style / 'kit' / 'core.css', *sorted(DST.glob('*/*.css'))]:
+    s = f.read_text()
+    if s.count('/*') != s.count('*/'):
+        print(f'{f.relative_to(ROOT)}: UNBALANCED COMMENT ({s.count("/*")} opened, {s.count("*/")} closed)'); missing += 1
 for d in sorted(SRC.iterdir()):
     a, b = d / f'{d.name}.css', DST / d.name / f'{d.name}.css'
     if not a.exists():

@@ -1,0 +1,43 @@
+/*
+  Screen Title — Neon Cyber
+  Requires: ../../core.css, super-casual/kit/sc.js
+  No gradient letters and no 3D stack: a wide-tracked uppercase word with a soft glow and a hairline under it.
+*/
+:where(.sc-title) { --g1:var(--sc-ink); --g2:color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)); --g3:color-mix(in srgb, color-mix(in srgb, var(--sc-accent) 87%, var(--sc-ink)) calc(35% * var(--sc-glow)), transparent); }
+.sc-title {
+  --fs:44px; --sc-outline:color-mix(in srgb, var(--g2) 80%, var(--sc-shade));
+  position:relative; display:inline-block; margin:0; padding:0 .06em .14em;
+  font-family:var(--sc-title-font, var(--sc-font)); font-weight:700; font-size:var(--fs); line-height:1.05;
+  letter-spacing:0; text-transform:none; white-space:nowrap;
+}
+.sc-title[data-size="sm"] { --fs:24px; }
+.sc-title[data-size="md"] { --fs:34px; }
+
+/* no 3D layers here: ::before and ::after are the ornament (below) */
+.sc-title > span {
+  position:relative; z-index:1; color:var(--g1);
+  text-shadow:none; color:var(--g2);
+}
+/* the ornament: a thin line fading out at both ends, and a small diamond at its middle (the reference's title rule) */
+.sc-title::after {                            /* a short rounded bar, centred */
+  content:""; position:absolute; left:50%; bottom:-2px; width:1.4em; height:.14em; translate:-50% 0; border-radius:99px;
+  background:var(--g2); opacity:.35;
+}
+.sc-title::before { content:none; }
+
+.sc-title[data-color="gold"]   { --g1:color-mix(in srgb, var(--sc-c-yellow) 50%, var(--sc-ink)); --g2:var(--sc-c-yellow); --g3:color-mix(in srgb, var(--sc-c-yellow) calc(40% * var(--sc-glow)), transparent); }
+.sc-title[data-color="red"]    { --g1:color-mix(in srgb, var(--sc-c-red) 49%, var(--sc-ink)); --g2:var(--sc-c-red); --g3:color-mix(in srgb, var(--sc-c-red) calc(40% * var(--sc-glow)), transparent); }
+.sc-title[data-color="blue"]   { --g1:color-mix(in srgb, var(--sc-c-blue) 56%, var(--sc-ink)); --g2:var(--sc-c-blue); --g3:color-mix(in srgb, var(--sc-c-blue) calc(40% * var(--sc-glow)), transparent); }
+.sc-title[data-color="green"]  { --g1:color-mix(in srgb, var(--sc-c-green) 44%, var(--sc-ink)); --g2:color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)); --g3:color-mix(in srgb, color-mix(in srgb, var(--sc-c-green) 86%, var(--sc-ink)) calc(40% * var(--sc-glow)), transparent); }
+.sc-title[data-color="purple"] { --g1:color-mix(in srgb, var(--sc-c-purple) 51%, var(--sc-ink)); --g2:var(--sc-c-purple); --g3:color-mix(in srgb, var(--sc-c-purple) calc(40% * var(--sc-glow)), transparent); }
+.sc-title[data-color="white"]  { --g1:var(--sc-sheen); --g2:color-mix(in srgb, var(--sc-dim) 79%, var(--sc-sheen)); --g3:color-mix(in srgb, color-mix(in srgb, var(--sc-dim) 79%, var(--sc-sheen)) calc(40% * var(--sc-glow)), transparent); }
+
+.sc-title[data-animate="drop"]  { animation:sc-title-drop .5s cubic-bezier(.2,1.2,.4,1) both; }
+.sc-title[data-animate="pop"]   { animation:sc-title-pop .4s cubic-bezier(.2,1.3,.4,1) both; }
+.sc-title[data-animate="shake"] { animation:sc-title-shake .6s ease-out both; }
+@keyframes sc-title-drop  { from { transform:translateY(-18px); opacity:0; letter-spacing:calc(.24em * var(--sc-tracking)); } }
+@keyframes sc-title-pop   { from { transform:scale(.88); opacity:0; } }
+@keyframes sc-title-shake {
+  0% { transform:scale(1.15); opacity:0; } 30% { transform:scale(1); opacity:1; }
+  45% { transform:translateX(-5px); } 60% { transform:translateX(4px); } 100% { transform:none; }
+}

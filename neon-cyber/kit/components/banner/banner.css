@@ -1,0 +1,36 @@
+/*
+  Title Banner — Neon Cyber
+  Requires: ../../core.css, ../sc.js
+  PORTED from the Tactical Dark file: sizes driven by --b-fs, the band sc.js wraps round the text, and both
+  entrance animations. Skin: a cloth ribbon hanging from a wooden rod with silver caps, swallow-tail ends,
+  dark outline — the reference's pennants, laid sideways for a title.
+*/
+:where(.sc-banner) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-banner {
+  --b-fs:18px; --b-h:calc(var(--b-fs) * 2.3); --cut:calc(var(--b-h) * .5); --sc-outline:color-mix(in srgb, var(--line) 80%, var(--sc-shade));
+  position:relative; display:inline-flex; box-sizing:border-box; height:var(--b-h); margin:0;
+  font-family:var(--sc-font); white-space:nowrap; user-select:none; -webkit-user-select:none; vertical-align:middle;
+  filter:drop-shadow(0 4px 10px color-mix(in srgb, var(--sc-shade) 22%, transparent));
+}
+.sc-banner[data-size="sm"] { --b-fs:13px; }
+.sc-banner[data-size="lg"] { --b-fs:26px; }
+.sc-banner::before { content:none; }
+.sc-banner::after { content:none; }
+.sc-banner-band {
+  position:relative; display:flex; align-items:center; justify-content:center; box-sizing:border-box; width:100%; height:100%;
+  min-width:calc(var(--b-h) * 3.6); padding:0 calc(var(--b-fs) * 1.6);
+  z-index:1;
+  background:var(--line); box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--line) 76%, var(--sc-shade));
+  border-radius:999px;
+}
+.sc-banner-band > .sc-text { --fs:var(--b-fs); --ink:var(--sc-ink); font-size:var(--fs); letter-spacing:.02em; text-transform:none; --ink:#FFFFFF; }
+
+.sc-banner[data-animate="unfurl"] { animation:sc-banner-unfurl .4s cubic-bezier(.2,1.2,.5,1) backwards; }
+.sc-banner[data-animate="drop"]   { animation:sc-banner-drop .4s cubic-bezier(.2,1.3,.5,1) backwards; }
+@keyframes sc-banner-unfurl { from { transform:scaleX(.2); opacity:0; } }
+@keyframes sc-banner-drop   { from { transform:translateY(-40%); opacity:0; } }
+@media (prefers-reduced-motion:reduce) { .sc-banner { animation:none !important; } }
+
+/* ---- Neon Cyber: the banner is neon glass like the buttons — white text on a bright neon fill was too weak ---- */
+.sc-banner-band { background:color-mix(in srgb, var(--line) 28%, var(--sc-well)); box-shadow:inset 0 0 0 2px var(--line), 0 0 14px -2px color-mix(in srgb, var(--line) 70%, transparent); }
+.sc-banner-band > .sc-text { text-shadow:0 0 8px color-mix(in srgb, var(--line) 80%, transparent); }

@@ -1,0 +1,27 @@
+/*
+  Shop Card — Neon Cyber
+  Requires: ../../core.css, ../sc.js, ../button/button.css, ../tag/tag.css
+  PORTED from the Super Casual file (column layout, the art box with its absolutely placed image, the amount
+  centred on the art's bottom edge, bonus line, full-width buy button, sold state). Skin: dark cell, thin
+  accent edge from data-color, soft accent light behind the item.
+*/
+:where(.sc-shopcard) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); }
+.sc-shopcard {
+  position:relative; display:inline-flex; flex-direction:column; align-items:stretch; box-sizing:border-box; vertical-align:top;
+  width:120px; padding:6px 6px 8px; gap:6px;
+  border:1.5px solid color-mix(in srgb, var(--line) 60%, color-mix(in srgb, var(--sc-panel) 80%, var(--sc-surface-shade))); border-radius:var(--sc-r);
+  background:linear-gradient(color-mix(in srgb, var(--sc-raise) 84%, var(--sc-surface-shade)), color-mix(in srgb, var(--sc-panel) 80%, var(--sc-surface-shade))); box-shadow:0 0 16px -8px var(--lip);
+  font-family:var(--sc-font); user-select:none; -webkit-user-select:none;
+}
+.sc-shopcard-art {
+  position:relative; aspect-ratio:1 / .9; border-radius:calc(var(--sc-r) * 0.625); overflow:hidden;
+  background:radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--line) 34%, #0000) 0%, #0000 70%), color-mix(in srgb, var(--sc-well) 86%, var(--sc-surface-shade));
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--sc-sheen) 7%, transparent);
+}
+.sc-shopcard-art > img { position:absolute; inset:8% 8% 16%; width:84%; height:76%; object-fit:contain; translate:var(--ox, 0%) var(--oy, 0%); }
+.sc-shopcard-amount { position:absolute; left:0; right:0; bottom:3px; text-align:center; line-height:1; }
+.sc-shopcard-amount > .sc-text { --fs:17px; --ink:var(--sc-ink); font-size:var(--fs); font-variant-numeric:tabular-nums; text-shadow:0 1px 3px #000c; }
+.sc-shopcard-bonus { text-align:center; font:700 max(11px, var(--sc-min-fs, 0px))/1.1 var(--sc-font); color:color-mix(in srgb, var(--sc-c-green) 73%, var(--sc-ink)); letter-spacing:calc(.06em * var(--sc-tracking)); text-transform:var(--sc-caps); }
+.sc-shopcard > .sc-button.sc-shopcard-buy { width:100%; min-width:0; --h:36px; }   /* .sc-button too: must beat [data-size="sm"] whatever order the files load in */
+.sc-shopcard > .sc-tag.sc-tag-attached { --t:10px; }   /* .sc-tag too: must beat tag.css whatever order the files load in */
+.sc-shopcard[data-state="sold"] { filter:grayscale(1) brightness(.7); }

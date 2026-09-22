@@ -2,6 +2,18 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## Neon Cyber v0.1.0 — the seventh style (not yet published)
+- Agent: A (Claude) · Date: 2026-09-23 · local only
+- For space, racing, rhythm, sci-fi puzzle and cyberpunk. Ported from Clean Flat (every owner rule built in), turned
+  dark: navy-black tokens, full-strength neon accents used only as edges and glows, coloured controls as dark glass
+  (button, icon button, toggle ON, selected tab, checked box, banner) so white text + white icon always read.
+- Built with the rules from the start: N1 + N2 coloured nav sheets and `--sc-nav-icons`; one-colour test and the
+  icon colour audit (now 289 pages, seven styles) both PASS.
+- Found while building: an unclosed `/*` in core.css (my token edit removed the `*/`) blanked the whole page. The
+  same slip was in Clean Flat and Cozy Paper since the one-colour fix, where it swallowed only
+  `--sc-label-outline: none` (no visible change). All fixed, and `tools/check_style.py` now fails on any stylesheet
+  with unbalanced comments.
+
 ## All styles — coloured tab icons everywhere + a full audit (not yet published)
 - Agent: A (Claude) · Date: 2026-09-23 · local only
 - Owner review: the Cozy Paper Tab Bar DOCS page still had white glyphs — the earlier fix only touched blocks.

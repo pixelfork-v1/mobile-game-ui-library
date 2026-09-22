@@ -1,0 +1,75 @@
+/*
+  Toggle — Neon Cyber
+  Requires: ../../core.css, ../sc.js   (same markup, role="switch", change event)
+
+  A chunky outlined switch: dark-outlined track (gold when ON, with the button's top band), a cream knob with its
+  own outline and bottom edge, the state word beside it. Same markup, same behaviour as every other style.
+
+  CONTRAST RULE (applies to every component in this style): the label is ALWAYS near-white on the dark
+  track, in both states. Never tint the text with the accent — accent-on-dark reads at about 3:1 and
+  disappears at small sizes. The accent carries the state through the THUMB, the BORDER and the GLOW;
+  the text carries the meaning, so it stays readable.
+*/
+:where(.sc-toggle) { --line:var(--sc-accent); --lip:color-mix(in srgb, var(--sc-accent) calc(35% * var(--sc-glow)), transparent); --on-label:#FFFFFF; }   /* the label is light in BOTH states; on the gold track it carries the outline */
+.sc-toggle {
+  --h:44px; --w:calc(var(--h) * 2.3);
+  --thumb:calc(var(--h) - var(--pad) * 2 - var(--bw) * 2);
+  --pad:calc(var(--h) * .13);
+  --bw:var(--sc-line);
+  --track:var(--sc-well);
+  --edge:var(--sc-outline);                   /* the outline is the same dark line the icons have, in both states */
+  --knob:var(--sc-panel);   /* a white knob in both states — flat switches */
+  --label:var(--sc-ink);                      /* near-white in BOTH states — this is the contrast rule */
+  position:relative; display:inline-block; flex:none; box-sizing:border-box;
+  width:var(--w); height:var(--h); padding:0; vertical-align:middle;
+  border:var(--bw) solid var(--edge); border-radius:calc(var(--h) / 2);
+  background:linear-gradient(180deg, color-mix(in srgb, var(--sc-sheen) 30%, transparent) 0%, color-mix(in srgb, var(--sc-sheen) 12%, transparent) 38%, #0000 46%), var(--track);
+  box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--sc-well) 70%, var(--sc-surface-shade));
+  font-family:var(--sc-font); cursor:pointer; appearance:none;
+  -webkit-tap-highlight-color:transparent; touch-action:manipulation; outline:none;
+  user-select:none; -webkit-user-select:none;
+  transition:border-color .16s, box-shadow .16s, background .16s;
+}
+.sc-toggle[data-size="sm"] { --h:36px; --bw:2px; }
+.sc-toggle[data-size="lg"] { --h:54px; }
+
+/* ON: the accent lights the edge, the thumb and the glow — never the text */
+.sc-toggle:is([data-checked="true"], [data-checked=""]) {
+  --knob:var(--sc-panel); --track:var(--line); --label:var(--on-label); --sc-outline:color-mix(in srgb, var(--line) 80%, var(--sc-shade));
+  box-shadow:inset 0 -3px 0 color-mix(in srgb, var(--line) 76%, var(--sc-shade)), 0 0 calc(var(--h) * .28) var(--lip);
+}
+
+.sc-toggle-thumb {
+  position:absolute; top:var(--pad); left:var(--pad);
+  width:var(--thumb); height:var(--thumb); box-sizing:border-box; pointer-events:none;
+  border-radius:50%; background:linear-gradient(180deg, color-mix(in srgb, var(--knob) 92%, var(--sc-sheen)), color-mix(in srgb, var(--knob) 88%, var(--sc-shade)));
+  border:2px solid var(--sc-outline); box-shadow:inset 0 -2px 0 color-mix(in srgb, var(--sc-ink) 70%, var(--sc-shade));
+  transition:transform .18s cubic-bezier(.3,1.1,.5,1), background .16s;
+}
+.sc-toggle:is([data-checked="true"], [data-checked=""]) > .sc-toggle-thumb {
+  transform:translateX(calc(var(--w) - var(--h)));
+}
+
+/* the word sits on the free side of the track */
+.sc-toggle-label {
+  position:absolute; top:0; bottom:0;
+  left:calc(var(--h) - var(--bw)); right:calc(var(--h) * .22);
+  display:grid; place-items:center; pointer-events:none;
+}
+.sc-toggle:is([data-checked="true"], [data-checked=""]) > .sc-toggle-label {
+  left:calc(var(--h) * .22); right:calc(var(--h) - var(--bw));
+}
+.sc-toggle-label > .sc-text {
+  --fs:calc(var(--h) * .36); --ink:var(--label);
+  font-size:var(--fs); font-weight:var(--sc-weight); letter-spacing:.04em; text-transform:uppercase; -webkit-text-stroke:0; text-shadow:0 1px 0 color-mix(in srgb, var(--sc-outline) 55%, transparent);
+}
+
+.sc-toggle:active, .sc-toggle.sc-pressed { scale:.97; }
+.sc-toggle:focus-visible { outline:2px solid var(--line); outline-offset:3px; }
+.sc-toggle:disabled { cursor:not-allowed; filter:grayscale(1); opacity:.5; }
+@media (prefers-reduced-motion:reduce) { .sc-toggle, .sc-toggle-thumb { transition:none; } }
+
+/* ---- Neon Cyber: ON = glass track with a neon edge and a glowing knob ---- */
+.sc-toggle:is([data-checked="true"], [data-checked=""]) { --track:color-mix(in srgb, var(--line) 26%, var(--sc-well)); --sc-outline:var(--line); border-color:var(--line); box-shadow:0 0 14px -2px color-mix(in srgb, var(--line) 70%, transparent); }
+.sc-toggle:is([data-checked="true"], [data-checked=""]) > .sc-toggle-thumb { background:var(--line); box-shadow:0 0 10px var(--line); border-color:var(--line); }
+.sc-toggle { --knob:var(--sc-dim); }   /* OFF knob: visible grey on the dark track */

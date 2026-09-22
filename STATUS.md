@@ -9,6 +9,11 @@ while it was built. It is now complete: 30 components, 90 icons, 10 blocks, its 
 CDN tag, fix the repo URLs (the GitHub account was renamed advme → pixelfork-v1, Pages is 404), add a `cdn`
 block to Tactical Dark's registry, and decide whether it ships from the same repo and tag.
 
+## Done — style 7: Neon Cyber (`neon-cyber/`)
+Dark glass controls tinted by neon, neon edges and glow, faint grid on solid screens, Oxanium + Audiowide.
+Spec: `neon-cyber/STYLE.md`. Ported from Clean Flat with every owner rule. 30 components · 10 blocks · docs · bundle ·
+147 icons (90 shared, 27 sci-fi items, N1 + N2 coloured nav, packs and capsules).
+
 ## Done — style 6: Cozy Paper (`cozy-paper/`)
 Warm cream paper (a generated, seamless paper tile under every paper surface), stitched popup seam, earthy accents
 that carry white labels, Grandstander + Chewy. Spec: `cozy-paper/STYLE.md`. Ported from Clean Flat, so it keeps

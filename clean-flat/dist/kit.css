@@ -52,7 +52,7 @@
   --sc-button-label: #FFFFFF;
   --sc-button-fill: 1.7;                     /* how much accent is in the fill: 1 = this style's tinted glass, 1.7 = solid accent */
   --sc-button-label-mix: 0;             /* how much of the accent is mixed into the label (0 = the plain label colour) */
-  --sc-button-dark-label: '';              /* none: every coloured button is white text + white icon (one colour per button); fills are dark enough for white
+  --sc-button-dark-label: '';              /* none: every coloured button is white text + white icon (one colour per button); fills are dark enough for white */
   --sc-label-outline: none;                 /* flat: labels are not outlined — every white label must clear its fill on its own */   /* what makes white text readable on a gold fill: every label on a fill carries this outline */   /* colour names whose button label is the dark outline colour instead (light fills) */
   --sc-scrim: #EEF2F8;                     /* the veil laid over the game behind popups and result screens (text sits on it, so a light theme makes it light) */
   /* shape and type */
