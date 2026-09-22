@@ -18,7 +18,7 @@ the widest range of any style, and the best base for Custom themes.
 | ground / well / panel / raise / edge | `#F2F5FA / #E4E9F2 / #FFFFFF / #F7F9FC / #C9D1DE` | pale steps; the panel is pure white |
 | ink / dim | `#1C2333 / #5A6478` | dark text on light surfaces |
 | `--sc-outline` | `#D9DFEA` | a light grey edge on neutral surfaces; coloured elements use their own colour, 80% |
-| accents | sky `#108CFF` green `#2A9F47` yellow `#B38300` orange `#EF5F00` red `#FF4859` purple `#8C5CFF` … | each darkened from a bright base until a WHITE label reads 3:1 on it |
+| accents | sky `#108CFF` green `#2A9F47` gold `#C97900` orange `#EF5F00` red `#FF4859` purple `#8C5CFF` … | each darkened from a bright base until a WHITE label reads 3:1 on it |
 | `--sc-glyph-filter` | `brightness(0) invert(.16)` | white glyph icons turn dark slate on light surfaces; on coloured fills they stay white |
 | `--sc-scrim` | `#EEF2F8` | a light veil behind popups and result screens (text sits on it) |
 | `--sc-label-outline` | `none` | labels are not outlined — every white label must clear its fill on its own |
@@ -29,8 +29,9 @@ the widest range of any style, and the best base for Custom themes.
 - **Button** is solid colour with a softer lip (the colour at 76%) and a hairline edge in the same hue.
   `data-color="dark"` is the quiet secondary: white with a grey edge and a dark label.
 - **Title** in the accent colour, no shadow, a short rounded bar under it. **Banner** is a plain rounded ribbon.
-- **Text follows the icon colour**: dark labels and dark glyphs on light surfaces, white labels and white glyphs on
-  coloured fills. The progress label is dark with a white halo because it straddles fill and track.
+- **One colour per button** (owner rule): icon and text always match. Every coloured button is white text + white
+  glyph; the gold is `#C97900` so white reads on it. The quiet white button has a dark label AND a dark glyph.
+  Dark labels and glyphs on light surfaces; the progress label is dark with a white halo (it straddles fill and track).
 
 ## Rules from the owner (this style)
 - **Tab bars use coloured icons**, never white glyphs: `home-color`, `shop-color`, `settings-color`, `map-color`,

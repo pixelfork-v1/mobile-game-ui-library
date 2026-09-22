@@ -124,3 +124,11 @@ gh release create v0.11.0-A --title "v0.11.0-A — Count Bubble component" --not
 
 ## Generated art
 Every icon prompt says "Original designs only — nothing that copies a character or item from an existing game." Never describe a famous character, block, power-up or logo; describe a generic object. Reference images are described in words, never sent to the model.
+
+## One colour per button (owner rule)
+The icon and the text on a button — and on any filled control — are ALWAYS the same colour. Default: white text +
+white glyph; if white fails contrast on a fill, change the FILL, not the text. A dark label needs a dark icon, and
+the glyph filter must actually apply (a component rule `.sc-button > img { filter:none }` silently overrides it).
+Check every style: open `tools/tests/one-colour.html` — it renders all 13 colours with a glyph in every style and
+compares the label colour with the icon's rendered colour.
+

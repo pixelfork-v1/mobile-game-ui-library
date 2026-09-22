@@ -2,6 +2,31 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## Cozy Paper v0.1.0 — the sixth style (not yet published)
+- Agent: A (Claude) · Date: 2026-09-23 · local only
+- For farming, cozy life sims, cooking, café, merge, story, kids and pets. Ported from Clean Flat (light, and already
+  following every owner rule), then warmed: cream paper tokens, earthy accents each tuned so a white label reads ≥3:1,
+  Grandstander labels (digits compared with Sniglet, Sour Gummy, Mali, Itim) and Chewy titles, a stitched dashed
+  seam inside the popup.
+- Paper: a seamless cream watercolour paper generated with Azure, made seamless by blending with a half-offset copy
+  (edge jump 7.3 vs 6.2 inside), 10 KB webp, multiply-blended under paper surfaces. The rule lives in core.css: a
+  url() in a custom property resolves against the stylesheet that USES it (tested — it broke from components/).
+- Icons: 147 via Azure — soft painted items with an outline in a darker shade of their own colour, pillowy glyphs.
+  The nav sheet was rejected three times by the "background share" check (detailed painted art fills 57% of the
+  image); the first try was correct and cut by hand, and the threshold is now 35%.
+- Checked: one-colour test 13 colours × 6 styles PASS; all blocks with real icons; every referenced icon exists;
+  selectors clean; load order 0 differ; contrast PASS; the texture ships inside the bundle.
+
+## Clean Flat v0.1.1 — one colour per button (not yet published)
+- Agent: A (Claude) · Date: 2026-09-23 · local only
+- Owner review: the gold "Retry" had a dark label next to a WHITE restart glyph. Two causes: the yellow button used a
+  dark label, and the style's `.sc-button > img { filter:none }` silently beat the generated glyph rule, so the glyph
+  never turned dark. Fixed: gold fill `#C97900` carries white text like every other colour (dark-label exception
+  removed); the component rule no longer sets a filter; the quiet white button gets a dark glyph to match its label.
+- Rule saved (memory + AGENTS.md): one foreground colour per button; fix contrast by changing the fill.
+- New `tools/tests/one-colour.html`: 13 colours × every style, label colour vs the icon's rendered colour (sampled
+  after the filter on a canvas). All styles pass; a deliberately dark-label button is reported.
+
 ## Clean Flat v0.1.0 — the fifth style, the first light one (not yet published)
 - Agent: A (Claude) · Date: 2026-09-23 · local only
 - For the widest range of games (puzzle, word, trivia, merge, idle, board, kids, cozy). Ported from Fantasy RPG Casual
