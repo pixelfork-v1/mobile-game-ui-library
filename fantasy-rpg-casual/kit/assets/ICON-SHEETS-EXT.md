@@ -966,3 +966,39 @@ All objects share one lighting direction, one level of detail and one style — 
 Row 1: a blue hanging pennant banner on a wooden rod with silver ends, with a pale crown emblem, a red pennant banner on the same rod, with a castle emblem, a purple pennant banner with a gold border and a rune emblem.
 Row 2: a white pennant banner with a red border and a dark skull emblem, a green pennant banner with a pine tree emblem, a yellow pennant banner with a paw print emblem.
 ```
+
+## Sheet N1 — Navigation, coloured
+
+`home-color shop-color settings-color map-color mail-color calendar-color profile-color friends-color quest-color`
+
+```
+A 3x3 grid sprite sheet of 9 separate coloured navigation icons for a casual fantasy RPG mobile game.
+
+ONE SINGLE IMAGE ONLY, on a fully TRANSPARENT background (alpha channel) — no backdrop, no tiles, no cards, no panels, no frames, no shadow on the ground, nothing behind the objects at all. Do not produce variations, alternatives or options, and do not show the same icons twice in different styles. One square image, one version.
+
+Style: casual fantasy RPG inventory icons, like a polished mid-core mobile RPG shop. Clean cartoon rendering with a thick dark outline (warm dark brown, almost black, about 3% of the icon size) around every shape. Soft, mostly MATTE shading: smooth gradients, one small crisp highlight on the top-left of each form, a slightly darker bottom edge — calm, not glossy, not candy, no big shine. Materials read clearly — warm gold with an orange shadow, cool steel with a blue-grey shadow, gems with a few flat facets and one white glint, wood with two or three plank lines, leather warm brown. Colours saturated and cheerful but a little muted. Each object is drawn at a slight three-quarter tilt, chunky and simplified, filling its cell. Not realistic, not painterly, not gritty, no texture noise.
+
+All 9 share one lighting direction, one outline treatment, one level of detail and one optical size — a set from the same game, drawn by the same artist in the same sitting. Original designs only — nothing that copies a character or item from an existing game. No text, no letters, no numbers, no logos, no hands, no background scenery. Arrange them as a 3 by 3 grid, evenly spaced, each centred in its own ninth with clear empty space around it.
+
+Row 1: a small stone cottage with a red roof and a chimney, a merchant tent with a striped awning and a gold coin sign, a bronze gear with a blue gem centre.
+Row 2: a parchment map with a red wax pin, a cream envelope with a red wax seal, a parchment calendar page with a red top and one date circled.
+Row 3: a hooded hero portrait in a gold round frame, two hooded hero portraits side by side, a quest scroll with a gold star seal.
+```
+
+## Sheet N2 — Navigation, coloured 2
+
+`lock-color check-color bell-color medal-color star-color book-color alarm-color box-color compass-color`
+
+```
+A 3x3 grid sprite sheet of 9 separate coloured navigation icons for a casual fantasy RPG mobile game.
+
+ONE SINGLE IMAGE ONLY, on a fully TRANSPARENT background (alpha channel) — no backdrop, no tiles, no cards, no panels, no frames, no shadow on the ground, nothing behind the objects at all. Do not produce variations, alternatives or options, and do not show the same icons twice in different styles. One square image, one version.
+
+Style: casual fantasy RPG inventory icons, like a polished mid-core mobile RPG shop. Clean cartoon rendering with a thick dark outline (warm dark brown, almost black, about 3% of the icon size) around every shape. Soft, mostly MATTE shading: smooth gradients, one small crisp highlight on the top-left of each form, a slightly darker bottom edge — calm, not glossy, not candy, no big shine. Materials read clearly — warm gold with an orange shadow, cool steel with a blue-grey shadow, gems with a few flat facets and one white glint, wood with two or three plank lines, leather warm brown. Colours saturated and cheerful but a little muted. Each object is drawn at a slight three-quarter tilt, chunky and simplified, filling its cell. Not realistic, not painterly, not gritty, no texture noise.
+
+All 9 share one lighting direction, one outline treatment, one level of detail and one optical size — a set from the same game, drawn by the same artist in the same sitting. Original designs only — nothing that copies a character or item from an existing game. No text, no letters, no numbers, no logos, no hands, no background scenery. Arrange them as a 3 by 3 grid, evenly spaced, each centred in its own ninth with clear empty space around it.
+
+Row 1: a golden padlock, a green check mark on a gold round seal, a golden bell.
+Row 2: a red ribbon medal, a golden star, an open spellbook.
+Row 3: a red alarm horn, a treasure chest, a brass compass.
+```

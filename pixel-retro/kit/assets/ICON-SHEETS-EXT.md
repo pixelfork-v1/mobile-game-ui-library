@@ -144,3 +144,39 @@ Style: 16-bit retro pixel-art shop illustrations: hard square pixels only, no an
 Row 1: three gold coins, a big pile of gold coins, a brown sack overflowing with gold coins.
 Row 2: three blue gems, a big pile of blue gems, a purple sack overflowing with blue gems.
 ```
+
+## Sheet N1 — Navigation, coloured
+
+`home-color shop-color settings-color map-color mail-color calendar-color profile-color friends-color quest-color`
+
+```
+A 3x3 grid sprite sheet of 9 separate coloured navigation icons for a retro pixel-art mobile game.
+
+ONE SINGLE IMAGE ONLY, on a fully TRANSPARENT background (alpha channel) — no backdrop, no tiles, no cards, no panels, no frames, no shadow on the ground, nothing behind the objects at all. Do not produce variations, alternatives or options, and do not show the same icons twice in different styles. One square image, one version.
+
+Style: 16-bit retro pixel-art game item icons, like a classic console RPG or arcade shop. Each object is drawn on a coarse pixel grid, as if it were 32x32 pixels scaled up with no smoothing: hard square pixels only, no anti-aliasing, no soft gradients, no blur. A one-pixel dark outline (near-black navy) around every shape, flat colour areas with one or two hard-stepped shade tones and a small square highlight on the top-left. A limited bright retro palette. Slight three-quarter view, chunky and readable, filling its cell. Not painterly, not realistic, not smooth vector art.
+
+All 9 share one lighting direction, one outline treatment, one level of detail and one optical size — a set from the same game, drawn by the same artist in the same sitting. Original designs only — nothing that copies a character or item from an existing game. No text, no letters, no numbers, no logos, no hands, no background scenery. Arrange them as a 3 by 3 grid, evenly spaced, each centred in its own ninth with clear empty space around it.
+
+Row 1: a small house with a red roof, a shop with a striped awning, a grey gear with a blue centre.
+Row 2: a folded treasure map with a red x, a white envelope with a red heart, a calendar page with a red top and one date circled.
+Row 3: a round portrait of a smiling hero with a cap, two smiling heroes side by side, a scroll with a gold star.
+```
+
+## Sheet N2 — Navigation, coloured 2
+
+`lock-color check-color bell-color medal-color star-color book-color alarm-color box-color compass-color`
+
+```
+A 3x3 grid sprite sheet of 9 separate coloured navigation icons for a retro pixel-art mobile game.
+
+ONE SINGLE IMAGE ONLY, on a fully TRANSPARENT background (alpha channel) — no backdrop, no tiles, no cards, no panels, no frames, no shadow on the ground, nothing behind the objects at all. Do not produce variations, alternatives or options, and do not show the same icons twice in different styles. One square image, one version.
+
+Style: 16-bit retro pixel-art game item icons, like a classic console RPG or arcade shop. Each object is drawn on a coarse pixel grid, as if it were 32x32 pixels scaled up with no smoothing: hard square pixels only, no anti-aliasing, no soft gradients, no blur. A one-pixel dark outline (near-black navy) around every shape, flat colour areas with one or two hard-stepped shade tones and a small square highlight on the top-left. A limited bright retro palette. Slight three-quarter view, chunky and readable, filling its cell. Not painterly, not realistic, not smooth vector art.
+
+All 9 share one lighting direction, one outline treatment, one level of detail and one optical size — a set from the same game, drawn by the same artist in the same sitting. Original designs only — nothing that copies a character or item from an existing game. No text, no letters, no numbers, no logos, no hands, no background scenery. Arrange them as a 3 by 3 grid, evenly spaced, each centred in its own ninth with clear empty space around it.
+
+Row 1: a golden padlock, a green check mark on a round badge, a golden bell.
+Row 2: a gold medal on a red ribbon, a golden star, an open book.
+Row 3: a red alarm light, a wooden chest, a compass.
+```

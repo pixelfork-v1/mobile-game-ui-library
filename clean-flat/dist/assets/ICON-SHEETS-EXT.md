@@ -144,3 +144,21 @@ Row 1: a friendly blue house with a red roof and a round window, a small shop wi
 Row 2: a folded paper map with a red pin, a white envelope with a red heart seal, a calendar page with a red top and one date circled.
 Row 3: a round avatar of a smiling person on a blue circle, two smiling people side by side, a scroll with a gold star.
 ```
+
+## Sheet N2 — Navigation, coloured 2
+
+`lock-color check-color bell-color medal-color star-color book-color alarm-color box-color compass-color`
+
+```
+A 3x3 grid sprite sheet of 9 separate navigation icons for a clean modern mobile game.
+
+ONE SINGLE IMAGE ONLY, on a fully TRANSPARENT background (alpha channel) — no backdrop, no tiles, no cards, no panels, no frames, no shadow on the ground, nothing behind the objects at all. Do not produce variations, alternatives or options, and do not show the same icons twice in different styles. One square image, one version.
+
+Style: clean flat vector game item icons, like a polished modern puzzle or word game. Simple geometric shapes, smooth vector edges, NO outline stroke at all. Each object uses two or three flat tones of its colour (a base, one darker shade on the lower side, one small soft highlight) — no texture, no noise, no painterly detail. Bright, clean, friendly colours. Front view with a very slight tilt, chunky and simplified, filling its cell. Original designs only — nothing that copies a character or item from an existing game. Not glossy, not 3D-rendered, not pixel art.
+
+All objects share one lighting direction, one level of detail and one optical size — a set from the same game, drawn by the same designer in the same sitting. No text, no letters, no numbers (except where an item shows one), no logos, no hands, no background scenery. Arrange them as a 3 by 3 grid, evenly spaced, each centred in its own ninth with clear empty space around it.
+
+Row 1: a golden padlock, a green check mark in a round badge, a golden bell.
+Row 2: a gold medal on a blue ribbon, a golden star, an open book.
+Row 3: a red alarm clock, a gift box, a compass.
+```

@@ -52,6 +52,6 @@
 
 /* ---- Clean Flat: tab bars carry COLOURED icons (home-color, shop-color, settings-color…, see ICON-SHEETS-EXT.md N1).
    Unselected items stay in colour but calmer; the selected one is full colour on its raised tile. ---- */
-.sc-tabbar-item > img[data-sc-icon] { opacity:.7; filter:saturate(.75); }
-.sc-tabbar-item[aria-selected="true"] > img[data-sc-icon] { opacity:1; filter:none; }
+.sc-tabbar-item > img[data-sc-icon] { opacity:.7; }
+.sc-tabbar-item[aria-selected="true"] > img[data-sc-icon] { opacity:1; }
 .sc-tabbar-item > .sc-bubble { top:3px; right:calc(50% - var(--icon) / 2 - 17px); }   /* the badge sits beside the icon's corner, not on it */

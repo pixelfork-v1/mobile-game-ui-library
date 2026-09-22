@@ -47,6 +47,8 @@
   --sc-button-tint: #420917;               /* warm and dark here; a theme usually sets it to its own --sc-ground */
   --sc-button-label: #FFEAB0;
   --sc-button-fill: 1;                     /* how much accent is in the fill: 1 = this style's tinted glass, 1.7 = solid accent */
+  --sc-button-label-mix: 35;             /* how much of the accent is mixed into the label (0 = the plain label colour) */
+  --sc-button-dark-label: '';   /* colour names whose button label is the dark outline colour instead (light fills) */
   --sc-scrim: #04070E;                     /* the veil laid over the game behind popups and result screens (text sits on it, so a light theme makes it light) */
   /* shape and type */
   --sc-round: 1;                           /* roundness, one knob: 0 = square, 1 = this style, 2.5 = soft, 6 = pills */
@@ -57,6 +59,7 @@
   --sc-caps: uppercase;                    /* small labels: uppercase | none */
   --sc-tracking: 1;                        /* letter-spacing multiplier */
   --sc-weight: 700;                        /* text weight — must be a weight the font was loaded with */
+  --sc-nav-icons: "home:home-color shop:shop-color settings:settings-color map:map-color mail:mail-color calendar:calendar-color profile:profile-color user:profile-color avatar:profile-color friends:friends-color quest:quest-color lock:lock-color check:check-color alert:bell-color notification:bell-color medal:medal-color star:star-color book:book-color alarm:alarm-color box:box-color compass:compass-color";   /* tab bars + tabs show these COLOURED icons in place of the white glyphs (sc.js) */
   --sc-tip-x: .4;                          /* where the fingertip is inside THIS style's hand icon — sc.js */
   --sc-tip-y: .1;                          /* reads these to aim the Tutorial Hand (measured off hand.png) */
 }
@@ -170,6 +173,51 @@ img[src*="assets/"][src$="/warning.png"],
 img[src*="assets/"][src$="/wifi.png"],
 img[src*="assets/"][src$="/wrench.png"]) { filter:var(--sc-glyph-filter); }
 .sc-button > :where(img[src*="assets/"][src$="/alert.png"],
+img[src*="assets/"][src$="/arrow-left.png"],
+img[src*="assets/"][src$="/arrow-right.png"],
+img[src*="assets/"][src$="/back.png"],
+img[src*="assets/"][src$="/battery.png"],
+img[src*="assets/"][src$="/calendar.png"],
+img[src*="assets/"][src$="/chat.png"],
+img[src*="assets/"][src$="/check.png"],
+img[src*="assets/"][src$="/clock.png"],
+img[src*="assets/"][src$="/close.png"],
+img[src*="assets/"][src$="/compass.png"],
+img[src*="assets/"][src$="/crosshair.png"],
+img[src*="assets/"][src$="/eye.png"],
+img[src*="assets/"][src$="/flag.png"],
+img[src*="assets/"][src$="/hand.png"],
+img[src*="assets/"][src$="/home.png"],
+img[src*="assets/"][src$="/hourglass.png"],
+img[src*="assets/"][src$="/info.png"],
+img[src*="assets/"][src$="/jump.png"],
+img[src*="assets/"][src$="/lock.png"],
+img[src*="assets/"][src$="/mail.png"],
+img[src*="assets/"][src$="/map.png"],
+img[src*="assets/"][src$="/menu.png"],
+img[src*="assets/"][src$="/minus.png"],
+img[src*="assets/"][src$="/music-off.png"],
+img[src*="assets/"][src$="/music.png"],
+img[src*="assets/"][src$="/pause.png"],
+img[src*="assets/"][src$="/pin.png"],
+img[src*="assets/"][src$="/play.png"],
+img[src*="assets/"][src$="/plus.png"],
+img[src*="assets/"][src$="/radar.png"],
+img[src*="assets/"][src$="/refresh.png"],
+img[src*="assets/"][src$="/restart.png"],
+img[src*="assets/"][src$="/ring.png"],
+img[src*="assets/"][src$="/search.png"],
+img[src*="assets/"][src$="/settings.png"],
+img[src*="assets/"][src$="/shop.png"],
+img[src*="assets/"][src$="/skull.png"],
+img[src*="assets/"][src$="/sound-off.png"],
+img[src*="assets/"][src$="/sound.png"],
+img[src*="assets/"][src$="/trash.png"],
+img[src*="assets/"][src$="/video.png"],
+img[src*="assets/"][src$="/warning.png"],
+img[src*="assets/"][src$="/wifi.png"],
+img[src*="assets/"][src$="/wrench.png"]),
+:is(.sc-icon-button:not([data-variant]), .sc-icon-button[data-variant="glossy"]) > :where(img[src*="assets/"][src$="/alert.png"],
 img[src*="assets/"][src$="/arrow-left.png"],
 img[src*="assets/"][src$="/arrow-right.png"],
 img[src*="assets/"][src$="/back.png"],
@@ -1089,7 +1137,7 @@ img[src*="assets/"][src$="/wrench.png"]) { filter:var(--sc-glyph-on-button); }
 }
 .sc-tabbar-item > img[data-sc-icon] {
   width:var(--icon); height:var(--icon); object-fit:contain; pointer-events:none;
-  opacity:.62; translate:var(--ox, 0%) var(--oy, 0%);
+  opacity:.85; translate:var(--ox, 0%) var(--oy, 0%);   /* coloured icons: calmer when unselected, never faded out */
   transition:opacity .16s, width .16s, height .16s;
 }
 .sc-tabbar-item > img[data-flip] { transform:scaleX(-1); }

@@ -2,6 +2,20 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## All styles — coloured tab icons everywhere + a full audit (not yet published)
+- Agent: A (Claude) · Date: 2026-09-23 · local only
+- Owner review: the Cozy Paper Tab Bar DOCS page still had white glyphs — the earlier fix only touched blocks.
+  Fixed at the source instead: `--sc-nav-icons` (core.css of each style) maps plain names to coloured ones, and
+  sc.js swaps them inside `.sc-tabbar` / `.sc-tabs`, so every page, docs included, and every game gets coloured tab
+  icons with unchanged markup. Coloured nav sheets generated for Tactical Dark, Fantasy RPG Casual and Pixel Retro
+  (N1), and a second sheet for all five new styles (N2: lock, check, bell, medal, star, book, alarm, box, compass).
+  Unselected tab icons on the dark styles 62% → 85% opacity.
+- New `tools/tests/icon-colour-audit.html`: loads every docs page, block and example of all six styles (248 pages)
+  and reports any white/mono glyph in a tab or tab bar, and any control whose glyph and text render in different
+  colours. It tells flat glyphs (one tone) from painted icons (outline + shading), skips badge dots, and re-loads a
+  page whose stylesheets did not arrive. Result: all six styles clean.
+- Rules saved to memory and AGENTS.md.
+
 ## Cozy Paper v0.1.0 — the sixth style (not yet published)
 - Agent: A (Claude) · Date: 2026-09-23 · local only
 - For farming, cozy life sims, cooking, café, merge, story, kids and pets. Ported from Clean Flat (light, and already

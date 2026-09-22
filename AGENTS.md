@@ -132,3 +132,12 @@ the glyph filter must actually apply (a component rule `.sc-button > img { filte
 Check every style: open `tools/tests/one-colour.html` — it renders all 13 colours with a glyph in every style and
 compares the label colour with the icon's rendered colour.
 
+## Tabs use coloured icons (owner rule)
+Tab bars and tabs show COLOURED icons only — every style, every page type (blocks, examples, docs). Each style has a
+coloured nav set (N1/N2 in `assets/ICON-SHEETS-EXT.md`: home-color, shop-color, settings-color, lock-color,
+check-color…) and a `--sc-nav-icons` map in core.css; sc.js swaps `data-icon="home"` for `home-color` inside
+`.sc-tabbar` / `.sc-tabs`, so the markup is the same in every style. A new style is not done without N1 + N2.
+Before calling any style change done, open `tools/tests/icon-colour-audit.html`: it scans every docs page, block and
+example of every style for white glyphs in tabs and for icon/text colour mismatches, and must say PASS.
+Fix a rule everywhere it applies — all styles, all page types — not only where it was reported.
+

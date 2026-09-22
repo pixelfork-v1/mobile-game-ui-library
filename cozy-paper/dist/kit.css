@@ -64,6 +64,7 @@
   --sc-caps: none;                    /* small labels: uppercase | none */
   --sc-tracking: .2;                        /* letter-spacing multiplier */
   --sc-weight: 800;                        /* text weight — must be a weight the font was loaded with */
+  --sc-nav-icons: "home:home-color shop:shop-color settings:settings-color map:map-color mail:mail-color calendar:calendar-color profile:profile-color user:profile-color avatar:profile-color friends:friends-color quest:quest-color lock:lock-color check:check-color alert:bell-color notification:bell-color medal:medal-color star:star-color book:book-color alarm:alarm-color box:box-color compass:compass-color";   /* tab bars + tabs show these COLOURED icons in place of the white glyphs (sc.js) */
   --sc-tip-x: .4;                          /* where the fingertip is inside THIS style's hand icon — sc.js */
   --sc-tip-y: .07;                         /* reads these to aim the Tutorial Hand (measured off hand.png) */
 }
@@ -1245,8 +1246,8 @@ img[src*="assets/"][src$="/wrench.png"]) { filter:var(--sc-glyph-on-button); }
 
 /* ---- Clean Flat: tab bars carry COLOURED icons (home-color, shop-color, settings-color…, see ICON-SHEETS-EXT.md N1).
    Unselected items stay in colour but calmer; the selected one is full colour on its raised tile. ---- */
-.sc-tabbar-item > img[data-sc-icon] { opacity:.7; filter:saturate(.75); }
-.sc-tabbar-item[aria-selected="true"] > img[data-sc-icon] { opacity:1; filter:none; }
+.sc-tabbar-item > img[data-sc-icon] { opacity:.7; }
+.sc-tabbar-item[aria-selected="true"] > img[data-sc-icon] { opacity:1; }
 .sc-tabbar-item > .sc-bubble { top:3px; right:calc(50% - var(--icon) / 2 - 17px); }   /* the badge sits beside the icon's corner, not on it */
 
 /* ===== tag ===== */

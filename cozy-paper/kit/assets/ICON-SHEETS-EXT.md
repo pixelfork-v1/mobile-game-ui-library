@@ -122,3 +122,21 @@ Style: cozy storybook shop illustrations, soft hand-painted look, outlines in a 
 Row 1: a small wooden crate tied with twine, a big wooden crate with a ribbon, a golden crate with a red bow.
 Row 2: the same small crate open with vegetables inside, the same big crate open with fruit and flowers, the same golden crate open with coins and stars.
 ```
+
+## Sheet N2 — Navigation, coloured 2
+
+`lock-color check-color bell-color medal-color star-color book-color alarm-color box-color compass-color`
+
+```
+A 3x3 grid sprite sheet of 9 separate navigation icons for a cozy storybook mobile game.
+
+ONE SINGLE IMAGE ONLY, on a fully TRANSPARENT background (alpha channel) — no backdrop, no tiles, no cards, no panels, no frames, no shadow on the ground, nothing behind the objects at all. Do not produce variations, alternatives or options, and do not show the same icons twice in different styles. One square image, one version.
+
+Style: cozy storybook game item icons, like a warm farming or cooking game. Soft rounded shapes, gentle hand-painted look with light watercolour-like shading and a little paper grain, warm natural palette (cream, honey, leaf green, berry red, sky blue, wood brown). Each object has a thin outline in a DARKER SHADE OF ITS OWN COLOUR — never black, never one brown line for everything. Front view with a very slight tilt, chunky and friendly, filling its cell. Original designs only — nothing that copies a character or item from an existing game. Not glossy, not 3D-rendered, not pixel art, not realistic.
+
+All objects share one lighting direction, one level of detail and one optical size — a set from the same game, painted by the same artist in the same sitting. No text, no letters, no numbers, no logos, no hands, no background scenery. Arrange them as a 3 by 3 grid, evenly spaced, each centred in its own ninth with clear empty space around it.
+
+Row 1: a small brass padlock, a green check mark on a round wooden badge, a golden bell.
+Row 2: a ribbon medal, a golden star, an open recipe book.
+Row 3: a red alarm clock, a wooden crate, a brass compass.
+```

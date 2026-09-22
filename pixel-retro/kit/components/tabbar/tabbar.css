@@ -26,7 +26,7 @@
 }
 .sc-tabbar-item > img[data-sc-icon] {
   width:var(--icon); height:var(--icon); object-fit:contain; pointer-events:none;
-  opacity:.62; translate:var(--ox, 0%) var(--oy, 0%);
+  opacity:.85; translate:var(--ox, 0%) var(--oy, 0%);   /* coloured icons: calmer when unselected, never faded out */
   transition:opacity .16s, width .16s, height .16s;
 }
 .sc-tabbar-item > img[data-flip] { transform:scaleX(-1); }

@@ -1,0 +1,61 @@
+<!doctype html><meta charset="utf-8"><title>icon colour audit</title>
+<style>body{font:13px ui-monospace,monospace;background:#111;color:#ddd;padding:12px} .bad{color:#ff8a8a} .ok{color:#8aff9a} iframe{position:fixed;left:-3000px;width:420px;height:900px}</style>
+<h3>Icon colour audit — every docs page, block and example, every style</h3>
+<p>1. Tab bars and tabs: coloured icons only (no white/mono glyph).<br>2. One colour per control: a glyph and the text beside it render in the same colour (both light or both dark).</p>
+<pre id="out">running…</pre>
+<script>
+const PAGES = {"super-casual": ["docs/actions.html", "docs/alert.html", "docs/banner.html", "docs/bubble.html", "docs/button.html", "docs/checkbox.html", "docs/counter.html", "docs/float.html", "docs/hint.html", "docs/icon-button.html", "docs/joystick.html", "docs/level.html", "docs/loading.html", "docs/popup.html", "docs/progress.html", "docs/row.html", "docs/screen.html", "docs/shopcard.html", "docs/slider.html", "docs/slot.html", "docs/stars.html", "docs/tabbar.html", "docs/tabs.html", "docs/tag.html", "docs/timer.html", "docs/title.html", "docs/toast.html", "docs/toggle.html", "docs/topbar.html", "docs/tutorial.html", "blocks/daily.html?embed=1", "blocks/fail.html?embed=1", "blocks/hud.html?embed=1", "blocks/loading.html?embed=1", "blocks/pause.html?embed=1", "blocks/reward.html?embed=1", "blocks/settings.html?embed=1", "blocks/shop.html?embed=1", "blocks/start.html?embed=1", "blocks/success.html?embed=1", "examples/button-on-canvas.html", "examples/controls-on-canvas.html", "examples/screen-on-canvas.html"], "tactical-dark": ["docs/actions.html", "docs/alert.html", "docs/banner.html", "docs/bubble.html", "docs/button.html", "docs/checkbox.html", "docs/counter.html", "docs/float.html", "docs/hint.html", "docs/icon-button.html", "docs/joystick.html", "docs/level.html", "docs/loading.html", "docs/popup.html", "docs/progress.html", "docs/row.html", "docs/screen.html", "docs/shopcard.html", "docs/slider.html", "docs/slot.html", "docs/stars.html", "docs/tabbar.html", "docs/tabs.html", "docs/tag.html", "docs/timer.html", "docs/title.html", "docs/toast.html", "docs/toggle.html", "docs/topbar.html", "docs/tutorial.html", "blocks/daily.html?embed=1", "blocks/fail.html?embed=1", "blocks/hud.html?embed=1", "blocks/loading.html?embed=1", "blocks/pause.html?embed=1", "blocks/reward.html?embed=1", "blocks/settings.html?embed=1", "blocks/shop.html?embed=1", "blocks/start.html?embed=1", "blocks/success.html?embed=1", "examples/all-components.html"], "fantasy-rpg-casual": ["docs/actions.html", "docs/alert.html", "docs/banner.html", "docs/bubble.html", "docs/button.html", "docs/checkbox.html", "docs/counter.html", "docs/float.html", "docs/hint.html", "docs/icon-button.html", "docs/joystick.html", "docs/level.html", "docs/loading.html", "docs/popup.html", "docs/progress.html", "docs/row.html", "docs/screen.html", "docs/shopcard.html", "docs/slider.html", "docs/slot.html", "docs/stars.html", "docs/tabbar.html", "docs/tabs.html", "docs/tag.html", "docs/timer.html", "docs/title.html", "docs/toast.html", "docs/toggle.html", "docs/topbar.html", "docs/tutorial.html", "blocks/daily.html?embed=1", "blocks/fail.html?embed=1", "blocks/hud.html?embed=1", "blocks/loading.html?embed=1", "blocks/pause.html?embed=1", "blocks/reward.html?embed=1", "blocks/settings.html?embed=1", "blocks/shop.html?embed=1", "blocks/start.html?embed=1", "blocks/success.html?embed=1", "examples/all-components.html"], "pixel-retro": ["docs/actions.html", "docs/alert.html", "docs/banner.html", "docs/bubble.html", "docs/button.html", "docs/checkbox.html", "docs/counter.html", "docs/float.html", "docs/hint.html", "docs/icon-button.html", "docs/joystick.html", "docs/level.html", "docs/loading.html", "docs/popup.html", "docs/progress.html", "docs/row.html", "docs/screen.html", "docs/shopcard.html", "docs/slider.html", "docs/slot.html", "docs/stars.html", "docs/tabbar.html", "docs/tabs.html", "docs/tag.html", "docs/timer.html", "docs/title.html", "docs/toast.html", "docs/toggle.html", "docs/topbar.html", "docs/tutorial.html", "blocks/daily.html?embed=1", "blocks/fail.html?embed=1", "blocks/hud.html?embed=1", "blocks/loading.html?embed=1", "blocks/pause.html?embed=1", "blocks/reward.html?embed=1", "blocks/settings.html?embed=1", "blocks/shop.html?embed=1", "blocks/start.html?embed=1", "blocks/success.html?embed=1", "examples/all-components.html"], "clean-flat": ["docs/actions.html", "docs/alert.html", "docs/banner.html", "docs/bubble.html", "docs/button.html", "docs/checkbox.html", "docs/counter.html", "docs/float.html", "docs/hint.html", "docs/icon-button.html", "docs/joystick.html", "docs/level.html", "docs/loading.html", "docs/popup.html", "docs/progress.html", "docs/row.html", "docs/screen.html", "docs/shopcard.html", "docs/slider.html", "docs/slot.html", "docs/stars.html", "docs/tabbar.html", "docs/tabs.html", "docs/tag.html", "docs/timer.html", "docs/title.html", "docs/toast.html", "docs/toggle.html", "docs/topbar.html", "docs/tutorial.html", "blocks/daily.html?embed=1", "blocks/fail.html?embed=1", "blocks/hud.html?embed=1", "blocks/loading.html?embed=1", "blocks/pause.html?embed=1", "blocks/reward.html?embed=1", "blocks/settings.html?embed=1", "blocks/shop.html?embed=1", "blocks/start.html?embed=1", "blocks/success.html?embed=1", "examples/all-components.html"], "cozy-paper": ["docs/actions.html", "docs/alert.html", "docs/banner.html", "docs/bubble.html", "docs/button.html", "docs/checkbox.html", "docs/counter.html", "docs/float.html", "docs/hint.html", "docs/icon-button.html", "docs/joystick.html", "docs/level.html", "docs/loading.html", "docs/popup.html", "docs/progress.html", "docs/row.html", "docs/screen.html", "docs/shopcard.html", "docs/slider.html", "docs/slot.html", "docs/stars.html", "docs/tabbar.html", "docs/tabs.html", "docs/tag.html", "docs/timer.html", "docs/title.html", "docs/toast.html", "docs/toggle.html", "docs/topbar.html", "docs/tutorial.html", "blocks/daily.html?embed=1", "blocks/fail.html?embed=1", "blocks/hud.html?embed=1", "blocks/loading.html?embed=1", "blocks/pause.html?embed=1", "blocks/reward.html?embed=1", "blocks/settings.html?embed=1", "blocks/shop.html?embed=1", "blocks/start.html?embed=1", "blocks/success.html?embed=1", "examples/all-components.html"]};
+const CONTROLS = '.sc-button, .sc-icon-button, .sc-tab, .sc-tabbar-item, .sc-toast, .sc-checkbox, .sc-action, .sc-tag, .sc-hint, .sc-banner';
+const lum = (r, g, b) => (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+const cache = new Map();
+function pixels(img, filter) {
+  const c = document.createElement('canvas'); c.width = c.height = 32; const x = c.getContext('2d');
+  x.filter = filter && filter !== 'none' ? filter : 'none'; x.drawImage(img, 0, 0, 32, 32);
+  return x.getImageData(0, 0, 32, 32).data;
+}
+function stats(px) {
+  let n = 0, l = 0, l2 = 0, sat = 0;
+  for (let i = 0; i < px.length; i += 4) if (px[i + 3] > 180) { n++; const r = px[i], g = px[i+1], b = px[i+2], v = lum(r, g, b); l += v; l2 += v * v; sat += (Math.max(r, g, b) - Math.min(r, g, b)) / 255; }
+  if (!n) return null; const mean = l / n;
+  return { lum: mean, sat: sat / n, spread: Math.sqrt(Math.max(0, l2 / n - mean * mean)), n };
+}
+function colourOf(el, win) { const m = win.getComputedStyle(el).color.match(/[\d.]+/g).map(Number); const k = m[0] <= 1 && m[1] <= 1 && m[2] <= 1 && win.getComputedStyle(el).color.startsWith('color(') ? 255 : 1; return lum(m[0] * k, m[1] * k, m[2] * k); }
+function visible(el, win) { const r = el.getBoundingClientRect(); const cs = win.getComputedStyle(el); return r.width > 2 && r.height > 2 && cs.visibility !== 'hidden' && cs.display !== 'none'; }
+function styled(d) {   // every stylesheet on the page really loaded (a busy local server sometimes serves one late)
+  return [...d.styleSheets].every(s => { try { return s.cssRules.length > 0 || /offsets|fonts\.googleapis/.test(s.href || ''); } catch (e) { return /fonts\.googleapis/.test(s.href || ''); } });
+}
+async function audit(style, page, tries = 3) {
+  const f = document.createElement('iframe'); f.src = `../../${style}/kit/${page}`; document.body.append(f);
+  await new Promise(r => { f.onload = r; setTimeout(r, 8000); }); await new Promise(r => setTimeout(r, 1800));
+  const d = f.contentDocument, w = f.contentWindow, bad = [];
+  if (!styled(d) && tries > 1) { f.remove(); return audit(style, page, tries - 1); }
+  if (!styled(d)) { f.remove(); return ['page did not load its stylesheets (server busy?) — not checked']; }
+  for (const img of d.querySelectorAll('img')) {
+    if (!img.complete || !img.naturalWidth || !visible(img, w)) continue;
+    const raw = stats(pixels(img)); if (!raw || raw.sat > .12 || raw.spread > .06) continue;   // a GLYPH is one flat tone (spread ~0.01); painted icons (outline + shading) carry their own colours
+    if (img.closest('.sc-alert, .sc-bubble, .sc-tag-attached, .sc-slot-state')) continue;   // badges carry their own glyph on their own dot
+    const name = (img.getAttribute('src') || '').split('/').pop();
+    const tab = img.closest('.sc-tabbar-item, .sc-tab');
+    if (tab) bad.push(`white/mono glyph "${name}" in ${tab.className.split(' ')[0]}`);
+    const ctl = img.closest(CONTROLS); const txt = ctl && [...ctl.querySelectorAll('.sc-text')].find(t => visible(t, w) && t.textContent.trim() && !t.closest('.sc-bubble, .sc-alert, .sc-tag-attached'));
+    if (ctl && txt) {
+      const g = stats(pixels(img, w.getComputedStyle(img).filter)); const tl = colourOf(txt, w);
+      if (g && (g.lum > .5) !== (tl > .5)) bad.push(`icon "${name}" is ${g.lum > .5 ? 'light' : 'dark'} but its text "${txt.textContent.trim().slice(0, 18)}" is ${tl > .5 ? 'light' : 'dark'} (${ctl.className.split(' ')[0]})`);
+    }
+  }
+  f.remove(); return [...new Set(bad)];
+}
+(async () => {
+  const out = document.getElementById('out'); out.textContent = ''; let total = 0;
+  const only = new URLSearchParams(location.search).get('only');   // ?only=clean-flat:blocks/pause.html?embed=1
+  const RUN = only ? { [only.split(':')[0]]: [only.split(':').slice(1).join(':')] } : PAGES;
+  for (const [style, pages] of Object.entries(RUN)) {
+    let n = 0; const lines = [];
+    const queue = [...pages];
+    await Promise.all([0, 1, 2, 3].map(async () => { while (queue.length) { const p = queue.shift(); const b = await audit(style, p); if (b.length) { n += b.length; lines.push(`  ${p}: ${b.join(' · ')}`); } } }));
+    total += n;
+    out.innerHTML += `<span class="${n ? 'bad' : 'ok'}">${style}: ${n ? n + ' problem(s)' : 'clean'} (${pages.length} pages)</span>\n` + lines.sort().map(l => `<span class="bad">${l.replace(/</g, '&lt;')}</span>`).join('\n') + (lines.length ? '\n' : '');
+  }
+  document.title = total ? `FAIL ${total}` : 'PASS';
+})();
+</script>

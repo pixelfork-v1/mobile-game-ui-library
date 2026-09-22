@@ -89,9 +89,19 @@
     });
   }
 
+  // Tab bars and tabs always show COLOURED icons (owner rule). A style whose plain icons are white glyphs maps them
+  // to its coloured set in core.css:  --sc-nav-icons: "home:home-color shop:shop-color …"  — so the game's markup
+  // (data-icon="home") stays the same in every style. Read fresh each time: styles can be swapped at runtime.
+  function navIcon(el, name) {
+    if (IMAGE_MAP[name] || isPath(name) || !el.closest('.sc-tabbar, .sc-tabs')) return name;
+    const map = getComputedStyle(document.documentElement).getPropertyValue('--sc-nav-icons').replace(/["']/g, ' ');
+    const hit = map.split(/\s+/).find(pair => pair.split(':')[0] === name);
+    return hit ? hit.split(':')[1] : name;
+  }
+
   // Insert / update an <img> for data-icon
   function upgradeIcon(el) {
-    const name = el.dataset.icon;
+    const name = navIcon(el, el.dataset.icon);
     if (!name) return;
     const alias = (!IMAGE_MAP[name] && ALIASES[name]) || { name, flip: false };
     let img = el.querySelector(':scope > img[data-sc-icon]');
