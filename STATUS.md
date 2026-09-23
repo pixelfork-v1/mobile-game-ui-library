@@ -1,13 +1,12 @@
 # STATUS
 
-**Last updated:** 2026-09-19 · by **A (Claude)** · version **v0.44.1-A** (Super Casual) · Tactical Dark v0.2.0
+**Last updated:** 2026-09-23 · by **A (Claude)** · version **v0.44.2-A** (Super Casual) · Tactical Dark v0.2.0 · Fantasy RPG Casual, Pixel Retro, Clean Flat, Cozy Paper, Neon Cyber v0.1.0
 
 ## Next task
-**Publish Tactical Dark.** Nothing in `tactical-dark/` is committed yet — the owner asked to stay local
-while it was built. It is now complete: 30 components, 90 icons, 10 blocks, its own docs site. Before publishing:
-`python3 tools/build_kit.py --all` (done once locally — `tactical-dark/dist/` exists and is verified), bump the
-CDN tag, fix the repo URLs (the GitHub account was renamed advme → pixelfork-v1, Pages is 404), add a `cdn`
-block to Tactical Dark's registry, and decide whether it ships from the same repo and tag.
+**Tag a release for the six new styles.** All seven styles are now on GitHub `main` (pushed 2026-09-23), but the
+CDN tag is still `v0.44.2-A`, which predates them. Next: bump versions, add a `cdn` block to each new style's
+`registry.json` (pixelfork-v1 links, pinned to the new tag), build `--all`, tag and push the tag, then check the
+jsDelivr URLs return 200. After that: the live switch demo (one game screen, a selector for all seven styles).
 
 ## Done — style 7: Neon Cyber (`neon-cyber/`)
 Dark glass controls tinted by neon, neon edges and glow, faint grid on solid screens, Oxanium + Audiowide.
@@ -130,5 +129,6 @@ _All blocks done._
 - Ideas after that: Level Select block (map of levels with stars/locks), Profile block, Leaderboard block, Settings inside Pause
 
 ## Links
-- Repo is **public** again (since v0.41.1-A); GitHub Pages is on: https://advme.github.io/mobile-game-ui-library/
+- Repo lives at https://github.com/pixelfork-v1/mobile-game-ui-library (moved from `advme` in 2026-09) and is **public** (since v0.41.1-A); GitHub Pages is on: https://pixelfork-v1.github.io/mobile-game-ui-library/
+- A local clone may still have `origin` set to the old `github.com/advme/...` address. It works through GitHub's redirect; ask the owner before changing it.
 - No-install use: jsDelivr CDN of `super-casual/dist` pinned to a tag (see `AI-GUIDE.md`). **When you publish a new version, update the tag in `AI-GUIDE.md`, `llms.txt`, `README.md`, `templates/cdn-game.html` and `registry.json → cdn` (search for the old tag).**
