@@ -2,6 +2,12 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## Super Casual — lighter Screen Title (not yet published)
+- Agent: A (Claude) · Date: 2026-09-23 · local only
+- Owner: the title's stroke was too heavy and its dark 3D drop too deep. Outline 18% → 10% of the font size, drop
+  6.5% → 3.5%. Chosen from four options compared at real size on a game background (`_staging/title-options.html`);
+  8% / 3% made the small size look thin.
+
 ## Neon Cyber v0.1.0 — the seventh style (not yet published)
 - Agent: A (Claude) · Date: 2026-09-23 · local only
 - For space, racing, rhythm, sci-fi puzzle and cyberpunk. Ported from Clean Flat (every owner rule built in), turned

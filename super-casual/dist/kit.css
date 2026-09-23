@@ -488,12 +488,12 @@
 .sc-title[data-size="sm"] { --fs:32px; }
 .sc-title[data-size="md"] { --fs:46px; }
 
-/* Two dark layers behind: even outline + thicker 3D bottom edge */
+/* Two dark layers behind: even outline + a 3D bottom edge (10% / 3.5% of the size — owner found 18% / 6.5% too heavy) */
 .sc-title::before, .sc-title::after {
   content:attr(data-text); position:absolute; left:0; right:0; top:0; padding:inherit; color:var(--sc-outline);
-  -webkit-text-stroke:calc(var(--fs) * .18) var(--sc-outline); pointer-events:none;
+  -webkit-text-stroke:calc(var(--fs) * .10) var(--sc-outline); pointer-events:none;
 }
-.sc-title::after { top:calc(var(--fs) * .065); }
+.sc-title::after { top:calc(var(--fs) * .035); }
 /* Front layer: gradient letters */
 .sc-title > span {
   position:relative; z-index:1; color:transparent;
