@@ -8,7 +8,7 @@ Copy this folder into a game as `kit/` and add two lines:
 <script src="kit/kit.js"></script>
 ```
 
-Everything is included (all 30 components). Icons load from `kit/assets/` automatically.
+Everything is included (30 components). Icons load from `kit/assets/` automatically.
 - Components and rules: `registry.json` (full manuals: `neon-cyber/kit/components/<name>/<name>.md` in the kit repo)
 - New pictures: `assets/IMAGE-PROMPTS.md`
 - A complete wired game to start from: `templates/pixelfork-game/`

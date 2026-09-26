@@ -2,6 +2,38 @@
 
 Newest first. Format and version rules: see `AGENTS.md` §8 (A = Claude, B = Codex/GPT).
 
+## v0.45.0-A · Speedometer component
+- Agent: A (Claude) · Date: 2026-09-26 · committed locally (not yet tagged or pushed)
+- Done: a new Super Casual component, approved by the owner. `.sc-speedometer` shows the player's speed in car, bike,
+  boat and other vehicle games. Two types with `data-type`:
+  - `dial` (default): a dark translucent disc with the kit's thick outline, a 240° scale from lower left (0) to lower
+    right (max), a red zone from the redline to the max, a green fill up to the speed (it stops where the red zone
+    starts), 8 white ticks, a yellow outlined needle and hub, and the number with a small unit under the hub.
+  - `arc`: a thick outlined half arc whose bar fills green → yellow → red, with the number and unit inside it.
+  - Attributes: `data-value` (0), `data-max` (140), `data-unit` ("km/h", empty hides it), `data-redline` (dial,
+    80% of max), `data-size` sm / md / lg (dial 96 / 120 / 150 px, arc 120 / 150 / 190 px).
+  - `SC.setValue(el, speed)` never animates or bumps, so a game calls it every frame. The SVG is built once; an
+    update only moves the needle / bar (two attributes) and changes the number when the rounded value changes.
+    Below 0 shows 0; above the max the needle and bar stop, the number shows the real speed.
+  - `role="meter"` with `aria-valuenow/min/max`, `aria-valuetext` ("72 km/h") and `aria-label="Speed"` unless set.
+  - Display only: taps go through to the game.
+- Files: `components/speedometer/speedometer.css` + `.md`, the builder in `sc.js` (hooked into `upgradeOne` and
+  the observer; `data-unit`, `data-redline`, `data-type` added to the observed attributes), `registry.json` item,
+  `docs/speedometer.html` (types, scale/unit/redline, sizes, placement over a stand-in game: the dial above Brake,
+  the arc between Brake and Gas, and a live drive demo), a row in `AI-GUIDE.md`, `tools/tests/speedometer.html`,
+  `speedometer` in `ORDER` of `tools/build_kit.py`. Versions 0.45.0 in `registry.json` and `SC.version`.
+- Also in this release (already on `main`, not in a release before): the six new styles (Tactical Dark, Fantasy RPG
+  Casual, Pixel Retro, Clean Flat, Cozy Paper, Neon Cyber) and the lighter Super Casual screen title.
+- Tested: `tools/tests/speedometer.html` 52/52 (both types build, SVG parts, needle angle and fill/bar length at 0,
+  35, 70, max, above max, below 0 and a decimal, the number text, unit hidden when empty, no animation / bump / DOM
+  rebuild across 120 updates, 600 calls timed, role and aria values, attribute changes, type switch). Full runner
+  20/20 pages. One-colour test PASS (7 styles), icon colour audit PASS (290 pages, the new docs page included),
+  responsive sweep 100/100, `check_style.py super-casual` clean. Docs page checked at 375×812: no sideways scroll,
+  no console errors, the live demo drives both gauges. The built bundle renders both types.
+- Notes for next agent: the other six styles still need the speedometer's CSS (see STATUS → In progress). The
+  pinned CDN tag is still `v0.44.2-A` until this version is tagged. On a small dial a 3-digit number sits close to
+  the two lowest ticks; readable, since the number is drawn above them.
+
 ## Super Casual — lighter Screen Title (not yet published)
 - Agent: A (Claude) · Date: 2026-09-23 · local only
 - Owner: the title's stroke was too heavy and its dark 3D drop too deep. Outline 18% → 10% of the font size, drop

@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedometer · Super Casual UI Kit</title>
+<link rel="stylesheet" href="../core.css">
+<link rel="stylesheet" href="../components/speedometer/speedometer.css">
+<link rel="stylesheet" href="../components/button/button.css">
+<link rel="stylesheet" href="docs.css">
+<script src="../sc.js"></script>
+<script src="docs.js"></script>
+<style>
+.spd-row { width:100%; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:26px; }
+/* a stand-in game: sky, hills and a road, so the gauges are seen over a game like in a real HUD */
+.spd-scene {
+  position:relative; width:min(340px, 100%); height:250px; border-radius:16px; overflow:hidden;
+  background:
+    linear-gradient(transparent 62%, #3b3f4d 62% 100%),
+    radial-gradient(ellipse 60% 40% at 20% 64%, #3fae4f 98%, transparent 100%),
+    radial-gradient(ellipse 70% 45% at 85% 66%, #4cc45c 98%, transparent 100%),
+    linear-gradient(#5cb8ff, #bfe6ff 62%);
+}
+.spd-scene::after {                                        /* dashed centre line of the road */
+  content:""; position:absolute; left:0; right:0; top:80%; height:5px;
+  background:repeating-linear-gradient(90deg, #f3f3f3 0 26px, transparent 26px 52px); background-position-x:var(--road, 0px);
+}
+.spd-hud { position:absolute; z-index:1; left:10px; right:10px; bottom:10px; display:flex; align-items:flex-end; justify-content:space-between; gap:8px; }
+.spd-hud > .spd-col { display:flex; flex-direction:column; align-items:center; gap:8px; }
+.spd-hud .sc-button { --minw:0px; touch-action:none; }
+.spd-arc-top { position:absolute; z-index:1; left:50%; top:10px; translate:-50% 0; }
+</style>
+</head>
+<body>
+<script>
+  SCDocs.page({
+    title: 'Speedometer',
+    lead: 'Shows how fast the player is going in car, bike, boat and other vehicle games. A round dial with a needle, or a half arc that fills from green to red.',
+    hero: `<div class="spd-row">
+  <div class="sc-speedometer" data-value="72"></div>
+  <div class="sc-speedometer" data-type="arc" data-value="96"></div>
+</div>`,
+    css: ['components/speedometer/speedometer.css'],
+    usageNote: 'The gauge builds itself from its attributes. Update it from the game loop with SC.setValue(el, speed): it does not animate, so call it every frame.',
+    usage: `<div class="sc-speedometer" id="speedo" data-value="0"></div>
+
+<script>
+  function frame() {
+    SC.setValue(speedo, car.speed * 3.6);   // m/s → km/h
+    requestAnimationFrame(frame);
+  }
+<\/script>`,
+    examples: [
+      { title: 'Two types', desc: 'dial (default): a disc with a needle, a red zone from the redline to the top, and a green fill. arc: a half arc that fills green → yellow → red.',
+        html: `<div class="spd-row">
+  <div class="sc-speedometer" data-value="0"></div>
+  <div class="sc-speedometer" data-value="72"></div>
+  <div class="sc-speedometer" data-value="130"></div>
+</div>
+<div class="spd-row">
+  <div class="sc-speedometer" data-type="arc" data-value="30"></div>
+  <div class="sc-speedometer" data-type="arc" data-value="110"></div>
+</div>` },
+      { title: 'Scale, unit and redline', desc: 'data-max sets the top of the scale, data-unit the text under the number (empty hides it), data-redline where the dial turns red. Above the max the needle stops, the number does not.',
+        html: `<div class="spd-row">
+  <div class="sc-speedometer" data-value="88" data-max="120" data-unit="mph" data-redline="100"></div>
+  <div class="sc-speedometer" data-value="42" data-max="60" data-unit="knots"></div>
+  <div class="sc-speedometer" data-value="171" data-max="160" data-unit=""></div>
+</div>` },
+      { title: 'Sizes', desc: 'dial 96 / 120 / 150 px wide · arc 120 / 150 / 190 px wide.',
+        html: `<div class="spd-row">
+  <div class="sc-speedometer" data-size="sm" data-value="50"></div>
+  <div class="sc-speedometer" data-value="50"></div>
+  <div class="sc-speedometer" data-size="lg" data-value="50"></div>
+</div>
+<div class="spd-row">
+  <div class="sc-speedometer" data-type="arc" data-size="sm" data-value="80"></div>
+  <div class="sc-speedometer" data-type="arc" data-value="80"></div>
+  <div class="sc-speedometer" data-type="arc" data-size="lg" data-value="80"></div>
+</div>` },
+      { title: 'Over a game: dial in a corner', desc: 'The dial sits in a lower corner, just above the Brake button, where it is seen without covering the road.',
+        html: `<div class="spd-scene">
+  <div class="spd-hud">
+    <div class="spd-col">
+      <div class="sc-speedometer" data-value="64"></div>
+      <button class="sc-button" data-color="red" data-size="sm">Brake</button>
+    </div>
+    <button class="sc-button" data-color="green" data-size="sm">Gas</button>
+  </div>
+</div>` },
+      { title: 'Over a game: arc between the pedals', desc: 'The arc sits in the middle of the bottom edge, between Brake and Gas.',
+        html: `<div class="spd-scene">
+  <div class="spd-hud">
+    <button class="sc-button" data-color="red" data-size="sm">Brake</button>
+    <div class="sc-speedometer" data-type="arc" data-size="sm" data-value="96"></div>
+    <button class="sc-button" data-color="green" data-size="sm">Gas</button>
+  </div>
+</div>` },
+      { title: 'Live: drive', desc: 'Hold Gas to speed up, Brake to slow down. The game loop calls SC.setValue() on both gauges every frame.',
+        html: `<div class="spd-scene" id="liveRoad">
+  <div class="spd-arc-top"><div class="sc-speedometer" id="liveArc" data-type="arc" data-size="sm" data-value="0"></div></div>
+  <div class="spd-hud">
+    <div class="spd-col">
+      <div class="sc-speedometer" id="liveDial" data-size="sm" data-value="0"></div>
+      <button class="sc-button" data-color="red" data-size="sm" data-pedal="brake">Brake</button>
+    </div>
+    <button class="sc-button" data-color="green" data-size="sm" data-pedal="gas">Gas</button>
+  </div>
+</div>`,
+        setup(p) {
+          const dial = p.querySelector('#liveDial'), arc = p.querySelector('#liveArc'), road = p.querySelector('#liveRoad');
+          const held = { gas: false, brake: false };
+          p.querySelectorAll('[data-pedal]').forEach(b => {
+            const set = on => e => { e.preventDefault(); held[b.dataset.pedal] = on; };
+            b.addEventListener('pointerdown', set(true));
+            ['pointerup', 'pointercancel', 'pointerleave'].forEach(t => b.addEventListener(t, set(false)));
+          });
+          let speed = 0, x = 0, last = performance.now();          // speed in km/h
+          (function frame(now) {
+            const dt = Math.min((now - last) / 1000, .05); last = now;
+            speed += (held.gas ? 55 : -10) * dt - (held.brake ? 140 : 0) * dt;
+            speed = Math.max(0, Math.min(speed, 155));
+            SC.setValue(dial, speed); SC.setValue(arc, speed);
+            x -= speed * dt * 6; road.style.setProperty('--road', (x % 52).toFixed(1) + 'px');
+            requestAnimationFrame(frame);
+          })(last);
+        } },
+    ],
+    api: [
+      ['data-type', 'dial arc', 'dial', 'Round dial with a needle, or a half arc that fills up.'],
+      ['data-value', 'number', '0', 'Current speed, in the game\'s units. Below 0 shows 0; above the max the needle and the arc stop, the number shows the real value.'],
+      ['data-max', 'number', '140', 'Top of the scale.'],
+      ['data-unit', 'text', 'km/h', 'Small text under the number. An empty value hides it.'],
+      ['data-redline', 'number', '80% of max', 'Dial only: where the red zone starts. The green fill stops there.'],
+      ['data-size', 'sm md lg', 'md', 'Dial 96 / 120 / 150 px wide · arc 120 / 150 / 190 px wide.'],
+    ],
+    js: `SC.setValue(speedo, speed);                  // every frame: no animation, no bump
+SC.setValue(speedo, body.getLinearVelocity().length() * 3.6);   // 2D/3D physics in m/s → km/h
+speedo.dataset.unit = 'mph';                  // attributes can change at any time`,
+    rules: [
+      '<b>Car, bike, boat and other vehicle games</b> show their speed with this. One per screen.',
+      '<b>Update every frame</b> with <code class="inline">SC.setValue(el, speed)</code>, in the game\'s units. It never animates, so the needle follows the car exactly.',
+      '<b>Units:</b> km/h by default. A physics engine gives m/s: multiply by <b>3.6</b> for km/h (or by 2.237 for mph and set <code class="inline">data-unit="mph"</code>).',
+      '<b>Pick data-max</b> a little above the car\'s real top speed, so the needle reaches the red zone only when the car is really fast.',
+      '<b>Placement:</b> the dial in a lower corner above the Brake button; the arc centred between Brake and Gas. Never over the middle of the road.',
+      '<b>Display only:</b> taps go through it to the game. Never write its inner parts (svg, number, unit).',
+    ],
+  });
+</script>
+</body>
+</html>

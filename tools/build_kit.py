@@ -30,7 +30,7 @@ TEMPLATE_KIT = ROOT / "templates" / "pixelfork-game" / "kit"
 ORDER = [
     "screen", "button", "icon-button", "counter", "slot", "progress", "title", "stars", "timer", "float",
     "popup", "bubble", "toggle", "slider", "checkbox", "tabs", "tabbar", "tag", "banner", "hint", "toast",
-    "row", "loading", "alert", "level", "topbar", "shopcard", "tutorial", "joystick", "actions",
+    "row", "loading", "alert", "level", "topbar", "shopcard", "tutorial", "joystick", "actions", "speedometer",
 ]
 
 def styles():

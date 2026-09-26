@@ -1,0 +1,153 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speedometer regression checks</title>
+<link rel="stylesheet" href="../../super-casual/kit/core.css">
+<link rel="stylesheet" href="../../super-casual/kit/components/speedometer/speedometer.css">
+<script src="../../super-casual/kit/sc.js"></script>
+<style>
+* { animation:none !important; transition:none !important; }
+body { margin:20px; font:14px system-ui; background:#243453; color:white; }
+#fixtures { display:flex; flex-wrap:wrap; gap:12px; padding:12px; }
+li { margin:6px 0; } .fail { color:#ff9da7; }
+</style>
+<h1>Speedometer checks</h1>
+<p id="summary">Running…</p>
+<div id="fixtures">
+  <div id="dial" class="sc-speedometer" data-value="70"></div>
+  <div id="arc" class="sc-speedometer" data-type="arc" data-value="70"></div>
+  <div id="custom" class="sc-speedometer" data-value="40" data-max="200" data-unit="mph" data-redline="150" aria-label="Boat speed"></div>
+  <div id="nounit" class="sc-speedometer" data-value="10" data-unit=""></div>
+  <div id="bare" class="sc-speedometer"></div>
+  <div id="sm" class="sc-speedometer" data-size="sm" data-value="1"></div>
+  <div id="lg" class="sc-speedometer" data-size="lg" data-value="1"></div>
+  <div id="arcLg" class="sc-speedometer" data-type="arc" data-size="lg" data-value="1"></div>
+</div>
+<ol id="results"></ol>
+<script>
+addEventListener('load', async () => {
+  const $ = s => document.querySelector(s), results = $('#results');
+  let passed = 0, failed = 0;
+  const settle = () => new Promise(r => setTimeout(r, 40));   // timers, not animation frames: browsers pause rAF in hidden tabs
+  const check = (name, ok) => { const li = document.createElement('li'); li.textContent = (ok ? 'PASS: ' : 'FAIL: ') + name; ok ? passed++ : (failed++, li.className = 'fail'); results.append(li); };
+  const DIAL_LEN = 44 * 240 * Math.PI / 180, BAR_LEN = 60 * Math.PI;
+  const angle = el => { const m = /rotate\(([-\d.]+) 60 60\)/.exec(el.querySelector('.sc-speedometer-needle').getAttribute('transform') || ''); return m ? +m[1] : NaN; };
+  const dash = (el, sel) => parseFloat(el.querySelector(sel).getAttribute('stroke-dasharray'));
+  const shown = el => el.querySelector('.sc-speedometer-value .sc-text').textContent;
+  const near = (a, b) => Math.abs(a - b) < 0.02;
+  try {
+    const dial = $('#dial'), arc = $('#arc');
+    // build
+    check('dial: one svg (viewBox 120×120) with disc, scale, red zone, fill, needle, hub',
+      dial.querySelectorAll(':scope > svg').length === 1 && dial.querySelector('svg').getAttribute('viewBox') === '0 0 120 120' &&
+      ['disc', 'scale', 'red', 'fill', 'needle', 'hub'].every(p => dial.querySelector('.sc-speedometer-' + p)));
+    check('dial: 8 tick marks', dial.querySelectorAll('.sc-speedometer-tick').length === 8);
+    check('dial: needle drawn twice (outline + colour)', dial.querySelectorAll('.sc-speedometer-needle line').length === 2);
+    check('arc: one svg (viewBox 150×86) with outline, track, bar and a 3-stop gradient',
+      arc.querySelectorAll(':scope > svg').length === 1 && arc.querySelector('svg').getAttribute('viewBox') === '0 0 150 86' &&
+      ['outline', 'track', 'bar'].every(p => arc.querySelector('.sc-speedometer-' + p)) && arc.querySelectorAll('linearGradient stop').length === 3);
+    const gid = arc.querySelector('linearGradient').id;
+    check('arc: bar uses its own gradient', arc.querySelector('.sc-speedometer-bar').getAttribute('stroke') === `url(#${gid})`);
+    const arc2 = $('#arcLg');
+    check('two arcs get different gradient ids', arc2.querySelector('linearGradient').id !== gid);
+    check('arc: no needle', !arc.querySelector('.sc-speedometer-needle'));
+    check('number and unit are outlined kit text', shown(dial) === '70' && dial.querySelector('.sc-speedometer-value .sc-text').dataset.text === '70' &&
+      dial.querySelector('.sc-speedometer-unit .sc-text').textContent === 'km/h');
+    check('number uses the kit font', getComputedStyle(dial.querySelector('.sc-speedometer-value .sc-text')).fontFamily.includes('M PLUS Rounded 1c'));
+
+    // sizes
+    const w = id => Math.round($(id).getBoundingClientRect().width);
+    check('dial sizes 96 / 120 / 150', w('#sm') === 96 && w('#dial') === 120 && w('#lg') === 150);
+    check('arc sizes 150 / 190, height follows the 150×86 shape', w('#arc') === 150 && w('#arcLg') === 190 && Math.abs($('#arc svg').getBoundingClientRect().height - 86) < 1);
+
+    // defaults
+    const bare = $('#bare');
+    check('defaults: value 0, max 140, km/h', shown(bare) === '0' && bare.getAttribute('aria-valuemax') === '140' && bare.querySelector('.sc-speedometer-unit .sc-text').textContent === 'km/h');
+    check('default redline is 80% of max (red zone starts at 112 of 140)',
+      near(-parseFloat(bare.querySelector('.sc-speedometer-red').getAttribute('stroke-dashoffset')), 0.8 * DIAL_LEN) &&
+      near(dash(bare, '.sc-speedometer-red'), 0.2 * DIAL_LEN));
+
+    // needle and fill match the value
+    for (const [v, a, fill, text] of [[0, -120, 0, '0'], [35, -60, 0.25 * DIAL_LEN, '35'], [70, 0, 0.5 * DIAL_LEN, '70'], [140, 120, 0.8 * DIAL_LEN, '140'], [200, 120, 0.8 * DIAL_LEN, '200'], [-15, -120, 0, '0'], [57.6, -120 + 240 * 57.6 / 140, 57.6 / 140 * DIAL_LEN, '58']]) {
+      SC.setValue(dial, v);
+      const fillEl = dial.querySelector('.sc-speedometer-fill');
+      check(`dial at ${v}: needle ${a.toFixed(1)}°, fill ${fill.toFixed(1)}, number "${text}"`,
+        near(angle(dial), a) && near(dash(dial, '.sc-speedometer-fill'), fill) && shown(dial) === text &&
+        (fill > 0 ? fillEl.style.visibility === '' : fillEl.style.visibility === 'hidden'));
+    }
+    for (const [v, bar, text] of [[0, 0, '0'], [35, 0.25 * BAR_LEN, '35'], [70, 0.5 * BAR_LEN, '70'], [140, BAR_LEN, '140'], [300, BAR_LEN, '300'], [-5, 0, '0']]) {
+      SC.setValue(arc, v);
+      const barEl = arc.querySelector('.sc-speedometer-bar');
+      check(`arc at ${v}: bar ${bar.toFixed(1)} of ${BAR_LEN.toFixed(1)}, number "${text}"`,
+        near(dash(arc, '.sc-speedometer-bar'), bar) && shown(arc) === text && (bar > 0 ? barEl.style.visibility === '' : barEl.style.visibility === 'hidden'));
+    }
+
+    // custom max / redline / unit
+    const custom = $('#custom');
+    check('custom max 200: value 40 → needle -72°', near(angle(custom), -120 + 240 * 40 / 200));
+    check('custom redline 150 of 200', near(-parseFloat(custom.querySelector('.sc-speedometer-red').getAttribute('stroke-dashoffset')), 0.75 * DIAL_LEN));
+    SC.setValue(custom, 180);
+    check('green fill stops at the redline', near(dash(custom, '.sc-speedometer-fill'), 0.75 * DIAL_LEN));
+    check('unit mph shown', custom.querySelector('.sc-speedometer-unit .sc-text').textContent === 'mph' && !custom.querySelector('.sc-speedometer-unit').hidden);
+
+    // unit hidden when empty
+    const nounit = $('#nounit');
+    check('data-unit="" hides the unit', nounit.querySelector('.sc-speedometer-unit').hidden && getComputedStyle(nounit.querySelector('.sc-speedometer-unit')).display === 'none');
+    nounit.dataset.unit = 'knots'; await settle();
+    check('setting data-unit later shows it', !nounit.querySelector('.sc-speedometer-unit').hidden && nounit.querySelector('.sc-speedometer-unit .sc-text').textContent === 'knots');
+
+    // setValue: no animation, no bump, no rebuild
+    SC.setValue(dial, 0);
+    const svg = dial.querySelector('svg'), numSpan = dial.querySelector('.sc-speedometer-value .sc-text');
+    SC.setValue(dial, 105);
+    check('setValue applies at once (no animation)', near(angle(dial), 60) && shown(dial) === '105');
+    check('setValue does not bump', !dial.classList.contains('sc-bump') && !dial.classList.contains('sc-pop'));
+    await settle();
+    check('still exact after the observer ran', near(angle(dial), 60) && shown(dial) === '105' && dial.dataset.value === '105');
+    for (let i = 0; i < 120; i++) SC.setValue(dial, i * 1.1);
+    await settle();
+    check('120 updates reuse the same svg and number (no DOM rebuild)', dial.querySelector('svg') === svg && dial.querySelector('.sc-speedometer-value .sc-text') === numSpan && dial.querySelectorAll(':scope > svg').length === 1);
+    check('no CSS transition on needle or fill', ['.sc-speedometer-needle', '.sc-speedometer-fill'].every(s => { const t = getComputedStyle(dial.querySelector(s)); return t.transitionDuration.split(',').every(d => parseFloat(d) === 0); }));
+    const t0 = performance.now(); for (let i = 0; i < 600; i++) SC.setValue(arc, i % 150); const ms = performance.now() - t0;
+    check(`600 setValue calls are cheap (${ms.toFixed(1)} ms)`, ms < 150);
+
+    // accessibility
+    SC.setValue(dial, 72.4);
+    check('role meter + aria-label "Speed"', dial.getAttribute('role') === 'meter' && dial.getAttribute('aria-label') === 'Speed');
+    check('aria-valuenow/min/max/valuetext', dial.getAttribute('aria-valuenow') === '72' && dial.getAttribute('aria-valuemin') === '0' && dial.getAttribute('aria-valuemax') === '140' && dial.getAttribute('aria-valuetext') === '72 km/h');
+    SC.setValue(dial, 180);
+    check('aria-valuenow stays within max, valuetext shows the real speed', dial.getAttribute('aria-valuenow') === '140' && dial.getAttribute('aria-valuetext') === '180 km/h');
+    check('own aria-label kept', custom.getAttribute('aria-label') === 'Boat speed');
+    check('svg hidden from screen readers', dial.querySelector('svg').getAttribute('aria-hidden') === 'true');
+
+    // attribute changes
+    dial.dataset.value = '35'; await settle();
+    check('data-value change re-renders', near(angle(dial), -60) && shown(dial) === '35');
+    dial.dataset.max = '70'; await settle();
+    check('data-max change re-renders', near(angle(dial), 0) && dial.getAttribute('aria-valuemax') === '70');
+    dial.dataset.redline = '35'; await settle();
+    check('data-redline change moves the red zone', near(-parseFloat(dial.querySelector('.sc-speedometer-red').getAttribute('stroke-dashoffset')), 0.5 * DIAL_LEN));
+    dial.dataset.type = 'arc'; await settle();
+    check('data-type change rebuilds as an arc', dial.querySelectorAll(':scope > svg').length === 1 && !!dial.querySelector('.sc-speedometer-bar') && !dial.querySelector('.sc-speedometer-needle') && near(dash(dial, '.sc-speedometer-bar'), 0.5 * BAR_LEN));
+    dial.removeAttribute('data-type'); await settle();
+    check('and back to a dial', !!dial.querySelector('.sc-speedometer-needle') && dial.querySelectorAll('.sc-speedometer-read').length === 1);
+    SC.upgrade(dial); SC.upgrade(dial);
+    check('repeated upgrades do not duplicate parts', dial.querySelectorAll(':scope > svg').length === 1 && dial.querySelectorAll('.sc-speedometer-read').length === 1);
+
+    // dynamic
+    const fresh = document.createElement('div'); fresh.className = 'sc-speedometer'; fresh.dataset.type = 'arc'; fresh.dataset.value = '14';
+    $('#fixtures').append(fresh); await settle();
+    check('inserted speedometer upgrades automatically', !!fresh.querySelector('.sc-speedometer-bar') && shown(fresh) === '14');
+
+    // display only
+    check('taps go through (pointer-events none)', getComputedStyle(dial).pointerEvents === 'none');
+
+    // no observer loop
+    let records = 0; const mo = new MutationObserver(r => records += r.length); mo.observe($('#fixtures'), { attributes: true, subtree: true, childList: true, characterData: true });
+    await new Promise(r => setTimeout(r, 200)); mo.disconnect();
+    check('no endless updates', records === 0);
+  } catch (err) { check('unexpected error: ' + err.message, false); }
+  $('#summary').textContent = `${passed} passed; ${failed} failed`;
+  document.title = (failed ? 'FAIL' : 'PASS') + ' · Speedometer';
+});
+</script>

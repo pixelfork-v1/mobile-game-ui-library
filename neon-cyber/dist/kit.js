@@ -39,11 +39,12 @@
   const SHOPCARDS = '.sc-shopcard';
   const JOYSTICKS = '.sc-joystick';
   const ACTIONS = 'button.sc-action';
+  const SPEEDOS = '.sc-speedometer';
   const TAB_ITEMS = '.sc-tabs > button, .sc-tabbar > button';
   const BADGE_HOSTS = '.sc-button, .sc-icon-button, .sc-slot, .sc-tab, .sc-tabbar-item';
   const MESSAGES = '.sc-popup-message, .sc-popup-value';
   const SCREENS = '.sc-screen';
-  const ALL = `${TEXT_COMPONENTS}, ${COUNTERS}, ${SLOTS}, ${POPUPS}, ${MESSAGES}, ${PROGRESS}, ${TITLES}, ${STARS}, ${TIMERS}, ${SCREENS}, ${TOGGLES}, ${SLIDERS}, ${CHECKBOXES}, ${TABS}, ${TAGS}, ${BANNERS}, .sc-row-avatar, ${LOADINGS}, ${ALERTS}, ${LEVELS}, ${TOPBARS}, ${SHOPCARDS}, ${JOYSTICKS}, ${ACTIONS}`;
+  const ALL = `${TEXT_COMPONENTS}, ${COUNTERS}, ${SLOTS}, ${POPUPS}, ${MESSAGES}, ${PROGRESS}, ${TITLES}, ${STARS}, ${TIMERS}, ${SCREENS}, ${TOGGLES}, ${SLIDERS}, ${CHECKBOXES}, ${TABS}, ${TAGS}, ${BANNERS}, .sc-row-avatar, ${LOADINGS}, ${ALERTS}, ${LEVELS}, ${TOPBARS}, ${SHOPCARDS}, ${JOYSTICKS}, ${ACTIONS}, ${SPEEDOS}`;
   const PRESSABLE = `.sc-button, .sc-icon-button, .sc-counter-plus, ${ACTIONS}, .sc-topbar-player, ${TOGGLES}, ${CHECKBOXES}, ${TAB_ITEMS}`;
 
   const script = document.currentScript;
@@ -879,6 +880,7 @@
   }
 
   function setValue(el, value, { animate = true, duration = 450 } = {}) {
+    if (el.matches(SPEEDOS)) { el.dataset.value = value; upgradeSpeedometer(el); return; }   // every frame: no animation, no bump
     if (el.matches(STARS)) { el.dataset.value = value; upgradeStars(el); return; }
     if (el.matches(LEVELS)) {
       const changed = el.dataset.value !== String(value);
@@ -984,6 +986,77 @@
       m.classList.toggle('sc-lit', lit);
     });
     el._scReady = true;
+  }
+
+  /* ---------- Speedometer ---------- */
+  // Built once; every later update only moves the needle / bar and changes the number, so a game can call
+  // SC.setValue(el, speed) every frame. Dial: viewBox 120×120, scale from -120° (0) to +120° (max) around (60,60).
+  const DIAL_LEN = 44 * 240 * Math.PI / 180;               // length of the dial's scale arc (r 44, 240°)
+  const BAR_LEN = 60 * Math.PI;                            // length of the half arc (r 60, 180°)
+  let speedoIds = 0;
+  const onDial = (r, deg) => { const a = deg * Math.PI / 180; return `${(60 + r * Math.sin(a)).toFixed(2)} ${(60 - r * Math.cos(a)).toFixed(2)}`; };
+  function speedoSvg(type) {
+    if (type === 'arc') {
+      const id = 'sc-speedometer-grad-' + (++speedoIds), d = 'M15 78 A60 60 0 0 1 135 78';
+      return `<svg viewBox="0 0 150 86" aria-hidden="true" focusable="false"><defs><linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="15" y1="0" x2="135" y2="0">` +
+        '<stop offset="0" class="sc-speedometer-low"/><stop offset=".6" class="sc-speedometer-mid"/><stop offset="1" class="sc-speedometer-high"/></linearGradient></defs>' +
+        `<path class="sc-speedometer-outline" d="${d}"/><path class="sc-speedometer-track" d="${d}"/><path class="sc-speedometer-bar" d="${d}" stroke="url(#${id})"/></svg>`;
+    }
+    const scale = `M${onDial(44, -120)} A44 44 0 1 1 ${onDial(44, 120)}`;
+    const ticks = Array.from({ length: 8 }, (_, i) => { const deg = -120 + i * 240 / 7;
+      return `<path class="sc-speedometer-tick" d="M${onDial(30, deg)} L${onDial(36, deg)}"/>`; }).join('');
+    return '<svg viewBox="0 0 120 120" aria-hidden="true" focusable="false"><circle class="sc-speedometer-disc" cx="60" cy="60" r="56"/>' +
+      `<path class="sc-speedometer-scale" d="${scale}"/><path class="sc-speedometer-red" d="${scale}"/><path class="sc-speedometer-fill" d="${scale}"/>${ticks}` +
+      '<g class="sc-speedometer-needle"><line x1="60" y1="60" x2="60" y2="16"/><line x1="60" y1="60" x2="60" y2="16"/></g>' +
+      '<circle class="sc-speedometer-hub" cx="60" cy="60" r="7"/></svg>';
+  }
+  function upgradeSpeedometer(el) {
+    const type = el.dataset.type === 'arc' ? 'arc' : 'dial';
+    let st = el._scSpeedo;
+    if (!st || st.type !== type || st.svg.parentNode !== el || st.read.parentNode !== el) {
+      el.querySelectorAll(':scope > svg, :scope > .sc-speedometer-read').forEach(n => n.remove());
+      el.insertAdjacentHTML('afterbegin', speedoSvg(type));
+      const read = document.createElement('span'); read.className = 'sc-speedometer-read';
+      const num = document.createElement('span'); num.className = 'sc-speedometer-value'; num.append(textSpan('0'));
+      const unit = document.createElement('span'); unit.className = 'sc-speedometer-unit'; unit.append(textSpan(''));
+      read.append(num, unit); el.append(read);
+      const svg = el.firstElementChild, q = s => svg.querySelector(s);
+      st = el._scSpeedo = { type, svg, read, num: num.firstChild, unitBox: unit, unit: unit.firstChild, key: '',
+        needle: q('.sc-speedometer-needle'), fill: q(type === 'arc' ? '.sc-speedometer-bar' : '.sc-speedometer-fill'), red: q('.sc-speedometer-red') };
+    }
+    setAttr(el, 'role', 'meter');
+    if (!el.hasAttribute('aria-label')) el.setAttribute('aria-label', 'Speed');
+    renderSpeedometer(el, st);
+  }
+  function renderSpeedometer(el, st) {
+    const d = el.dataset, num = v => (v == null || v === '' || !isFinite(v) ? NaN : Number(v));
+    const max = num(d.max) > 0 ? num(d.max) : 140, value = isNaN(num(d.value)) ? 0 : num(d.value);
+    const unit = d.unit == null ? 'km/h' : d.unit;
+    const redline = Math.max(0, Math.min(isNaN(num(d.redline)) ? max * .8 : num(d.redline), max));
+    const key = `${value}|${max}|${redline}|${unit}`;
+    if (st.key === key) return;                              // nothing changed (e.g. the observer after setValue)
+    st.key = key;
+    const f = Math.max(0, Math.min(value / max, 1));
+    if (st.type === 'dial') {
+      st.needle.setAttribute('transform', `rotate(${(-120 + 240 * f).toFixed(2)} 60 60)`);
+      const r = redline / max, g = Math.min(f, r);
+      st.fill.setAttribute('stroke-dasharray', `${(g * DIAL_LEN).toFixed(2)} 999`);
+      st.fill.style.visibility = g > 0 ? '' : 'hidden';        // a zero-length dash would still draw a round dot
+      st.red.setAttribute('stroke-dasharray', `${((1 - r) * DIAL_LEN).toFixed(2)} 999`);
+      st.red.setAttribute('stroke-dashoffset', (-r * DIAL_LEN).toFixed(2));
+      st.red.style.visibility = r < 1 ? '' : 'hidden';
+    } else {
+      st.fill.setAttribute('stroke-dasharray', `${(f * BAR_LEN).toFixed(2)} 999`);
+      st.fill.style.visibility = f > 0 ? '' : 'hidden';
+    }
+    const shown = String(Math.round(Math.max(0, value)));
+    setSpan(st.num, shown);
+    setSpan(st.unit, unit);
+    if (st.unitBox.hidden !== !unit) st.unitBox.hidden = !unit;
+    setAttr(el, 'aria-valuenow', Math.round(f * max));
+    setAttr(el, 'aria-valuemin', 0);
+    setAttr(el, 'aria-valuemax', max);
+    setAttr(el, 'aria-valuetext', unit ? `${shown} ${unit}` : shown);
   }
 
   /* ---------- Screen Title ---------- */
@@ -1253,6 +1326,7 @@
     if (el.matches(SHOPCARDS)) return upgradeShopcard(el);
     if (el.matches(JOYSTICKS)) return upgradeJoystick(el);
     if (el.matches(ACTIONS)) return upgradeAction(el);
+    if (el.matches(SPEEDOS)) return upgradeSpeedometer(el);
     if (el.matches(ALERTS)) return buildAlert(el, el.dataset.alert === 'dot' ? 'dot' : 'icon');
     if (el.matches(TAGS)) return upgradeText(el);
     if (el.matches(BANNERS)) return upgradeBanner(el);
@@ -1309,6 +1383,7 @@
         else if (r.target.matches(SHOPCARDS)) upgradeShopcard(r.target);
         else if (r.target.matches(JOYSTICKS)) upgradeJoystick(r.target);
         else if (r.target.matches(ACTIONS)) upgradeAction(r.target);
+        else if (r.target.matches(SPEEDOS)) upgradeSpeedometer(r.target);
         else if (r.target.matches(TAB_ITEMS)) upgradeTabs(r.target.parentElement);
         else if (r.target.matches(ICON_COMPONENTS)) upgradeIcon(r.target);
       } else {
@@ -1325,7 +1400,7 @@
     }
   }).observe(document.documentElement, {
     childList: true, subtree: true, characterData: true,
-    attributes: true, attributeFilter: ['data-icon', 'data-value', 'data-max', 'data-plus', 'data-format', 'data-count', 'data-tag', 'data-tag-color', 'data-tag-pos', 'data-state', 'data-title', 'data-sub', 'data-closable', 'data-label', 'data-stars', 'data-seconds', 'data-variant', 'data-badge', 'data-badge-color', 'data-checked', 'data-min', 'data-step', 'disabled', 'data-panel', 'data-tips', 'data-alert', 'data-level', 'data-name', 'data-avatar', 'data-amount', 'data-price', 'data-price-icon', 'data-bonus', 'data-mode', 'data-snap', 'data-width', 'data-height', 'data-fit'],
+    attributes: true, attributeFilter: ['data-icon', 'data-value', 'data-max', 'data-plus', 'data-format', 'data-count', 'data-tag', 'data-tag-color', 'data-tag-pos', 'data-state', 'data-title', 'data-sub', 'data-closable', 'data-label', 'data-stars', 'data-seconds', 'data-variant', 'data-badge', 'data-badge-color', 'data-checked', 'data-min', 'data-step', 'disabled', 'data-panel', 'data-tips', 'data-alert', 'data-level', 'data-name', 'data-avatar', 'data-amount', 'data-price', 'data-price-icon', 'data-bonus', 'data-mode', 'data-snap', 'data-width', 'data-height', 'data-fit', 'data-unit', 'data-redline', 'data-type'],
   });
 
   // Press feedback (delegated, so it works for dynamically added components)
@@ -1342,7 +1417,7 @@
 
   /* ---------- Public API ---------- */
   window.SC = Object.assign(window.SC || {}, {
-    version: '0.44.2',
+    version: '0.45.0',
     assets: ASSETS,
     upgrade,
     /** Change a component's label: SC.setLabel(el, 'Claimed') */
@@ -1360,7 +1435,7 @@
       if (color != null) el.dataset.badgeColor = color;
       upgradeBubble(el);
     },
-    /** Change a counter's value or a slot's count with a count animation: SC.setValue(el, 350000) */
+    /** Change a counter's value or a slot's count with a count animation: SC.setValue(el, 350000). On a speedometer it never animates (call it every frame). */
     setValue,
     /** Play an element's entrance animation again: SC.replay(title) */
     replay(el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; },

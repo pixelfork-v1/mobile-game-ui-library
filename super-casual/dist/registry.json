@@ -2,7 +2,7 @@
   "name": "super-casual",
   "title": "Super Casual UI Kit",
   "description": "Chunky, glossy mobile game UI for hyper-casual and casual 2D/3D web games. Plain HTML + CSS components that float above any game canvas (Three.js, Babylon, Phaser, PixiJS).",
-  "version": "0.44.2",
+  "version": "0.45.0",
   "items": [
     {
       "name": "core",
@@ -2423,6 +2423,86 @@
         {
           "title": "Fire and dash",
           "js": "acts.addEventListener('press', e => game.start(e.detail.value)); acts.addEventListener('release', e => game.stop(e.detail.value));"
+        }
+      ]
+    },
+    {
+      "name": "speedometer",
+      "type": "registry:ui",
+      "title": "Speedometer",
+      "description": "Speed gauge for vehicle games: a round dial (needle, green fill, red zone, ticks) or a half arc that fills green to yellow to red, with the number and unit in outlined kit text. Built once, then updated every frame without animation.",
+      "whenToUse": "Car, bike, boat and other vehicle games: always show the player's speed with it.",
+      "files": [
+        "components/speedometer/speedometer.css"
+      ],
+      "docs": "components/speedometer/speedometer.md",
+      "dependencies": [
+        "core"
+      ],
+      "html": "<div class=\"sc-speedometer\" id=\"speedo\" data-value=\"0\"></div>",
+      "props": {
+        "data-type": {
+          "type": "enum",
+          "values": [
+            "dial",
+            "arc"
+          ],
+          "default": "dial"
+        },
+        "data-value": {
+          "type": "number",
+          "default": 0,
+          "description": "Current speed in the game's units. Below 0 shows 0; above max the needle/arc stop, the number shows the real value"
+        },
+        "data-max": {
+          "type": "number",
+          "default": 140
+        },
+        "data-unit": {
+          "type": "string",
+          "default": "km/h",
+          "description": "Empty string hides it"
+        },
+        "data-redline": {
+          "type": "number",
+          "optional": true,
+          "description": "Dial only: where the red zone starts. Default 80% of max"
+        },
+        "data-size": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "description": "dial 96/120/150 px wide, arc 120/150/190 px wide"
+        }
+      },
+      "events": [],
+      "js": {
+        "SC.setValue(el, speed)": "Move the needle/arc and change the number at once: no animation, no bump. Call it every frame"
+      },
+      "rules": [
+        "Car, bike, boat and other vehicle games show their speed with this; one per screen.",
+        "Call SC.setValue(el, speed) every frame from the game loop, speed in the game's units.",
+        "km/h by default: physics engines give m/s, multiply by 3.6 (or 2.237 with data-unit=\"mph\").",
+        "Set data-max a little above the vehicle's real top speed.",
+        "Dial in a lower corner above the Brake button; arc centred between Brake and Gas. Never over the middle of the road.",
+        "Display only (taps go through). Never write its inner parts (svg, number, unit)."
+      ],
+      "examples": [
+        {
+          "title": "Dial above the brake",
+          "html": "<div class=\"sc-screen-bottom\"><div style=\"display:flex;justify-content:space-between;align-items:flex-end;width:100%\"><div style=\"display:flex;flex-direction:column;align-items:center;gap:8px\"><div class=\"sc-speedometer\" id=\"speedo\" data-value=\"0\"></div><button class=\"sc-button\" data-color=\"red\" data-size=\"sm\">Brake</button></div><button class=\"sc-button\" data-color=\"green\" data-size=\"sm\">Gas</button></div></div>"
+        },
+        {
+          "title": "Arc between the pedals",
+          "html": "<div class=\"sc-speedometer\" data-type=\"arc\" data-size=\"sm\" data-value=\"0\"></div>"
+        },
+        {
+          "title": "Every frame",
+          "js": "SC.setValue(speedo, carBody.getLinearVelocity().length() * 3.6); // m/s → km/h"
         }
       ]
     }

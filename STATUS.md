@@ -1,9 +1,14 @@
 # STATUS
 
-**Last updated:** 2026-09-23 · by **A (Claude)** · version **v0.44.2-A** (Super Casual) · Tactical Dark v0.2.0 · Fantasy RPG Casual, Pixel Retro, Clean Flat, Cozy Paper, Neon Cyber v0.1.0
+**Last updated:** 2026-09-26 · by **A (Claude)** · version **v0.45.0-A** (Super Casual, committed locally, not yet tagged or pushed) · Tactical Dark v0.2.0 · Fantasy RPG Casual, Pixel Retro, Clean Flat, Cozy Paper, Neon Cyber v0.1.0
 
 ## Next task
-**Tag a release for the six new styles.** All seven styles are now on GitHub `main` (pushed 2026-09-23), but the
+**Publish v0.45.0-A (Speedometer).** It is committed on `main` but not tagged, pushed or released. Tag it, push,
+create the GitHub release, then move the pinned CDN tag from `v0.44.2-A` to `v0.45.0-A` in `AI-GUIDE.md`, `llms.txt`,
+`README.md`, `templates/cdn-game.html` and `registry.json → cdn` (left on the old tag on purpose: the new tag does not
+exist yet). This release also carries the six new styles and the lighter Super Casual screen title.
+
+After that: **tag a release for the six new styles.** All seven styles are now on GitHub `main` (pushed 2026-09-23), but the
 CDN tag is still `v0.44.2-A`, which predates them. Next: bump versions, add a `cdn` block to each new style's
 `registry.json` (pixelfork-v1 links, pinned to the new tag), build `--all`, tag and push the tag, then check the
 jsDelivr URLs return 200. After that: the live switch demo (one game screen, a selector for all seven styles).
@@ -66,7 +71,13 @@ New tooling, all reusable for a third style:
 **Final check with a fresh AI.** Open a new AI session with no history. Ask it to follow `templates/pixelfork-game/AI.md` and turn the template into a small real game (e.g. "tap the falling fruit" with a fruit-themed coin via `CONFIG.images` and a Shop screen copied from `kit/blocks/shop.html`). Write down everything that confused it, then fix AI.md, the docs or the registry. Also: test the template on a real iPhone and Android phone.
 
 ## In progress
-_Nothing._
+- **Speedometer in the other six styles.** v0.45.0-A added `.sc-speedometer` to Super Casual only. Its builder is in
+  the shared `sc.js`, so every style's `dist/kit.js` already builds it, but tactical-dark, fantasy-rpg-casual,
+  pixel-retro, clean-flat, cozy-paper and neon-cyber have no `components/speedometer/speedometer.css` yet: their
+  bundles leave it out (`build_kit.py` prints "not skinned yet") and a speedometer there renders as a bare SVG.
+  Next: port the CSS per style (colours are `--sp-*` tokens under `:where(.sc-speedometer)`, outlines from
+  `--sc-line`), then run `tools/sync_style.py` so each style gets the current `sc.js` copy, a docs page and its
+  registry entry, and add the docs page to that style's list in `tools/tests/icon-colour-audit.html`.
 
 ## Done — kit components (`super-casual/kit`)
 | # | Component | Class | Version |
@@ -101,6 +112,7 @@ _Nothing._
 | 28 | Tutorial Hand | `SC.tutorial` | v0.28.0-A |
 | 29 | Joystick / D-Pad | `.sc-joystick` | v0.44.0-A |
 | 30 | Action Buttons | `.sc-actions / .sc-action` | v0.44.0-A |
+| 31 | Speedometer | `.sc-speedometer` (dial, arc) | v0.45.0-A |
 
 ## Done — blocks (`super-casual/kit/blocks`)
 | # | Block | File | Version |

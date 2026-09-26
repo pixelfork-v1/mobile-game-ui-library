@@ -1,0 +1,72 @@
+/*
+  Speedometer · Super Casual UI Kit
+  Requires: core.css, sc.js
+
+  <div class="sc-speedometer" data-value="0"></div>                    <!-- round dial with a needle -->
+  <div class="sc-speedometer" data-type="arc" data-value="0"></div>    <!-- half arc that fills up -->
+
+  data-type     dial | arc      (dial: disc, 240° scale, needle, red zone · arc: 180° bar green → yellow → red)   default: dial
+  data-value    current speed, in the game's units (below 0 shows 0; above max the needle/bar stop, the number doesn't)   default: 0
+  data-max      top of the scale                                                                             default: 140
+  data-unit     text under the number; "" hides it                                                            default: km/h
+  data-redline  dial only: where the red zone starts                                                          default: 80% of max
+  data-size     sm | md | lg    (dial 96 / 120 / 150 px wide · arc 120 / 150 / 190 px wide)                    default: md
+
+  JS: SC.setValue(el, speed)   // call it every frame: no animation, no bump, only the needle/bar and the number change
+  Accessibility: role="meter", aria-valuenow/min/max, aria-valuetext ("72 km/h"), aria-label "Speed" unless you set one.
+  Display only: taps go through to the game.
+*/
+:where(.sc-speedometer) {                                   /* default colours; a theme can override them */
+  --sp-disc:rgba(10,14,30,.74);
+  --sp-scale:rgba(255,255,255,.18);
+  --sp-fill:#4bdc5a;
+  --sp-red:#ff4d4d;
+  --sp-tick:#fff;
+  --sp-needle:#ffd23f;
+  --sp-bar-track:rgba(10,14,30,.85);
+  --sp-low:#4bdc5a; --sp-mid:#ffd23f; --sp-high:#ff4d4d;
+}
+.sc-speedometer {
+  --sp:120px;
+  position:relative; display:inline-block; flex:none; width:var(--sp); vertical-align:middle;
+  font-family:var(--sc-font); line-height:1; pointer-events:none; user-select:none; -webkit-user-select:none;
+}
+.sc-speedometer[data-size="sm"] { --sp:96px; }
+.sc-speedometer[data-size="lg"] { --sp:150px; }
+.sc-speedometer[data-type="arc"] { --sp:150px; }
+.sc-speedometer[data-type="arc"][data-size="sm"] { --sp:120px; }
+.sc-speedometer[data-type="arc"][data-size="lg"] { --sp:190px; }
+.sc-speedometer > svg { display:block; width:100%; height:auto; overflow:visible; }
+
+/* Dial (viewBox 120 × 120). Widths are in the SVG's own units, so the whole dial scales with its size;
+   outlines are multiples of --sc-line (2.4 → 4 on the disc, 3 on the hub, 2 each side of the needle). */
+.sc-speedometer-disc { fill:var(--sp-disc); stroke:var(--sc-outline); stroke-width:calc(var(--sc-line) * 1.667); }
+.sc-speedometer-scale, .sc-speedometer-red, .sc-speedometer-fill { fill:none; stroke-width:9px; stroke-linecap:round; }
+.sc-speedometer-scale { stroke:var(--sp-scale); }
+.sc-speedometer-red { stroke:var(--sp-red); }
+.sc-speedometer-fill { stroke:var(--sp-fill); }
+.sc-speedometer-tick { stroke:var(--sp-tick); stroke-width:2.4px; stroke-linecap:round; }
+.sc-speedometer-needle line { fill:none; stroke-linecap:round; }
+.sc-speedometer-needle line:first-child { stroke:var(--sc-outline); stroke-width:calc(4px + var(--sc-line) * 1.667); }
+.sc-speedometer-needle line:last-child { stroke:var(--sp-needle); stroke-width:4px; }
+.sc-speedometer-hub { fill:var(--sp-needle); stroke:var(--sc-outline); stroke-width:calc(var(--sc-line) * 1.25); }
+
+/* Arc (viewBox 150 × 86): dark outline, dark track, and a bar whose colour depends on where it reaches */
+.sc-speedometer-outline, .sc-speedometer-track, .sc-speedometer-bar { fill:none; stroke-linecap:round; }
+.sc-speedometer-outline { stroke:var(--sc-outline); stroke-width:calc(16px + var(--sc-line) * 2.5); }
+.sc-speedometer-track { stroke:var(--sp-bar-track); stroke-width:16px; }
+.sc-speedometer-bar { stroke-width:16px; }                 /* stroke = the gradient, set by sc.js (one id per speedometer) */
+.sc-speedometer-low { stop-color:var(--sp-low); }
+.sc-speedometer-mid { stop-color:var(--sp-mid); }
+.sc-speedometer-high { stop-color:var(--sp-high); }
+
+/* Number + unit, in the kit's outlined text. Dial: under the hub. Arc: inside the arc, near the bottom. */
+.sc-speedometer-read {
+  position:absolute; left:0; right:0; top:60%; z-index:1;
+  display:flex; flex-direction:column; align-items:center; gap:calc(var(--sp) * .02);
+}
+.sc-speedometer[data-type="arc"] .sc-speedometer-read { top:auto; bottom:0; gap:calc(var(--sp) * .01); }
+.sc-speedometer-value .sc-text { --fs:calc(var(--sp) * .2); font-variant-numeric:tabular-nums; }
+.sc-speedometer[data-type="arc"] .sc-speedometer-value .sc-text { --fs:calc(var(--sp) * .187); }
+.sc-speedometer-unit .sc-text { --fs:max(var(--sc-min-text), calc(var(--sp) * .09)); }
+.sc-speedometer[data-type="arc"] .sc-speedometer-unit .sc-text { --fs:max(var(--sc-min-text), calc(var(--sp) * .075)); }
