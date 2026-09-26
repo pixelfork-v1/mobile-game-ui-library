@@ -2762,8 +2762,8 @@
   },
   "blocksPreview": "blocks/preview.html?block=<file> — desktop device frames (docs only; remove the preview.js line when copying a block into a game)",
   "cdn": {
-    "css": "https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/kit.css",
-    "js": "https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/kit.js",
+    "css": "https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.45.0-A/super-casual/dist/kit.css",
+    "js": "https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.45.0-A/super-casual/dist/kit.js",
     "guide": "https://pixelfork-v1.github.io/mobile-game-ui-library/AI-GUIDE.md"
   }
 }

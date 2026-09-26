@@ -7,8 +7,8 @@ Chunky, glossy mobile game UI for hyper-casual / casual 2D and 3D web games. Pla
 
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/kit.css">
-<script src="https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/kit.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.45.0-A/super-casual/dist/kit.css">
+<script src="https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.45.0-A/super-casual/dist/kit.js"></script>
 ```
 Icons load automatically from the same place. (Offline/own copy: download `super-casual/dist/` and point the 2 lines at it.)
 
@@ -102,7 +102,7 @@ New pictures must be generated (never drawn in code) with the style prompt in `s
 2. Every full-page UI is one `.sc-screen`; one menu screen visible at a time; HUD has no backdrop.
 3. Button labels 1–2 words; titles ≈8 letters; the page never scrolls.
 4. Always wire: Play → hide menu, show HUD, start game · Pause → pause game, open popup · win → Success screen · lose → Fail screen.
-5. Full details per component: https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/docs/introduction.html · machine-readable: `https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.44.2-A/super-casual/dist/registry.json`
+5. Full details per component: https://pixelfork-v1.github.io/mobile-game-ui-library/super-casual/kit/docs/introduction.html · machine-readable: `https://cdn.jsdelivr.net/gh/pixelfork-v1/mobile-game-ui-library@v0.45.0-A/super-casual/dist/registry.json`
 
 ## Licence — read this before using anything here
 
